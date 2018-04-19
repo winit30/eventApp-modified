@@ -14,41 +14,36 @@ class Main extends Component<{}> {
         this.autoLogin();
     }
 
-    autoLogin() {}
+    autoLogin = () => {}
 
-    renderComponent(loggedIn) {
+    mapElement = (node) => {
+        let {mapElement} = this.props;
+        mapElement("drawer", node);
+    }
 
-        let {mapInput} = this.props;
-
-        if (loggedIn) {
-
-            const navigationView = (
-                <Sidebar/>
-            );
-
+    renderComponent = () => {
+        let {loggedIn, token, mapInput} = this.props;
+        if (loggedIn && token) {
+            const navigationView = (<Sidebar/>);
             return(
                 <DrawerLayoutAndroid
                     drawerWidth={290}
-                    ref={(node) => mapInput("drawer", node)}
+                    ref={this.mapElement}
                     drawerPosition={DrawerLayoutAndroid.positions.Left}
                     renderNavigationView={() => navigationView}>
                     <Routes loggedIn={loggedIn}/>
                 </DrawerLayoutAndroid>
             );
-
-        } else if (!loggedIn) {
+        } else {
               return <Routes loggedIn={loggedIn}/>;
         }
     }
 
     render() {
-
-        let {loggedIn} = this.props;
-
         return (
             <View style={styles.mainContainer}>
                 <StatusBar backgroundColor="#001970" barStyle="light-content"/>
-                {this.renderComponent(loggedIn)}
+                {this.renderComponent()}
                 <Loader />
             </View>
         );
@@ -57,12 +52,13 @@ class Main extends Component<{}> {
 
 const mapStateToProps = state => ({
     token: state.auth.token,
-    loggedIn: state.auth.loggedIn
+    loggedIn: state.auth.loggedIn,
+    drawer: state.element.drawer
 });
 
 const mapDispatchToProps = dispatch => ({
-    mapInput: (property, node) => dispatch({
-        type:"MAP_INPUT",
+    mapElement: (property, node) => dispatch({
+        type:"MAP_ELEMENT",
         property,
         node
     })

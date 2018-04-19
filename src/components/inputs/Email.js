@@ -4,7 +4,18 @@ import {TextInput} from "react-native";
 
 import styles from "./../../styles/styles";
 
+const defaultProps = {
+    mapElement: (n) => {}
+}
+
 class Email extends Component<{}> {
+    constructor(props) {
+        super(props);
+    }
+
+    mapElement = (node) => {
+        this.props.mapElement(node);
+    }
 
     onSubmitEditing = () => {
       this.props.onSubmitEditing();
@@ -12,20 +23,20 @@ class Email extends Component<{}> {
 
     render() {
 
-        let {mapInput, onChangeText, email} = this.props;
+        let {onChangeText, email} = this.props;
 
         return (
             <TextInput style={styles.inputBox}
                 underlineColorAndroid="rgba(0,0,0,0)"
                 placeholder="Email"
-                placeholderTextColor = "#ffffff"
+                placeholderTextColor = "rgba(255,255,255,0.5)"
                 selectionColor="#fff"
                 keyboardType="email-address"
                 autoCapitalize="none"
                 returnKeyType="next"
                 value={email ? email : ""}
+                ref={this.mapElement}
                 onSubmitEditing={this.onSubmitEditing}
-                ref={email => mapInput("email", email)}
                 onChangeText={(value)=> {
                     onChangeText("email", value);
                 }}/>
@@ -38,11 +49,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    mapInput: (property, node) => dispatch({
-        type:"MAP_INPUT",
-        property,
-        node
-    }),
     onChangeText: (property, value) => dispatch({
         type:"ON_CHANGE_TEXT",
         property,
@@ -51,3 +57,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Email);
+
+Email.defaultProps = defaultProps;

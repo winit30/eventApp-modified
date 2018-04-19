@@ -1,5 +1,1 @@
-const url = "https://arcane-spire-68391.herokuapp.com";
-
-export {
-    url
-}
+export const BASE_URL = "https://arcane-spire-68391.herokuapp.com";

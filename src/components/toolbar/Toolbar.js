@@ -24,7 +24,7 @@ class Toolbar extends Component<{}> {
 }
 
 const mapStateToProps = state => ({
-    drawer: state.input.inputs.drawer
+    drawer: state.element.drawer
 });
 
 const mapDispatchToProps = dispatch => ({

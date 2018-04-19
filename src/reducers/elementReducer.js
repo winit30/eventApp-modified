@@ -1,18 +1,15 @@
 var defaultState = {
-    inputs: {}
+    drawer: null
 }
 
 export default (state = defaultState, action) => {
 
     switch (action.type) {
 
-        case "MAP_INPUT":
+        case "MAP_ELEMENT":
             return {
                 ...state,
-                inputs: {
-                    ...state.inputs,
-                    [action.property]: action.node
-                }
+                [action.property]: action.node
             }
 
         default:

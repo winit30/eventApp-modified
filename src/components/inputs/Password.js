@@ -4,11 +4,22 @@ import {TextInput} from "react-native";
 
 import styles from "./../../styles/styles";
 
+const defaultProps = {
+    mapElement: (n) => {}
+}
+
 class Password extends Component<{}> {
+    constructor(props) {
+        super(props);
+    }
+
+    mapElement = (node) => {
+        this.props.mapElement(node);
+    }
 
     render() {
 
-        let {mapInput, onChangeText, password} = this.props;
+        let {onChangeText, password} = this.props;
 
         return (
             <TextInput style={styles.inputBox}
@@ -16,10 +27,10 @@ class Password extends Component<{}> {
                 placeholder="Password"
                 value={password ? password : ""}
                 secureTextEntry={true}
-                placeholderTextColor = "#ffffff"
-                ref={password => mapInput("password", password)}
+                placeholderTextColor = "rgba(255,255,255,0.5)"
+                ref={this.mapElement}
                 onChangeText={(value)=> {
-                  onChangeText('password', value);
+                    onChangeText('password', value);
                 }}/>
         );
     }
@@ -30,11 +41,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    mapInput: (property, node) => dispatch({
-        type:"MAP_INPUT",
-        property,
-        node
-    }),
     onChangeText: (property, value) => dispatch({
         type:"ON_CHANGE_TEXT",
         property,
@@ -43,3 +49,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Password);
+
+Password.defaultProps = defaultProps;

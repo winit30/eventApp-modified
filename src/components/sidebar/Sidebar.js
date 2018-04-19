@@ -4,6 +4,7 @@ import {Image, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import React, {Component, PropTypes} from "react";
 
 import {logoutApi} from "./../../services/api";
+import {LOGOUT_URL} from "./../../constants/urls";
 import {redirectTo} from "./../../components/navigation/navigate";
 import {url} from "./../../config/settings";
 
@@ -18,7 +19,7 @@ class Sidebar extends Component {
                 "x-auth": this.props.token
             }
             setLoader(true);
-            const response = await logoutApi(`${url}/user/logout`, headers);
+            const response = await logoutApi(LOGOUT_URL, headers);
             setUserAuth(null, null, false);
             redirectTo("auth");
             setLoader(false);
@@ -42,7 +43,10 @@ class Sidebar extends Component {
                         <Text style={styles.headerTitle} key={0}>
                             {user ? user.name : ""}
                         </Text>
-                        <Text style={styles.headerEmail} key={1}>
+                        <Text style={styles.headerUserType} key={1}>
+                            {user ? user.userType === "organizer" ? "Organizer" : "Volunteer" : ""}
+                        </Text>
+                        <Text style={styles.headerEmail} key={2}>
                             {user ? user.email: ""}
                         </Text>
                     </View>

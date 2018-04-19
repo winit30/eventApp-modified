@@ -1,10 +1,10 @@
 import {combineReducers} from "redux";
 
 import auth from "./authReducer";
+import element from "./elementReducer";
 import form from "./formReducer";
-import input from "./inputReducer";
 import utils from "./utilsReducer";
 
 export default combineReducers({
-    form, input, auth, utils
+    auth, element, form, utils
 });

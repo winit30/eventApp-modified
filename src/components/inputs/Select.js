@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import {Picker} from "react-native";
+import {Picker, View} from "react-native";
 import React, { Component } from "react";
 
 import styles from "./../../styles/styles";
@@ -8,18 +8,20 @@ class Select extends Component<{}> {
 
     render() {
 
-        let {mapInput, onChangeText, userType} = this.props;
+        let {onChangeText, userType} = this.props;
 
         return (
-            <Picker
-                selectedValue={userType ? userType : "options"}
-                style={{ height: 50, width: "88%", color: "#dedede"}}
-                mode="dropdown"
-                onValueChange={(itemValue, itemIndex) => onChangeText("userType", itemValue) }>
-                <Picker.Item label="Select type" value="options" />
-                <Picker.Item label="Organizer" value="organizer" />
-                <Picker.Item label="Volunteer" value="volunteer" />
-            </Picker>
+            <View style={styles.pickerCont}>
+                <Picker
+                    selectedValue={userType ? userType : "options"}
+                    style={styles.selectPicker}
+                    onValueChange={(itemValue, itemIndex) => onChangeText("userType", itemValue) }>
+                    <Picker.Item label="Select user type" value="options" />
+                    <Picker.Item label="Organizer" value="organizer" />
+                    <Picker.Item label="Volunteer" value="volunteer" />
+                </Picker>
+                <View style={styles.pickerBorderBottom} />
+            </View>
         );
     }
 }
@@ -29,11 +31,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    mapInput: (property, node) => dispatch({
-        type:"MAP_INPUT",
-        property,
-        node
-    }),
     onChangeText: (property, value) => dispatch({
         type:"ON_CHANGE_TEXT",
         property,
