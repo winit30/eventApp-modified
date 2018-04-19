@@ -1,22 +1,23 @@
 var defaultState = {
-  inputs: {}
+    inputs: {}
 }
 
 export default (state = defaultState, action) => {
 
-  switch (action.type) {
+    switch (action.type) {
 
-      case 'MAP_INPUT':
-          return {
-            ...state,
-            inputs: {
-              ...state.inputs,
-              [action.property]: action.node
+        case "MAP_INPUT":
+            return {
+                ...state,
+                inputs: {
+                    ...state.inputs,
+                    [action.property]: action.node
+                }
             }
-          }
 
-      default:
+        default:
 
-  }
-  return state;
+    }
+
+    return state;
 }

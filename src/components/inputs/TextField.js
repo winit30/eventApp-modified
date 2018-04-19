@@ -1,40 +1,36 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { TextInput } from 'react-native';
-import styles from './../../styles/styles';
+import {connect} from "react-redux";
+import React, {Component} from "react";
+import {TextInput} from "react-native";
+
+import styles from "./../../styles/styles";
 
 class TextField extends Component<{}> {
 
-  constructor(props) {
-    super(props);
-    this.onSubmitEditing = this.onSubmitEditing.bind(this);
-  }
+    onSubmitEditing() {
+        this.props.onSubmitEditing();
+    }
 
-  onSubmitEditing() {
-    this.props.onSubmitEditing();
-  }
+    render() {
 
-  render() {
+        let {mapInput, onChangeText, name} = this.props;
 
-    let {mapInput, onChangeText, name} = this.props;
-
-    return (
-      <TextInput style={styles.inputBox}
-          underlineColorAndroid='rgba(0,0,0,0)'
-          placeholder="Name"
-          placeholderTextColor = "#ffffff"
-          selectionColor="#fff"
-          autoCapitalize="words"
-          keyboardType="default"
-          returnKeyType="next"
-          value={name ? name : ""}
-          onSubmitEditing={this.onSubmitEditing}
-          ref={ name => mapInput("name", name)}
-          onChangeText={(value)=> {
-              onChangeText("name", value);
-          }}/>
+        return (
+            <TextInput style={styles.inputBox}
+                underlineColorAndroid='rgba(0,0,0,0)'
+                placeholder="Name"
+                placeholderTextColor = "#ffffff"
+                selectionColor="#fff"
+                autoCapitalize="words"
+                keyboardType="default"
+                returnKeyType="next"
+                value={name ? name : ""}
+                onSubmitEditing={this.onSubmitEditing}
+                ref={name => mapInput("name", name)}
+                onChangeText={(value)=> {
+                    onChangeText("name", value);
+                }}/>
         );
-  }
+    }
 }
 
 const mapStateToProps = state => ({
@@ -43,15 +39,14 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     mapInput: (property, node) => dispatch({
-        type:'MAP_INPUT',
+        type:"MAP_INPUT",
         property,
         node
     }),
-
     onChangeText: (property, value) => dispatch({
-        type:'ON_CHANGE_TEXT',
+        type:"ON_CHANGE_TEXT",
         property,
-        value,
+        value
     })
 });
 

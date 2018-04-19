@@ -4,18 +4,17 @@ var initialState = {
 
 export default (state = initialState, action) => {
 
-  switch (action.type) {
+    switch (action.type) {
 
-      case "LOADER":
+        case "LOADER":
+            return {
+                ...state,
+                loader: action.status
+            }
 
-          return {
-            ...state,
-            loader: action.status
-          }
+        default:
+    }
 
-      default:
+    return state;
 
-  }
-
-  return state;
 }

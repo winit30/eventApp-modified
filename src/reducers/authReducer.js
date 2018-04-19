@@ -1,24 +1,23 @@
 var initialState = {
-  user: null,
-  token: null,
-  loggedIn: false
+    user: null,
+    token: null,
+    loggedIn: false
 }
 
 export default (state = initialState, action) => {
 
-  switch (action.type) {
+    switch (action.type) {
 
-      case "SET_USER_AUTH":
-          console.log(action);
-          return {
-            ...state,
-            token: action.token,
-            user: action.user,
-            loggedIn: action.loggedIn
-          }
+        case "SET_USER_AUTH":
+            return {
+                ...state,
+                token: action.token,
+                user: action.user,
+                loggedIn: action.loggedIn
+            }
 
-      default:
+        default:
 
-  }
-  return state;
+    }
+    return state;
 }

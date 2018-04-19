@@ -1,17 +1,18 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { TouchableOpacity, Text} from 'react-native';
-import styles from './../../styles/styles';
+import {connect} from "react-redux";
+import React, {Component} from "react";
+import {TouchableOpacity, Text} from "react-native";
+
+import styles from "./../../styles/styles";
 
 class LinkButton extends Component<{}> {
 
-  render() {
-    return (
-      <TouchableOpacity onPress={this.props.onPress}>
-        <Text style={styles.linkButton}>{this.props.text}</Text>
-      </TouchableOpacity>
-      );
-  }
+    render() {
+        return (
+            <TouchableOpacity onPress={this.props.onPress}>
+                <Text style={styles.linkButton}>{this.props.text}</Text>
+            </TouchableOpacity>
+          );
+    }
 }
 
 const mapStateToProps = state => ({

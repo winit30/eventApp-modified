@@ -1,7 +1,4 @@
-module.exports = {
-
-  fetchPostApi: async (url, body, headers = {}) => {
-
+export const fetchPostApi = async (url, body, headers = {}) => {
     try {
         headers["Accept"] = "application/json";
         headers["Content-Type"] = "application/json";
@@ -9,53 +6,53 @@ module.exports = {
         const fetchPromise = fetch(url, {method: 'POST', headers: headers, body: JSON.stringify(body)});
 
         const timerPromise = new Promise((resolve, reject) => {
-          setTimeout(function() {
-            reject("Request timeout");
-          }, 15000);
+            setTimeout(function() {
+                reject("Request timeout");
+            }, 15000);
         });
 
         const response = await Promise.race([fetchPromise, timerPromise]);
         return response;
 
     } catch(err) {
-        return err;
+          return err;
     }
-  },
+}
 
-  fetchGetApi: async (url, headers = {}) => {
+export const fetchGetApi = async (url, headers = {}) => {
     try {
 
-      const fetchPromise = fetch(url, {method: 'GET', headers: headers});
-      const timerPromise = new Promise((resolve, reject) => {
-        setTimeout(function() {
-          reject("Request timeout");
-        }, 15000)
-      });
+        const fetchPromise = fetch(url, {method: 'GET', headers: headers});
 
-      const response = await Promise.race([fetchPromise, timerPromise]);
-      return response;
+        const timerPromise = new Promise((resolve, reject) => {
+            setTimeout(function() {
+                reject("Request timeout");
+            }, 15000);
+        });
+
+        const response = await Promise.race([fetchPromise, timerPromise]);
+        return response;
 
     } catch(err) {
-      return err;
+          return err;
     }
-  },
+}
 
-  logoutApi: async (url, headers = {}) => {
+export const logoutApi = async (url, headers = {}) => {
     try {
 
-      const fetchPromise = fetch(url, {method: 'DELETE', headers: headers});
-      const timerPromise = new Promise((resolve, reject) => {
-        setTimeout(function() {
-          reject("Request timeout");
-        }, 15000)
-      });
+        const fetchPromise = fetch(url, {method: 'DELETE', headers: headers});
 
-      const response = await Promise.race([fetchPromise, timerPromise]);
-      return response;
+        const timerPromise = new Promise((resolve, reject) => {
+            setTimeout(function() {
+                reject("Request timeout");
+            }, 15000);
+        });
+
+        const response = await Promise.race([fetchPromise, timerPromise]);
+        return response;
 
     } catch(err) {
-      return err;
+          return err;
     }
   }
-
-}
