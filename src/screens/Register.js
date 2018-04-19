@@ -5,7 +5,7 @@ import {Text, View} from "react-native";
 
 import {Button, LinkButton} from "./../components/buttons";
 import {Email, Password, Select, TextField} from "./../components/inputs";
-import {fetchPostApi} from "./../services/api";
+import {fetchApi} from "./../services/api";
 import {REGISTER_URL} from "./../constants/urls";
 import {redirectTo} from "./../components/navigation/navigate";
 
@@ -35,7 +35,7 @@ class Register extends Component<{}> {
         try {
             const body = {userType, name, email, password};
             setLoader(true);
-            const response = await fetchPostApi(REGISTER_URL, body);
+            const response = await fetchApi(REGISTER_URL, "POST" ,body);
             if (response.status === 200 && response.headers.get("x-auth")) {
                 const token = response.headers.get("x-auth");
                 const user = await response.json();
@@ -46,7 +46,7 @@ class Register extends Component<{}> {
                 throw new Error("Duplicate user.");
             } else if (response.status !== 200) {
                 throw new Error("Something went wrong. Please try again.");
-            } else if (response === "Request timeout") {
+            } else {
                 throw new Error(response);
             }
         } catch (e) {

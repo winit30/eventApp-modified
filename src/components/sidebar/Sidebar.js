@@ -3,7 +3,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import {Image, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import React, {Component, PropTypes} from "react";
 
-import {logoutApi} from "./../../services/api";
+import {fetchApi} from "./../../services/api";
 import {LOGOUT_URL} from "./../../constants/urls";
 import {redirectTo} from "./../../components/navigation/navigate";
 import {url} from "./../../config/settings";
@@ -19,7 +19,7 @@ class Sidebar extends Component {
                 "x-auth": this.props.token
             }
             setLoader(true);
-            const response = await logoutApi(LOGOUT_URL, headers);
+            const response = await fetchApi(LOGOUT_URL, "DELETE", {}, headers);
             setUserAuth(null, null, false);
             redirectTo("auth");
             setLoader(false);

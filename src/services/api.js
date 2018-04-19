@@ -1,13 +1,27 @@
 import {BASE_URL} from "./../config/settings";
 
-export const fetchPostApi = async (url, body, headers = {}) => {
-    const URL = BASE_URL.concat(url);
+export const fetchApi = async (url, method, reqBody = {}, headers = {}) => {
     try {
-        headers["Accept"] = "application/json";
-        headers["Content-Type"] = "application/json";
+        const URL = BASE_URL.concat(url);
 
-        const fetchPromise = fetch(URL, {method: 'POST', headers: headers, body: JSON.stringify(body)});
+        if (!Object.keys(headers).length && method === "POST"){
+            headers["Accept"] = "application/json";
+            headers["Content-Type"] = "application/json";
+        }
 
+        const fetchParams = {method, headers};
+
+        if (method === "POST") {
+            const body = Object.keys(reqBody).length && JSON.stringify(reqBody);
+            if(!body) {
+                throw new Error("Request body required");
+            } else {
+                fetchParams["body"] = body;
+            }
+        }
+
+        const fetchPromise = fetch(URL, fetchParams);
+        
         const timerPromise = new Promise((resolve, reject) => {
             setTimeout(function() {
                 reject("Request timeout");
@@ -21,43 +35,3 @@ export const fetchPostApi = async (url, body, headers = {}) => {
           return err;
     }
 }
-
-export const fetchGetApi = async (url, headers = {}) => {
-    const URL = BASE_URL.concat(url);
-    try {
-
-        const fetchPromise = fetch(URL, {method: 'GET', headers: headers});
-
-        const timerPromise = new Promise((resolve, reject) => {
-            setTimeout(function() {
-                reject("Request timeout");
-            }, 15000);
-        });
-
-        const response = await Promise.race([fetchPromise, timerPromise]);
-        return response;
-
-    } catch(err) {
-          return err;
-    }
-}
-
-export const logoutApi = async (url, headers = {}) => {
-    const URL = BASE_URL.concat(url);
-    try {
-
-        const fetchPromise = fetch(URL, {method: 'DELETE', headers: headers});
-
-        const timerPromise = new Promise((resolve, reject) => {
-            setTimeout(function() {
-                reject("Request timeout");
-            }, 15000);
-        });
-
-        const response = await Promise.race([fetchPromise, timerPromise]);
-        return response;
-
-    } catch(err) {
-          return err;
-    }
-  }
