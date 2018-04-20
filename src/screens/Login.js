@@ -1,4 +1,3 @@
-import {Actions, ActionConst} from "react-native-router-flux";
 import {connect} from "react-redux";
 import React, {Component} from "react";
 import {View, Text} from "react-native";
@@ -7,7 +6,7 @@ import {Button, LinkButton} from "./../components/buttons";
 import {Email, Password} from "./../components/inputs";
 import {fetchApi} from "./../services/api";
 import {LOGIN_URL} from "./../constants/urls";
-import {redirectTo} from "./../components/navigation/navigate";
+import {redirectTo, navigateTo} from "./../components/navigation/navigate";
 
 import styles from "./../styles/styles";
 
@@ -55,7 +54,7 @@ class Login extends Component<{}> {
                 </View>
                 <View style={styles.signupTextCont}>
                     <Text style={styles.signupText}>Do not have an account yet? </Text>
-                    <LinkButton text="Register" onPress={Actions.signup} />
+                    <LinkButton text="Register" onPress={() => navigateTo("signup")} />
                 </View>
             </View>
         );

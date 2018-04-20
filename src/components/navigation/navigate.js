@@ -5,3 +5,11 @@ export const redirectTo = (scene) => {
         Actions.reset(scene);
     }
 }
+
+export const navigateTo = (scene) => {
+    Actions[scene].call();
+}
+
+export const navigateBack = () => {
+    Actions.pop();
+}

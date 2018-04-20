@@ -4,27 +4,27 @@ import {ToolbarAndroid} from "react-native";
 
 import styles from "./../../styles/styles";
 
-class Toolbar extends Component<{}> {
+defaultProps = {
+  title: "",
+  navIcon: "",
+  onIconClicked: ""
+}
 
-    openDrawer() {
-        this.props.drawer.openDrawer();
-    }
+class Toolbar extends Component<{}> {
 
     render() {
         return (
           <ToolbarAndroid
               style={styles.toolbar}
-              navIcon={require("../../assets/menu.png")}
+              navIcon={this.props.navIcon}
               title={this.props.title}
-              onIconClicked={()=>{
-                  this.openDrawer();
-            }}/>
+              onIconClicked={this.props.onIconClicked}/>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    drawer: state.element.drawer
+
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -32,3 +32,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps )(Toolbar);
+
+Toolbar.defaultProps = defaultProps;

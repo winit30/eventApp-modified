@@ -1,4 +1,3 @@
-import {Actions} from "react-native-router-flux";
 import {connect} from "react-redux";
 import React, {Component} from "react";
 import {Text, View} from "react-native";
@@ -7,7 +6,7 @@ import {Button, LinkButton} from "./../components/buttons";
 import {Email, Password, Select, TextField} from "./../components/inputs";
 import {fetchApi} from "./../services/api";
 import {REGISTER_URL} from "./../constants/urls";
-import {redirectTo} from "./../components/navigation/navigate";
+import {redirectTo, navigateBack} from "./../components/navigation/navigate";
 
 import styles from "./../styles/styles";
 
@@ -67,7 +66,7 @@ class Register extends Component<{}> {
                 </View>
                 <View style={styles.signupTextCont}>
                     <Text style={styles.signupText}>Already have an account? </Text>
-                    <LinkButton text="Login" onPress={Actions.pop}/>
+                    <LinkButton text="Login" onPress={navigateBack} />
                 </View>
             </View>
         );
@@ -75,7 +74,6 @@ class Register extends Component<{}> {
 }
 
 const mapStateToProps = state => ({
-    elements: state.element.elements,
     form: state.form.form
 });
 
