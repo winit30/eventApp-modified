@@ -1,5 +1,6 @@
 var defaultState = {
-    form: {}
+    form: {},
+    event: {}
 }
 
 export default (state = defaultState, action) => {
@@ -15,6 +16,15 @@ export default (state = defaultState, action) => {
                 ...state,
                 form: {
                     ...state.form,
+                    [action.property]: action.value
+                }
+            }
+
+        case "ON_CHANGE_EVENT":
+            return {
+                ...state,
+                event: {
+                    ...state.event,
                     [action.property]: action.value
                 }
             }
