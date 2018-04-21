@@ -3,6 +3,8 @@ import React, {Component} from "react";
 import {View, TouchableWithoutFeedback,  DatePickerAndroid, ScrollView} from "react-native";
 
 import {Button} from "./../components/buttons";
+import {CREATE_EVENT_URL} from "./../constants/urls";
+import {fetchApi} from "./../services/api";
 import TextField from "./../components/eventInputs/TextField";
 import Toolbar from "./../components/toolbar/Toolbar";
 import {navigateBack} from "./../components/navigation/navigate";
@@ -22,7 +24,7 @@ class CreateEvent extends Component<{}> {
                 date: new Date()
             });
             if (action !== DatePickerAndroid.dismissedAction) {
-                onChange('date', `${day}/${month}/${year}`);
+                onChange('date', `${month}/${day}/${year}`);
                 this.datePicker.blur();
             } else if(action === DatePickerAndroid.dismissedAction) {
                 this.datePicker.blur();
@@ -32,8 +34,32 @@ class CreateEvent extends Component<{}> {
         }
     }
 
-    createEvent = () => {
-
+    createEvent = async () => {
+        let {setLoader, token, events, setEvent} = this.props;
+        let {title, category, date, description, venue, pincode, city, state, country} = this.props.event;
+        try {
+            const body = {title, category, date, description, venue, pincode, city, state, country};
+            setLoader(true);
+            const headers = {"x-auth": token}
+            const response = await fetchApi(CREATE_EVENT_URL, "POST", body, headers);
+            if (response.status === 200) {
+                const event = await response.json();
+                if (event.hasOwnProperty("errors")) {
+                    throw new Error(event.message);
+                } else {
+                    const eventArray = events.slice();
+                    eventArray.push(event);
+                    setEvent(eventArray);
+                    navigateBack();
+                    setLoader(false);
+                }
+            } else {
+                throw new Error("Something went wrong. Please try again");
+            }
+        } catch (e) {
+              setLoader(false);
+              console.log(e.message);
+        }
     }
 
     render() {
@@ -66,6 +92,11 @@ class CreateEvent extends Component<{}> {
                   </View>
                   <View style={styles.formContRow}>
                       <View style={styles.formContRowChild}>
+                          <TextField property="state" placeholder="State" />
+                      </View>
+                  </View>
+                  <View style={styles.formContRow}>
+                      <View style={styles.formContRowChild}>
                           <TextField property="country" placeholder="Country" />
                       </View>
                   </View>
@@ -84,7 +115,9 @@ class CreateEvent extends Component<{}> {
 }
 
 const mapStateToProps = state => ({
-    event: state.form.event
+    event: state.form.event,
+    token: state.auth.token,
+    events: state.event.events
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -93,6 +126,11 @@ const mapDispatchToProps = dispatch => ({
         property,
         value,
     }),
+    setLoader:(status) => dispatch({type:"LOADER", status}),
+    setEvent: events => dispatch({
+        type: "SET_EVENTS",
+        events
+    })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateEvent);

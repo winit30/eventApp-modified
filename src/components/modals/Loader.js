@@ -8,7 +8,7 @@ class Loader extends Component<{}> {
 
     render() {
         return(
-            <Modal animationType="fade" transparent={true} visible={this.props.loader} onRequestClose={()=>{
+            <Modal animationType="fade" transparent={true} visible={this.props.loader} onRequestClose={() => {
               console.log("modal closed");
             }}>
                 <View style={styles.modalDesign}>

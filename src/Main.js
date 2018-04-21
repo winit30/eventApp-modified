@@ -4,7 +4,6 @@ import {StatusBar, Text, View} from "react-native";
 
 import Loader from "./components/modals/Loader";
 import Routes from "./config/Routes";
-import Sidebar from "./components/sidebar/Sidebar";
 
 import styles from "./styles/styles";
 

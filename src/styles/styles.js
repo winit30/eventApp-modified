@@ -110,8 +110,8 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         backgroundColor: '#303f9f',
         position: 'absolute',
-        bottom: 20,
-        right: 20,
+        bottom: 15,
+        right: 15,
         alignItems:'center',
         justifyContent :'center',
         elevation:4
