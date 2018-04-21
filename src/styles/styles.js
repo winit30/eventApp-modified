@@ -283,7 +283,17 @@ const styles = StyleSheet.create({
         height: 50,
         width: "100%",
         color: "#dedede"
-    }
+    },
+
+    rowContainer: {
+        flex:1,
+        flexDirection:'row',
+        alignItems: 'stretch'
+    },
+
+    rowContainerChild: {
+        flex: 1
+    },
 });
 
 export default styles;

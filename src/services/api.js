@@ -5,7 +5,7 @@ export const fetchApi = async (url, method, reqBody = {}, headers = {}) => {
         const URL = BASE_URL.concat(url);
         const fetchParams = {method, headers};
 
-        if (method === "POST") {
+        if (method === "POST" || method === "PUT") {
             fetchParams.headers["Accept"] = "application/json";
             fetchParams.headers["Content-Type"] = "application/json";
             const body = Object.keys(reqBody).length && JSON.stringify(reqBody);

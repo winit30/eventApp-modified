@@ -1,3 +1,4 @@
 import Organizer from "./Organizer";
+import Volunteer from "./Volunteer";
 
-export {Organizer};
+export {Organizer, Volunteer};
