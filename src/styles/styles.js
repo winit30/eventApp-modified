@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     },
 
     drawer: {
-        flex: 1,
+        flex: 1
     },
 
     header: {
@@ -273,16 +273,29 @@ const styles = StyleSheet.create({
         paddingVertical: 8
     },
 
+    selectCityCont: {
+        width: "100%",
+        paddingHorizontal:16
+    },
+
     pickerBorderBottom: {
         width: "100%",
         height:2,
         backgroundColor: "#dedede"
     },
 
+    selectCityBorder: {
+        backgroundColor: "#666666"
+    },
+
     selectPicker: {
         height: 50,
         width: "100%",
         color: "#dedede"
+    },
+
+    selectCityPicker: {
+        color: "#666666"
     },
 
     rowContainer: {

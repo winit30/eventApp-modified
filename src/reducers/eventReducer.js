@@ -1,5 +1,6 @@
 var initialState = {
-    events: []
+    events: [],
+    city: ""
 }
 
 export default (state = initialState, action) => {
@@ -10,6 +11,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 events: action.events
+            }
+
+        case "SET_CITY":
+            return {
+                ...state,
+                city: action.city
             }
 
         default:

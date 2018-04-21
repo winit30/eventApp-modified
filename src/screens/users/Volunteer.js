@@ -18,21 +18,22 @@ class Volunteer extends Component<{}> {
     }
 
     render() {
+        let {onChangeSelect, city} = this.props;
         return (
           <View style={styles.mainContainer}>
               <DrawerContainer mapElement={this.mapElement}>
                   <Toolbar title="Dashboard" onIconClicked={this.onIconClicked} navIcon={require("./../../assets/menu.png")}/>
 
-                  <View style={styles.pickerCont}>
+                  <View style={[styles.pickerCont, styles.selectCityCont]}>
                       <Picker
-                          selectedValue={userType ? userType : "options"}
-                          style={styles.selectPicker}
-                          onValueChange={(itemValue, itemIndex) => onChangeText("userType", itemValue) }>
-                          <Picker.Item label="Select user type" value="options" />
-                          <Picker.Item label="Organizer" value="organizer" />
-                          <Picker.Item label="Volunteer" value="volunteer" />
+                          selectedValue={city ? city : "option"}
+                          style={[styles.selectPicker, styles.selectCityPicker]}
+                          onValueChange={(itemValue, itemIndex) => onChangeSelect(itemValue)}>
+                          <Picker.Item label="Select your city" value="options" />
+                          <Picker.Item label="Bangalore" value="bangalore" />
+                          <Picker.Item label="Pune" value="pune" />
                       </Picker>
-                      <View style={styles.pickerBorderBottom} />
+                      <View style={[styles.pickerBorderBottom, styles.selectCityBorder]} />
                   </View>
 
               </DrawerContainer>
@@ -42,11 +43,11 @@ class Volunteer extends Component<{}> {
 }
 
 const mapStateToProps = state => ({
-
+    city: state.event.city
 });
 
 const mapDispatchToProps = dispatch => ({
-
+    onChangeSelect: city => dispatch({type: "SET_CITY", city})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Volunteer);
