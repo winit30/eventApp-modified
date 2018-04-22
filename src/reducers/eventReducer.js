@@ -7,6 +7,9 @@ export default (state = initialState, action) => {
 
     switch (action.type) {
 
+        case "INIT":
+            return initialState
+
         case "SET_EVENTS":
             return {
                 ...state,

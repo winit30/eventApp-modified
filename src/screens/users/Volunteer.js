@@ -13,6 +13,14 @@ import styles from "./../../styles/styles";
 
 class Volunteer extends Component<{}> {
 
+    componentDidMount() {
+        const {city} = this.props;
+        console.log("here");
+        if(city) {
+            this.loadEventsForSelectedCity(city);
+        }
+    }
+
     mapElement = (node) => {
         this.drawer = node && node;
     }
@@ -29,7 +37,10 @@ class Volunteer extends Component<{}> {
             const response = await fetchApi(`${GET_EVENT_URL}/${city}`, "GET", {}, headers);
             if (response.status === 200) {
                 const events = await response.json();
-                setEvent(events);
+                console.log(events);
+                activeEvents = events.filter((event) => event.isActive);
+                console.log(activeEvents);
+                setEvent(activeEvents);
                 setLoader(false);
             } else {
               throw new Error("Error");

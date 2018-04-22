@@ -6,6 +6,9 @@ export default (state = initialState, action) => {
 
     switch (action.type) {
 
+        case "INIT":
+            return initialState
+
         case "LOADER":
             return {
                 ...state,

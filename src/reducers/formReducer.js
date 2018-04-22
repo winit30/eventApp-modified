@@ -7,9 +7,7 @@ export default (state = defaultState, action) => {
     switch (action.type) {
 
         case "INIT":
-            return {
-                ...defaultState
-            }
+            return defaultState
 
         case "ON_CHANGE_TEXT":
             return {

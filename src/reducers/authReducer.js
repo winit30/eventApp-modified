@@ -8,6 +8,9 @@ export default (state = initialState, action) => {
 
     switch (action.type) {
 
+        case "INIT":
+            return initialState
+
         case "SET_USER_AUTH":
             return {
                 ...state,
@@ -19,6 +22,6 @@ export default (state = initialState, action) => {
         default:
 
     }
-    
+
     return state;
 }

@@ -13,14 +13,14 @@ import styles from "./../../styles/styles";
 class Sidebar extends Component {
 
     logout = async () => {
-        let {setLoader, setUserAuth} = this.props;
+        let {setLoader, resetStore} = this.props;
         try {
             const headers = {
                 "x-auth": this.props.token
             }
             setLoader(true);
             const response = await fetchApi(LOGOUT_URL, "DELETE", {}, headers);
-            setUserAuth(null, null, false);
+            resetStore();
             redirectTo("auth");
             setLoader(false);
         } catch (e) {
@@ -73,13 +73,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    setUserAuth: (token, user, loggedIn) => dispatch({
-      type: "SET_USER_AUTH",
-      token,
-      user,
-      loggedIn
-    }),
-    setLoader: status => dispatch({type: "LOADER", status})
+    setLoader: status => dispatch({type: "LOADER", status}),
+    resetStore: () => dispatch({type: "INIT"})
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
