@@ -50,7 +50,7 @@ class Register extends Component<{}> {
             }
         } catch (e) {
               setLoader(false);
-              console.log(e.message);
+              alert(e.message);
         }
     }
 

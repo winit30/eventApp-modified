@@ -42,7 +42,7 @@ class Organizer extends Component<{}> {
             }
         } catch (e) {
             setLoader(false);
-            console.log(e.message);
+            alert(e.message);
         }
     }
 
@@ -64,7 +64,7 @@ class Organizer extends Component<{}> {
             }
         } catch (e) {
             setLoader(false);
-            console.log(e.message);
+            alert(e.message);
         }
     }
 
@@ -88,7 +88,7 @@ class Organizer extends Component<{}> {
             }
         } catch (e) {
             setLoader(false);
-            console.log(e.message);
+            alert(e.message);
         }
     }
 

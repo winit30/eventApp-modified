@@ -25,7 +25,7 @@ class Sidebar extends Component {
             setLoader(false);
         } catch (e) {
           setLoader(false);
-          console.log(e);
+          alert(e.message);
         }
     }
 
