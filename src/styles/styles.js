@@ -307,6 +307,18 @@ const styles = StyleSheet.create({
     rowContainerChild: {
         flex: 1
     },
+
+    mapContainer: {
+        ...StyleSheet.absoluteFillObject,
+        height: 400,
+        width: 400,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
+    
+    map: {
+        ...StyleSheet.absoluteFillObject,
+    }
 });
 
 export default styles;

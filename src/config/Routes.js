@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Router, Scene} from "react-native-router-flux";
 
 import {Login, Register, Dashboard, CreateEvent} from "./../screens";
+import {EventFirstScreen, EventSecondScreen} from "./../screens/createEventScreens";
 
 export default class Routes extends Component<{}> {
 
@@ -25,3 +26,9 @@ export default class Routes extends Component<{}> {
 				);
 		}
 }
+
+// <Scene tabs key="createEvent" hideNavBar={true} hideTabBar={true} swipeEnabled={false} tabBarPosition="bottom">
+// 		<Scene key="firstScreen" hideNavBar={true}  component={EventFirstScreen} />
+// 		<Scene key="secondScreen" hideNavBar={true}  component={EventSecondScreen} />
+// 		<Scene key="thirdScreen" hideNavBar={true}  component={CreateEvent} />
+// </Scene>

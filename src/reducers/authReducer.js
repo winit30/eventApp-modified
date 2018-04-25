@@ -1,6 +1,6 @@
 var initialState = {
     user: null,
-    token: null,
+    token:null,
     loggedIn: false
 }
 
