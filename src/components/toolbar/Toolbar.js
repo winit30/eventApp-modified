@@ -5,9 +5,9 @@ import {ToolbarAndroid} from "react-native";
 import styles from "./../../styles/styles";
 
 defaultProps = {
-  title: "",
-  navIcon: "",
-  onIconClicked: ""
+    title: "",
+    navIcon: "",
+    onIconClicked: ""
 }
 
 class Toolbar extends Component<{}> {

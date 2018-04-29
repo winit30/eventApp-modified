@@ -1,20 +1,24 @@
 import {Button} from 'react-native-elements';
 import {connect} from "react-redux";
 import React, {Component} from "react";
-import {View, Text, TouchableWithoutFeedback, DatePickerAndroid} from "react-native";
+import {View, Text, TouchableWithoutFeedback, DatePickerAndroid, TextInput} from "react-native";
 
-import TextField from "./../../components/eventInputs/TextField";
+import {fetchAutoComplete} from "./../../services/api";
 import {navigateTo, navigateBack} from "./../../components/navigation/navigate";
 
 import styles from "./../../styles/styles";
 
 class EventSecondScreen extends Component<{}> {
 
+    onVenueChange = (text) => {
+        fetchAutoComplete(text)
+    }
+
     render() {
         return (
           <View style={styles.mainContainer}>
             <View style={styles.formCont}>
-                <TextField property="venue" placeholder="Venue" multiline={true} numberOfLines={2} style={styles.eventTextInputLast} />
+                <TextInput style={styles.eventTextInput} onChangeText={this.onVenueChange} />
             </View>
             <View style={styles.rowContainer}>
                 <View style={styles.rowContainerChild}>
