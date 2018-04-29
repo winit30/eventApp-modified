@@ -19,7 +19,11 @@ export default class Routes extends Component<{}> {
 										</Scene>
 										<Scene key="user" hideNavBar={true} initial={loggedIn}>
 												<Scene key="dashboard" component={Dashboard} title="Dashboard"/>
-												<Scene key="createEvent" component={CreateEvent} title="Create Event"/>
+												<Scene tabs key="createEvent" hideNavBar={true} hideTabBar={true} swipeEnabled={false} tabBarPosition="bottom">
+														<Scene key="firstScreen" hideNavBar={true}  component={EventFirstScreen} />
+														<Scene key="secondScreen" hideNavBar={true}  component={EventSecondScreen} />
+														<Scene key="thirdScreen" hideNavBar={true}  component={CreateEvent} />
+												</Scene>
 										</Scene>
 								</Scene>
 						</Router>
@@ -27,8 +31,4 @@ export default class Routes extends Component<{}> {
 		}
 }
 
-// <Scene tabs key="createEvent" hideNavBar={true} hideTabBar={true} swipeEnabled={false} tabBarPosition="bottom">
-// 		<Scene key="firstScreen" hideNavBar={true}  component={EventFirstScreen} />
-// 		<Scene key="secondScreen" hideNavBar={true}  component={EventSecondScreen} />
-// 		<Scene key="thirdScreen" hideNavBar={true}  component={CreateEvent} />
-// </Scene>
+//<Scene key="createEvent" component={CreateEvent} title="Create Event"/>
