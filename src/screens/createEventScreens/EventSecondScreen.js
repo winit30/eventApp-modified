@@ -1,7 +1,6 @@
 import {Button} from 'react-native-elements';
 import {connect} from "react-redux";
-import MapView from 'react-native-maps';
-import {Marker} from 'react-native-maps';
+import MapView , {Marker} from 'react-native-maps';
 import React, {Component} from "react";
 import {View, Text, TouchableWithoutFeedback, DatePickerAndroid, TextInput} from "react-native";
 
@@ -130,11 +129,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onChange:(property, value)=> dispatch({
-        type:"ON_CHANGE_EVENT",
-        property,
-        value,
-    })
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventSecondScreen);
