@@ -13,8 +13,11 @@ const defaultProps = {
 
 class Autocomplete extends Component<{}> {
 
+    mapElement = (node) => {
+        this.props.mapElement(node);
+    }
+
     handleSelectItem = (data) => {
-        this.autoComplete.blur();
         this.props.handleSelectItem(data);
     }
 
@@ -54,7 +57,7 @@ class Autocomplete extends Component<{}> {
     render() {
         return (
             <View style={styles.formCont}>
-                <TextInput ref={input => this.autoComplete = input} style={styles.eventTextInput} value={this.props.value} onChangeText={this.props.onVenueChange} />
+                <TextInput ref={this.mapElement} style={styles.eventTextInput} value={this.props.value} onChangeText={this.props.onVenueChange} />
                 {this.loadListItem()}
             </View>
         );

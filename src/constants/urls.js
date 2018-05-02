@@ -11,7 +11,7 @@ export const DELETE_EVENT_URL = "/event/delete";
 export const UPDATE_EVENT_URL = "/event/updateEvent";
 
 //Google api URLS
-//@params input
+//autocomplete
 //Example
 //https://maps.googleapis.com/maps/api/place/autocomplete/json?input=Paris&types=geocode&key=YOUR_API_KEY
 export const GOOGLE_AUTOCOMPLETE_URL = "https://maps.googleapis.com/maps/api/place/autocomplete/json";

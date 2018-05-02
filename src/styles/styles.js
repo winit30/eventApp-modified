@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     },
 
     autocompleteHight: {
-        minHeight: 200
+        flex: 2
     },
 
     eventSelectedText : {

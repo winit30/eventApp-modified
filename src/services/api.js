@@ -1,8 +1,13 @@
 import {BASE_URL} from "./../config/settings";
-import {GOOGLE_AUTOCOMPLETE_URL} from "./../constants/urls";
+import {GOOGLE_AUTOCOMPLETE_URL, GOOGLE_PLACE_DETAILS_URL} from "./../constants/urls";
 import {PLACES_API_KEY} from "./../config/settings";
 
 var requests = [];
+
+_abortRequests = () => {
+    requests.map(r => r.abort());
+    requests = [];
+}
 
 export const fetchApi = async (url, method, reqBody = {}, headers = {}) => {
     try {
@@ -39,7 +44,7 @@ export const fetchApi = async (url, method, reqBody = {}, headers = {}) => {
 export const fetchAutoComplete = (text) => {
     _abortRequests();
     const xhr = new XMLHttpRequest();
-    if (text.length) {
+    if (text) {
         requests.push(xhr);
         const autoCompleteUrl = `${GOOGLE_AUTOCOMPLETE_URL}?&input=${text}&key=${PLACES_API_KEY}`;
         xhr.open('GET', autoCompleteUrl, true);
@@ -61,7 +66,25 @@ export const fetchAutoComplete = (text) => {
     }
 }
 
-_abortRequests = () => {
-    requests.map(r => r.abort());
-    requests = [];
+export const fetchDetails = (placeId) => {
+    const xhr = new XMLHttpRequest();
+    if(placeId) {
+        const detailsUrl = `${GOOGLE_PLACE_DETAILS_URL}?&placeid=${placeId}&key=${PLACES_API_KEY}`;
+        xhr.open('GET', detailsUrl, true);
+        xhr.send();
+        return new Promise(function (resolve, reject) {
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status === 200) {
+                    if(typeof this.responseText === "string") {
+                        const response = JSON.parse(this.responseText);
+                        resolve(response);
+                    } else {
+                        reject("Something went wrong");
+                    }
+                } else if(this.readyState == 4 && this.status !== 200){
+                    reject("Something went wrong");
+                }
+            }
+        });
+    }
 }

@@ -22,7 +22,6 @@ export default class Routes extends Component<{}> {
 												<Scene tabs key="createEvent" hideNavBar={true} hideTabBar={true} swipeEnabled={false} tabBarPosition="bottom">
 														<Scene key="firstScreen" hideNavBar={true}  component={EventFirstScreen} />
 														<Scene key="secondScreen" hideNavBar={true}  component={EventSecondScreen} />
-														<Scene key="thirdScreen" hideNavBar={true}  component={CreateEvent} />
 												</Scene>
 										</Scene>
 								</Scene>
