@@ -6,6 +6,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#ededed'
     },
 
+    row: {
+      flexDirection: 'row'
+    },
+
     authCont: {
         flexGrow: 4,
         alignItems:'center',
@@ -141,6 +145,15 @@ const styles = StyleSheet.create({
         borderColor:'#ddd',
         textAlignVertical:'top',
         elevation:0.7
+    },
+
+    autocompleteHight: {
+        minHeight: 200
+    },
+
+    eventSelectedText : {
+      paddingTop:11,
+      paddingBottom:17
     },
 
     formContRow: {
@@ -315,9 +328,19 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
     },
-    
+
     map: {
         ...StyleSheet.absoluteFillObject,
+    },
+
+    listTitle: {
+      paddingHorizontal: 5,
+      fontSize: 14,
+      color: "#000000"
+    },
+
+    listSubTitle: {
+      paddingHorizontal: 5
     }
 });
 

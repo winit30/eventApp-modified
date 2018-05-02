@@ -39,16 +39,25 @@ export const fetchApi = async (url, method, reqBody = {}, headers = {}) => {
 export const fetchAutoComplete = (text) => {
     _abortRequests();
     const xhr = new XMLHttpRequest();
-    if (text.length > 3) {
+    if (text.length) {
         requests.push(xhr);
         const autoCompleteUrl = `${GOOGLE_AUTOCOMPLETE_URL}?&input=${text}&key=${PLACES_API_KEY}`;
         xhr.open('GET', autoCompleteUrl, true);
         xhr.send();
-        xhr.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
+        return new Promise(function (resolve, reject) {
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status === 200) {
+                    if(typeof this.responseText === "string") {
+                        const response = JSON.parse(this.responseText);
+                        resolve(response);
+                    } else {
+                        reject("Something went wrong");
+                    }
+                } else if(this.readyState == 4 && this.status !== 200){
+                    reject("Something went wrong");
+                }
             }
-        }
+        });
     }
 }
 
