@@ -6,7 +6,7 @@ import {View, Text, TouchableWithoutFeedback, DatePickerAndroid, TextInput} from
 
 import Autocomplete from "./../../components/eventInputs/Autocomplete";
 import {CREATE_EVENT_URL} from "./../../constants/urls";
-import {fetchAutoComplete, fetchDetails, fetchApi} from "./../../services/api";
+import {fetchGoogleApi, fetchApi} from "./../../services/api";
 import {redirectTo, navigateBack} from "./../../components/navigation/navigate";
 
 import styles from "./../../styles/styles";
@@ -34,7 +34,7 @@ class EventSecondScreen extends Component<{}> {
             this.setState({
                 value: text
             });
-            let response = await fetchAutoComplete(text);
+            let response = await fetchGoogleApi(text, "autocomplete");
             if(typeof response === "object" && response.status === "OK") {
                 this.setState({
                     location: response
@@ -49,7 +49,7 @@ class EventSecondScreen extends Component<{}> {
         if (data) {
             try {
                 this.autocomplete.blur();
-                const response = await fetchDetails(data.place_id);
+                const response = await fetchGoogleApi(data.place_id, "details");
                 if(typeof response === "object" && response.status === "OK") {
                     const venue = {
                         description: data.description,
@@ -87,7 +87,6 @@ class EventSecondScreen extends Component<{}> {
         let {title, category, date, description, venue} = this.props.event;
         try {
             const body = {title, category, date, description, venue};
-            console.log(body);
             setLoader(true);
             const headers = {"x-auth": token}
             const response = await fetchApi(CREATE_EVENT_URL, "POST", body, headers);

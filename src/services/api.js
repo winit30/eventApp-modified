@@ -13,7 +13,6 @@ export const fetchApi = async (url, method, reqBody = {}, headers = {}) => {
     try {
         const URL = BASE_URL.concat(url);
         const fetchParams = {method, headers};
-
         if (method === "POST" || method === "PUT") {
             fetchParams.headers["Accept"] = "application/json";
             fetchParams.headers["Content-Type"] = "application/json";
@@ -24,69 +23,46 @@ export const fetchApi = async (url, method, reqBody = {}, headers = {}) => {
                 fetchParams["body"] = body;
             }
         }
-
         const fetchPromise = fetch(URL, fetchParams);
-
         const timerPromise = new Promise((resolve, reject) => {
             setTimeout(function() {
                 reject("Request timeout");
-            }, 15000);
+            }, 10000);
         });
-
         const response = await Promise.race([fetchPromise, timerPromise]);
         return response;
-
     } catch(err) {
           return err;
     }
 }
 
-export const fetchAutoComplete = (text) => {
-    _abortRequests();
+export const fetchGoogleApi = (queryString, type) => {
     const xhr = new XMLHttpRequest();
-    if (text) {
+    let url;
+    if (queryString && type === "autocomplete") {
+        _abortRequests();
         requests.push(xhr);
-        const autoCompleteUrl = `${GOOGLE_AUTOCOMPLETE_URL}?&input=${text}&key=${PLACES_API_KEY}`;
-        xhr.open('GET', autoCompleteUrl, true);
-        xhr.send();
-        return new Promise(function (resolve, reject) {
-            xhr.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status === 200) {
-                    console.log(this.responseText);
-                    if(typeof this.responseText === "string") {
-                        const response = JSON.parse(this.responseText);
-                        resolve(response);
-                    } else {
-                        reject("Something went wrong");
-                    }
-                } else if(this.readyState == 4 && this.status !== 200){
+        url = `${GOOGLE_AUTOCOMPLETE_URL}?&input=${queryString}&key=${PLACES_API_KEY}`;
+    } else if (queryString && type === "details") {
+        url = `${GOOGLE_PLACE_DETAILS_URL}?&placeid=${queryString}&key=${PLACES_API_KEY}`;
+    } else {
+        return false;
+    }
+    xhr.open('GET', url, true);
+    xhr.send();
+    return new Promise(function (resolve, reject) {
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status === 200) {
+                console.log(this.responseText);
+                if(typeof this.responseText === "string") {
+                    const response = JSON.parse(this.responseText);
+                    resolve(response);
+                } else {
                     reject("Something went wrong");
                 }
+            } else if(this.readyState == 4 && this.status !== 200){
+                reject("Something went wrong");
             }
-        });
-    }
-}
-
-export const fetchDetails = (placeId) => {
-    const xhr = new XMLHttpRequest();
-    if(placeId) {
-        const detailsUrl = `${GOOGLE_PLACE_DETAILS_URL}?&placeid=${placeId}&key=${PLACES_API_KEY}`;
-        xhr.open('GET', detailsUrl, true);
-        xhr.send();
-        return new Promise(function (resolve, reject) {
-            xhr.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status === 200) {
-                    console.log(this.responseText);
-                    if(typeof this.responseText === "string") {
-                        const response = JSON.parse(this.responseText);
-                        resolve(response);
-                    } else {
-                        reject("Something went wrong");
-                    }
-                } else if(this.readyState == 4 && this.status !== 200){
-                    reject("Something went wrong");
-                }
-            }
-        });
-    }
+        }
+    });
 }
