@@ -52,6 +52,7 @@ export const fetchAutoComplete = (text) => {
         return new Promise(function (resolve, reject) {
             xhr.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status === 200) {
+                    console.log(this.responseText);
                     if(typeof this.responseText === "string") {
                         const response = JSON.parse(this.responseText);
                         resolve(response);
@@ -75,6 +76,7 @@ export const fetchDetails = (placeId) => {
         return new Promise(function (resolve, reject) {
             xhr.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status === 200) {
+                    console.log(this.responseText);
                     if(typeof this.responseText === "string") {
                         const response = JSON.parse(this.responseText);
                         resolve(response);

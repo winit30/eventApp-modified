@@ -5,8 +5,9 @@ import React, {Component} from "react";
 import {View, Text, TouchableWithoutFeedback, DatePickerAndroid, TextInput} from "react-native";
 
 import Autocomplete from "./../../components/eventInputs/Autocomplete";
-import {fetchAutoComplete, fetchDetails} from "./../../services/api";
-import {navigateTo, navigateBack} from "./../../components/navigation/navigate";
+import {CREATE_EVENT_URL} from "./../../constants/urls";
+import {fetchAutoComplete, fetchDetails, fetchApi} from "./../../services/api";
+import {redirectTo, navigateBack} from "./../../components/navigation/navigate";
 
 import styles from "./../../styles/styles";
 
@@ -50,6 +51,15 @@ class EventSecondScreen extends Component<{}> {
                 this.autocomplete.blur();
                 const response = await fetchDetails(data.place_id);
                 if(typeof response === "object" && response.status === "OK") {
+                    const venue = {
+                        description: data.description,
+                        place_id: data.place_id,
+                        latlng: {
+                            lat: response.result.geometry.location.lat,
+                            lng: response.result.geometry.location.lng
+                        }
+                    };
+                    this.props.onChange("venue", venue)
                     this.setState({
                         locationDetails: response,
                         value: data.description,
@@ -72,6 +82,35 @@ class EventSecondScreen extends Component<{}> {
         });
     }
 
+    createEvent = async () => {
+        let {setLoader, token, events, setEvent} = this.props;
+        let {title, category, date, description, venue} = this.props.event;
+        try {
+            const body = {title, category, date, description, venue};
+            console.log(body);
+            setLoader(true);
+            const headers = {"x-auth": token}
+            const response = await fetchApi(CREATE_EVENT_URL, "POST", body, headers);
+            if (response.status === 200) {
+                const event = await response.json();
+                if (event.hasOwnProperty("errors")) {
+                    throw new Error(event.message);
+                } else {
+                    const eventArray = events.slice();
+                    eventArray.push(event);
+                    setEvent(eventArray);
+                    redirectTo("user");
+                    setLoader(false);
+                }
+            } else {
+                throw new Error("Something went wrong. Please try again");
+            }
+        } catch (e) {
+              setLoader(false);
+              alert(e.message);
+        }
+    }
+
     render() {
         return (
           <View style={styles.mainContainer}>
@@ -88,8 +127,8 @@ class EventSecondScreen extends Component<{}> {
                         initialRegion={{
                             latitude: this.state.locationDetails.result.geometry.location.lat,
                             longitude: this.state.locationDetails.result.geometry.location.lng,
-                            latitudeDelta: 0.0922,
-                            longitudeDelta: 0.0421,
+                            latitudeDelta: 0.0900,
+                            longitudeDelta: 0.0500,
                         }}>
                         <Marker
                           coordinate={{
@@ -115,7 +154,7 @@ class EventSecondScreen extends Component<{}> {
                         <Button
                           backgroundColor='#03A9F4'
                           buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                          title="NEXT" onPress={() => {console.log("boom");}} />
+                          title="NEXT" onPress={this.createEvent} />
                     </View>
                 }
             </View>
@@ -125,11 +164,22 @@ class EventSecondScreen extends Component<{}> {
 }
 
 const mapStateToProps = state => ({
-
+    event: state.form.event,
+    token: state.auth.token,
+    events: state.event.events
 });
 
 const mapDispatchToProps = dispatch => ({
-
+    onChange:(property, value)=> dispatch({
+        type:"ON_CHANGE_EVENT",
+        property,
+        value,
+    }),
+    setLoader:(status) => dispatch({type:"LOADER", status}),
+    setEvent: events => dispatch({
+        type: "SET_EVENTS",
+        events
+    })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventSecondScreen);

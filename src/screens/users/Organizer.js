@@ -1,6 +1,7 @@
 import {connect} from "react-redux";
 import {Card, ListItem, Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MapView , {Marker} from 'react-native-maps';
 import React, {Component} from "react";
 import {View, Text, ScrollView} from "react-native";
 
@@ -110,8 +111,22 @@ class Organizer extends Component<{}> {
                             return(
                               <Card
                                 key={index}
-                                title={event.title}
-                                image={require('./../../assets/default-thumbnail.jpg')}>
+                                title={event.title}>
+                                <MapView style={{height: 200, width: "100%", marginBottom: 16}}
+                                    initialRegion={{
+                                        latitude: event.venue.latlng.lat,
+                                        longitude: event.venue.latlng.lng,
+                                        latitudeDelta: 0.0900,
+                                        longitudeDelta: 0.0500,
+                                    }}>
+                                    <Marker
+                                      coordinate={{
+                                          latitude: event.venue.latlng.lat,
+                                          longitude: event.venue.latlng.lng
+                                      }}
+                                      title={event.venue.description}
+                                    />
+                                </MapView>
                                 <Text>{event.date}</Text>
                                 <Text>{event.category}</Text>
                                 <Text style={styles.eventDescription}>{event.description}</Text>
@@ -120,7 +135,7 @@ class Organizer extends Component<{}> {
                                         <Button
                                           backgroundColor='#03A9F4'
                                           buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                                          title={event.isActive ? "INACTIVE" : "ACTIVE"} onPress={() => this.activateDeactivateEvent(!event.isActive, event._id)}/>
+                                          title={event.isActive ? "DEACTIVATE" : "ACTIVATE"} onPress={() => this.activateDeactivateEvent(!event.isActive, event._id)}/>
                                     </View>
                                     <View style={styles.rowContainerChild}>
                                         <Button
