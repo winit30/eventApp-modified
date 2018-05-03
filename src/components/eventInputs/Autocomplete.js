@@ -57,7 +57,14 @@ class Autocomplete extends Component<{}> {
     render() {
         return (
             <View style={styles.formCont}>
-                <TextInput ref={this.mapElement} style={styles.eventTextInput} value={this.props.value} onChangeText={this.props.onVenueChange} />
+                <TextInput
+                    ref={this.mapElement}
+                    style={styles.eventTextInput}
+                    value={this.props.value}
+                    onChangeText={this.props.onVenueChange}
+                    underlineColorAndroid='rgba(0,0,0,0)'
+                    placeholderTextColor = "#999"
+                    selectionColor="#333333" />
                 {this.loadListItem()}
             </View>
         );
