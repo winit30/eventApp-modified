@@ -121,6 +121,13 @@ const styles = StyleSheet.create({
         elevation:4
     },
 
+    iconButtonCont: {
+        backgroundColor: '#03A9F4',
+        alignSelf: "flex-end",
+        padding: 6,
+        borderRadius: 3
+    },
+
     floatingButton:{
         width: 60,
         height: 60,
@@ -341,6 +348,16 @@ const styles = StyleSheet.create({
 
     listSubTitle: {
       paddingHorizontal: 5
+    },
+
+    eventTitleCont: {
+      flexGrow: 3,
+      justifyContent:"center"
+    },
+
+    eventTitle: {
+      fontWeight: "500",
+      color: "#333333"
     }
 });
 

@@ -1,9 +1,9 @@
 import {connect} from "react-redux";
-import {Card, ListItem, Button} from 'react-native-elements';
+import {Card, ListItem, Button, Divider} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MapView , {Marker} from 'react-native-maps';
 import React, {Component} from "react";
-import {View, Text, ScrollView} from "react-native";
+import {View, Text, ScrollView, TouchableNativeFeedback} from "react-native";
 
 import DrawerContainer from "./../../components/drawer/DrawerContainer";
 import {FloatingButton} from "./../../components/buttons";
@@ -28,6 +28,11 @@ class Organizer extends Component<{}> {
         this.drawer && this.drawer.openDrawer();
     }
 
+    navigateToCreateScreen = () => {
+        this.props.resetEvent();
+        navigateTo("createEvent");
+    }
+
     loadEvents = async () => {
         let {token, setLoader, setEvent} = this.props;
         try {
@@ -45,6 +50,16 @@ class Organizer extends Component<{}> {
             setLoader(false);
             alert(e.message);
         }
+    }
+
+    editEvent = (id) => {
+        const {events, onChange} = this.props;
+        let eventInstance = JSON.parse(JSON.stringify(events));
+        eventInstance = eventInstance.filter(event => event._id === id)[0];
+        for(const key in eventInstance) {
+            onChange(key, eventInstance[key]);
+        }
+        navigateTo("createEvent");
     }
 
     deleteEvent = async (id) => {
@@ -110,8 +125,22 @@ class Organizer extends Component<{}> {
                           {events.map((event, index) => {
                             return(
                               <Card
-                                key={index}
-                                title={event.title}>
+                                key={index}>
+                                <View style={styles.rowContainer}>
+                                    <View style={[styles.rowContainerChild, styles.eventTitleCont]}>
+                                        <Text style={styles.eventTitle}>{event.title.toUpperCase()}</Text>
+                                    </View>
+                                    <View style={styles.rowContainerChild}>
+                                        <View style={styles.iconButtonCont}>
+                                            <TouchableNativeFeedback
+                                                background={TouchableNativeFeedback.Ripple("#fff", true)}
+                                                onPress={() => this.editEvent(event._id)}>
+                                                <Icon style={{color: "#ffffff"}} name="pencil" size={16} color="#333" />
+                                            </TouchableNativeFeedback>
+                                        </View>
+                                    </View>
+                                </View>
+                                <Divider style={{ backgroundColor: '#999999', marginVertical: 16 }} />
                                 <MapView style={{height: 200, width: "100%", marginBottom: 16}}
                                     initialRegion={{
                                         latitude: event.venue.latlng.lat,
@@ -150,7 +179,7 @@ class Organizer extends Component<{}> {
                           <View style={{paddingBottom:15}} />
                       </ScrollView>
                   }
-                  <FloatingButton onPress={() => navigateTo("createEvent")}/>
+                  <FloatingButton onPress={this.navigateToCreateScreen}/>
               </DrawerContainer>
           </View>
         );
@@ -163,6 +192,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    onChange:(property, value)=> dispatch({
+        type:"ON_CHANGE_EVENT",
+        property,
+        value,
+    }),
+    resetEvent:() => dispatch({type:"RESET_EVENT"}),
     setEvent: events => dispatch({
         type: "SET_EVENTS",
         events
