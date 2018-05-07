@@ -13,19 +13,19 @@ export const UPDATE_EVENT_URL = "/event/updateEvent";
 //Comment URLS
 export const ADD_COMMENT_URL = "/event/comments/addComment";
 export const GET_COMMENT_URL = "/event/comments/getComments"; //pass eventId as urlparams
+export const DELETE_COMMENT_URL = "/event/comments/deleteComment"; //pass comment id as urlparams
 
-//Google api URLS
-//autocomplete
+//autocomplete url
 //Example
 //https://maps.googleapis.com/maps/api/place/autocomplete/json?input=Paris&types=geocode&key=YOUR_API_KEY
 export const GOOGLE_AUTOCOMPLETE_URL = "https://maps.googleapis.com/maps/api/place/autocomplete/json";
 
-//place details
+//place details url
 //Example
 //https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4&key=YOUR_API_KEY
 export const GOOGLE_PLACE_DETAILS_URL = "https://maps.googleapis.com/maps/api/place/details/json";
 
-//places search
+//places search url
 //Example
 //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670,151.1957&radius=500&types=food&name=cruise&key=YOUR_API_KEY
 export const GOOGLE_PLACES_SEARCH_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
