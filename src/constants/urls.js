@@ -10,6 +10,10 @@ export const GET_EVENT_URL = "/event/events";
 export const DELETE_EVENT_URL = "/event/delete";
 export const UPDATE_EVENT_URL = "/event/updateEvent";
 
+//Comment URLS
+export const ADD_COMMENT_URL = "/event/comments/addComment";
+export const GET_COMMENT_URL = "/event/comments/getComments"; //pass eventId as urlparams
+
 //Google api URLS
 //autocomplete
 //Example

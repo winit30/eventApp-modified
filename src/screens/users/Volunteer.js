@@ -1,12 +1,14 @@
 import {connect} from "react-redux";
 import {Card, ListItem, Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MapView , {Marker} from 'react-native-maps';
 import React, {Component} from "react";
 import {View, Text, Picker, ScrollView} from "react-native";
 
 import DrawerContainer from "./../../components/drawer/DrawerContainer";
 import {fetchApi} from "./../../services/api";
 import {GET_EVENT_URL} from "./../../constants/urls";
+import {navigateTo} from "./../../components/navigation/navigate";
 import Toolbar from "./../../components/toolbar/Toolbar";
 
 import styles from "./../../styles/styles";
@@ -15,7 +17,6 @@ class Volunteer extends Component<{}> {
 
     componentDidMount() {
         const {city} = this.props;
-        console.log("here");
         if(city) {
             this.loadEventsForSelectedCity(city);
         }
@@ -37,9 +38,7 @@ class Volunteer extends Component<{}> {
             const response = await fetchApi(`${GET_EVENT_URL}/${city}`, "GET", {}, headers);
             if (response.status === 200) {
                 const events = await response.json();
-                console.log(events);
                 activeEvents = events.filter((event) => event.isActive);
-                console.log(activeEvents);
                 setEvent(activeEvents);
                 setLoader(false);
             } else {
@@ -79,18 +78,32 @@ class Volunteer extends Component<{}> {
                         return(
                           <Card
                             key={index}
-                            title={event.title}
-                            image={require('./../../assets/default-thumbnail.jpg')}>
+                            title={event.title}>
+                            <MapView style={{height: 150, width: "100%", marginBottom: 16}}
+                                initialRegion={{
+                                    latitude: event.venue.latlng.lat,
+                                    longitude: event.venue.latlng.lng,
+                                    latitudeDelta: 0.0900,
+                                    longitudeDelta: 0.0500,
+                                }}>
+                                <Marker
+                                  coordinate={{
+                                      latitude: event.venue.latlng.lat,
+                                      longitude: event.venue.latlng.lng
+                                  }}
+                                  title={event.venue.description}
+                                />
+                            </MapView>
                             <Text>{event.date}</Text>
                             <Text>{event.category}</Text>
                             <Text style={styles.eventDescription}>{event.description}</Text>
                             <Button
                               backgroundColor='#03A9F4'
                               buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                              title='VIEW NOW' />
+                              title='VIEW NOW' onPress={() => navigateTo("viewEvent", {selectedEvent: event})} />
                           </Card>
                         )
-                      })}
+                      }).reverse()}
                       <View style={{paddingBottom:15}} />
                   </ScrollView>
                   }

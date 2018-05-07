@@ -121,7 +121,7 @@ class Organizer extends Component<{}> {
                         <Icon name="flask-empty-outline" size={70} color="#ccc" />
                         <Text style={styles.emptyDashboardText}>You have no events</Text>
                       </View> :
-                      <ScrollView >
+                      <ScrollView>
                           {events.map((event, index) => {
                             return(
                               <Card
@@ -175,7 +175,7 @@ class Organizer extends Component<{}> {
                                 </View>
                               </Card>
                             )
-                          })}
+                          }).reverse()}
                           <View style={{paddingBottom:15}} />
                       </ScrollView>
                   }

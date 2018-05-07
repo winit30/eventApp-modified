@@ -1,6 +1,7 @@
 var initialState = {
     events: [],
-    city: ""
+    city: "",
+    comments: []
 }
 
 export default (state = initialState, action) => {
@@ -20,6 +21,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 city: action.city
+            }
+
+        case "SET_COMMENTS":
+            return {
+                ...state,
+                comments: action.comments
             }
 
         default:
