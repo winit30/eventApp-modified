@@ -14,6 +14,7 @@ export const UPDATE_EVENT_URL = "/event/updateEvent";
 export const ADD_COMMENT_URL = "/event/comments/addComment";
 export const GET_COMMENT_URL = "/event/comments/getComments"; //pass eventId as urlparams
 export const DELETE_COMMENT_URL = "/event/comments/deleteComment"; //pass comment id as urlparams
+export const REPLY_COMMENT_URL = "/event/comments/replyComment"; //pass comment id as urlparams
 
 //autocomplete url
 //Example

@@ -36,20 +36,49 @@ const style = {
             flexDirection: "row"
         },
 
+        marginLeft16: {
+          marginLeft: 16,
+          marginTop: 8
+        },
+
         textField: {
             flex:1,
             marginRight:8
+        },
+
+        cancelReply: {
+            paddingTop: 4,
+            color:"#03A9F4",
+            marginLeft: 16,
         },
 
         sendIcon: {
           flex:0,
           width:54,
           height:54,
-          backgroundColor:"#000",
+          backgroundColor:"#03A9F4",
           borderRadius:30,
           justifyContent:"center",
           alignItems:"center",
           marginVertical:8
+        },
+
+        replyIcon: {
+          flex:0,
+          width:43,
+          height:43,
+          backgroundColor:"#03A9F4",
+          borderRadius:30,
+          justifyContent:"center",
+          alignItems:"center",
+          marginVertical:8
+        },
+
+        replyTextField: {
+          paddingTop: 8,
+          paddingBottom: 4,
+          borderBottomWidth: 1,
+          fontSize: 14
         },
 
         showComments: {
@@ -84,6 +113,16 @@ const style = {
             backgroundColor: "#eeeeee",
             alignItems: 'stretch',
             padding:16,
+            borderBottomWidth: 1,
+            borderBottomColor: "#ffffff"
+        },
+
+        repliesCont: {
+            flexDirection: "row",
+            flex: 1,
+            backgroundColor: "#eeeeee",
+            alignItems: 'stretch',
+            paddingVertical:16,
             borderBottomWidth: 1,
             borderBottomColor: "#ffffff"
         },
@@ -124,7 +163,14 @@ const style = {
           paddingTop: 8,
           color:"#03A9F4",
           textAlign: "right"
-        }
+        },
+
+        replyCont: {
+          flexDirection: "row",
+          flex: 1,
+          marginLeft: 16,
+          marginTop: 8,
+        },
     }
 }
 

@@ -1,9 +1,10 @@
 import {connect} from "react-redux";
 import {Button, List, ListItem, Icon} from 'react-native-elements';
+import MapView , {Marker} from 'react-native-maps';
 import React, {Component} from "react";
 import {View, Text, ScrollView, TouchableNativeFeedback, Keyboard} from "react-native";
 
-import {ADD_COMMENT_URL, GET_COMMENT_URL, DELETE_COMMENT_URL} from "./../../../constants/urls";
+import {ADD_COMMENT_URL, GET_COMMENT_URL, DELETE_COMMENT_URL, REPLY_COMMENT_URL} from "./../../../constants/urls";
 import BottomToolBar from "./../../../components/toolbar/BottomToolBar";
 import Comments from "./../../../components/comments/Comments";
 import {fetchApi} from "./../../../services/api";
@@ -102,17 +103,52 @@ class ViewEvent extends Component<{}> {
         }
     }
 
+    replyToComment = async (commentId, cb) => {
+        const {selectedEvent, user, token, setLoader, comments, setComments, resetProperty} = this.props;
+        const {reply} = this.props.event;
+        try {
+            const body = {
+                repliedby: user._id,
+                reply
+            };
+            setLoader(true);
+            const headers = {"x-auth": token};
+            const response = await fetchApi(`${REPLY_COMMENT_URL}/${commentId}`, "PUT", body, headers);
+            const res = await response.json();
+            if (res.hasOwnProperty("errors")) {
+                throw new Error("Unable to reply");
+            } else {
+                let commentsArray = JSON.parse(JSON.stringify(comments));
+                commentsArray = commentsArray.map(c => {
+                    if (c._id === res._id) {
+                      return res;
+                    } else {
+                      return c;
+                    }
+                });
+                setComments(commentsArray);
+                cb(true);
+                resetProperty("reply");
+                setLoader(false);
+            }
+        } catch (e) {
+            console.log(e.message);
+            setLoader(false);
+        }
+    }
+
     _createCommentList = () => {
         const {comments, user} = this.props;
+        console.log(comments, user);
         if(comments.length) {
             return comments.map(c => {
                 if (user._id === c.commentedby) {
                     return (
-                        <Comments key={c._id} id={c._id} comments={c.comment} commentBy={c.commentedby} deleteComment={this._deleteComment} deleteIcon={true} />
+                        <Comments key={c._id} id={c._id} replyToComment={this.replyToComment} comments={c.comment} commentBy={c.commentedby} replies={c.replies} deleteComment={this._deleteComment} deleteIcon={true} />
                     );
                 } else {
                       return (
-                        <Comments key={c._id} id={c._id} comments={c.comment} commentBy={c.commentedby} deleteIcon={false}/>
+                        <Comments key={c._id} id={c._id} replyToComment={this.replyToComment} comments={c.comment} commentBy={c.commentedby} replies={c.replies} deleteIcon={false}/>
                       );
                 }
             });
@@ -121,16 +157,31 @@ class ViewEvent extends Component<{}> {
 
     render() {
         const {selectedEvent, comments} = this.props;
+        console.log(comments);
         return (
           <View style={styles.mainContainer}>
               <ScrollView ref={scrollView => this.scrollView = scrollView}>
                   <View style={style.viewEvent.titleCont}>
                       <Text style={style.viewEvent.title}>{selectedEvent.title}</Text>
                   </View>
+                  <MapView style={{height: 250, width: "100%", marginBottom: 16}}
+                      initialRegion={{
+                          latitude: selectedEvent.venue.latlng.lat,
+                          longitude: selectedEvent.venue.latlng.lng,
+                          latitudeDelta: 0.0900,
+                          longitudeDelta: 0.0500,
+                      }}>
+                      <Marker
+                        coordinate={{
+                            latitude: selectedEvent.venue.latlng.lat,
+                            longitude: selectedEvent.venue.latlng.lng
+                        }}
+                        title={selectedEvent.venue.description}
+                      />
+                  </MapView>
                   <View style={style.viewEvent.info}>
                       <Text style={style.viewEvent.date}>{selectedEvent.date}</Text>
                       <Text style={style.viewEvent.category}>{selectedEvent.category}</Text>
-                      <Text style={style.viewEvent.description}>{selectedEvent.venue.description}</Text>
                       <Text style={style.viewEvent.description}>{selectedEvent.description}</Text>
                       <Button
                         backgroundColor='#03A9F4'
@@ -147,11 +198,7 @@ class ViewEvent extends Component<{}> {
                     </View>
                     <View style={style.viewEvent.sendIcon}>
                         <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple("#fff", true)} onPress={this.addComment}>
-                            <Icon
-                            name='sc-telegram'
-                            type='evilicon'
-                            color='#ffffff'
-                            />
+                            <Icon name='send' type='material-community' color='#ffffff' />
                         </TouchableNativeFeedback>
                     </View>
                   </View>
