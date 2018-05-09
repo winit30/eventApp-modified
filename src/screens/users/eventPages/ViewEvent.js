@@ -180,11 +180,11 @@ class ViewEvent extends Component<{}> {
             return comments.map(c => {
                 if (user._id === c.commentedby) {
                     return (
-                        <Comments key={c._id} id={c._id} handleDeleteReply={this.handleDeleteReply} replyToComment={this.replyToComment} comments={c.comment} commentBy={c.commenter} replies={c.replies} deleteComment={this._deleteComment} deleteIcon={true} />
+                        <Comments key={c._id} comment={c} handleDeleteReply={this.handleDeleteReply} replyToComment={this.replyToComment} deleteComment={this._deleteComment} deleteIcon={true} />
                     );
                 } else {
                       return (
-                        <Comments key={c._id} id={c._id} replyToComment={this.replyToComment} comments={c.comment} commentBy={c.commenter} replies={c.replies} deleteIcon={false}/>
+                        <Comments key={c._id} comment={c} replyToComment={this.replyToComment} deleteIcon={false}/>
                       );
                 }
             });

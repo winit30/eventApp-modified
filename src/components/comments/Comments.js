@@ -56,8 +56,8 @@ class Comments extends Component<{}> {
     }
 
     replyToComment = () => {
-        const {id} = this.props;
-        this.props.replyToComment(id, (params) => {
+        const {comment} = this.props;
+        this.props.replyToComment(comment._id, (params) => {
             if(params) {
                 this.closeReplyTextField();
             }
@@ -65,10 +65,12 @@ class Comments extends Component<{}> {
     }
 
     deleteReply = (commentId, replyId) => {
+        console.log(commentId, replyId);
         this.props.handleDeleteReply(commentId, replyId);
     }
 
     render() {
+        const {comment} = this.props;
         return (
           <View style={styles.mainContainer}>
               <View style={style.Comments.commentsCont}>
@@ -83,8 +85,8 @@ class Comments extends Component<{}> {
                   </View>
                   <View style={style.Comments.textCommentCont}>
                       <View style={style.Comments.textCont}>
-                          <Text style={style.Comments.commentedby}>{this.props.commentBy}</Text>
-                          <Text>{this.props.comments}</Text>
+                          <Text style={style.Comments.commentedby}>{comment ? comment.commenter : ""}</Text>
+                          <Text>{comment ? comment.comment : ""}</Text>
                       </View>
                       {this.state.isReply ?
                           <View style={[style.viewEvent.commentBox, style.viewEvent.marginLeft16]}>
@@ -106,7 +108,7 @@ class Comments extends Component<{}> {
                           </View>
                       }
                       {this.state.isReply && <Text style={style.viewEvent.cancelReply} onPress={this.closeReplyTextField}>Cancel</Text>}
-                      {(this.props.replies.length>0) && this.props.replies.map((r) => {
+                      {(comment && comment.replies.length>0) && comment.replies.map((r) => {
                           return(
                               <View style={style.Comments.repliesCont} key={r._id}>
                                   <View style={style.Comments.avatar}>
@@ -125,7 +127,7 @@ class Comments extends Component<{}> {
                                       </View>
                                       <View style={style.Comments.toolsCont}>
                                           {this.props.deleteIcon &&
-                                              <Text style={style.Comments.tools} onPress={() => this.deleteReply(this.props.id, r._id)}>Delete</Text>
+                                              <Text style={style.Comments.tools} onPress={() => this.deleteReply(comment._id, r._id)}>Delete</Text>
                                           }
                                           <Text style={style.Comments.tools} onPress={this.openReplyTextField}>Reply</Text>
                                           <Text style={style.Comments.tools}>Report</Text>
