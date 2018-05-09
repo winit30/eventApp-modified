@@ -140,12 +140,10 @@ class ViewEvent extends Component<{}> {
     }
 
     handleDeleteReply = async (commentId, replyId) => {
-        const {user, token, setLoader, comments, setComments} = this.props;
+        const {token, setLoader, comments, setComments} = this.props;
         try {
             const body = {
-                _id: replyId,
-                repliedby: user._id,
-                replied: user.name
+                _id: replyId
             };
             setLoader(true);
             const headers = {"x-auth": token};
@@ -178,14 +176,10 @@ class ViewEvent extends Component<{}> {
         const {comments, user} = this.props;
         if(comments.length) {
             return comments.map(c => {
-                if (user._id === c.commentedby) {
+                if (c) {
                     return (
-                        <Comments key={c._id} comment={c} handleDeleteReply={this.handleDeleteReply} replyToComment={this.replyToComment} deleteComment={this._deleteComment} deleteIcon={true} />
+                        <Comments key={c._id} userComment={c} handleDeleteReply={this.handleDeleteReply} replyToComment={this.replyToComment} deleteComment={this._deleteComment} showDelete={(user._id === c.commentedby)} />
                     );
-                } else {
-                      return (
-                        <Comments key={c._id} comment={c} replyToComment={this.replyToComment} deleteIcon={false}/>
-                      );
                 }
             });
         }

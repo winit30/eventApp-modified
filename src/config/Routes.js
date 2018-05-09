@@ -31,5 +31,3 @@ export default class Routes extends Component<{}> {
 				);
 		}
 }
-
-//<Scene key="createEvent" component={CreateEvent} title="Create Event"/>

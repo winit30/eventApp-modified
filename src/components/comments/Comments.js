@@ -38,7 +38,9 @@ class Comments extends Component<{}> {
     }
 
     deleteComment = () => {
-        this.props.deleteComment(this.props.id);
+        const {userComment} = this.props;
+        this.props.deleteComment(userComment._id);
+        this._animate();
     }
 
     openReplyTextField = () => {
@@ -56,8 +58,8 @@ class Comments extends Component<{}> {
     }
 
     replyToComment = () => {
-        const {comment} = this.props;
-        this.props.replyToComment(comment._id, (params) => {
+        const {userComment} = this.props;
+        this.props.replyToComment(userComment._id, (params) => {
             if(params) {
                 this.closeReplyTextField();
             }
@@ -65,12 +67,12 @@ class Comments extends Component<{}> {
     }
 
     deleteReply = (commentId, replyId) => {
-        console.log(commentId, replyId);
         this.props.handleDeleteReply(commentId, replyId);
+        this._animate();
     }
 
     render() {
-        const {comment} = this.props;
+        const {userComment, user} = this.props;
         return (
           <View style={styles.mainContainer}>
               <View style={style.Comments.commentsCont}>
@@ -85,8 +87,8 @@ class Comments extends Component<{}> {
                   </View>
                   <View style={style.Comments.textCommentCont}>
                       <View style={style.Comments.textCont}>
-                          <Text style={style.Comments.commentedby}>{comment ? comment.commenter : ""}</Text>
-                          <Text>{comment ? comment.comment : ""}</Text>
+                          <Text style={style.Comments.commentedby}>{userComment ? userComment.commenter : ""}</Text>
+                          <Text>{userComment ? userComment.comment : ""}</Text>
                       </View>
                       {this.state.isReply ?
                           <View style={[style.viewEvent.commentBox, style.viewEvent.marginLeft16]}>
@@ -100,7 +102,7 @@ class Comments extends Component<{}> {
                               </View>
                           </View> :
                           <View style={style.Comments.toolsCont}>
-                              {this.props.deleteIcon &&
+                              {this.props.showDelete &&
                                   <Text style={style.Comments.tools} onPress={this.deleteComment}>Delete</Text>
                               }
                               <Text style={style.Comments.tools} onPress={this.openReplyTextField}>Reply</Text>
@@ -108,7 +110,7 @@ class Comments extends Component<{}> {
                           </View>
                       }
                       {this.state.isReply && <Text style={style.viewEvent.cancelReply} onPress={this.closeReplyTextField}>Cancel</Text>}
-                      {(comment && comment.replies.length>0) && comment.replies.map((r) => {
+                      {(userComment && userComment.replies.length>0) && userComment.replies.map((r) => {
                           return(
                               <View style={style.Comments.repliesCont} key={r._id}>
                                   <View style={style.Comments.avatar}>
@@ -126,8 +128,8 @@ class Comments extends Component<{}> {
                                           <Text>{r.reply}</Text>
                                       </View>
                                       <View style={style.Comments.toolsCont}>
-                                          {this.props.deleteIcon &&
-                                              <Text style={style.Comments.tools} onPress={() => this.deleteReply(comment._id, r._id)}>Delete</Text>
+                                          {(r.repliedby === user._id) &&
+                                              <Text style={style.Comments.tools} onPress={() => this.deleteReply(userComment._id, r._id)}>Delete</Text>
                                           }
                                           <Text style={style.Comments.tools} onPress={this.openReplyTextField}>Reply</Text>
                                           <Text style={style.Comments.tools}>Report</Text>
@@ -145,7 +147,7 @@ class Comments extends Component<{}> {
 
 
 const mapStateToProps = state => ({
-
+    user: state.auth.user
 });
 
 const mapDispatchToProps = dispatch => ({
