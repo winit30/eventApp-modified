@@ -128,7 +128,7 @@ class Organizer extends Component<{}> {
                                 key={index}>
                                 <View style={styles.rowContainer}>
                                     <View style={[styles.rowContainerChild, styles.eventTitleCont]}>
-                                        <Text style={styles.eventTitle}>{event.title.toUpperCase()}</Text>
+                                        <Text style={styles.eventTitle}  onPress={() => navigateTo("viewEvent", {selectedEvent: event})}>{event.title.toUpperCase()}</Text>
                                     </View>
                                     <View style={styles.rowContainerChild}>
                                         <View style={styles.iconButtonCont}>
@@ -141,7 +141,7 @@ class Organizer extends Component<{}> {
                                     </View>
                                 </View>
                                 <Divider style={{ backgroundColor: '#999999', marginVertical: 16 }} />
-                                <MapView style={{height: 200, width: "100%", marginBottom: 16}}
+                                <MapView style={{height: 150, width: "100%", marginBottom: 16}}
                                     initialRegion={{
                                         latitude: event.venue.latlng.lat,
                                         longitude: event.venue.latlng.lng,

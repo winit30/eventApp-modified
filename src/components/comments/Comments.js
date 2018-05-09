@@ -72,7 +72,7 @@ class Comments extends Component<{}> {
     }
 
     render() {
-        const {userComment, user} = this.props;
+        const {userComment, user, selectedEvent} = this.props;
         return (
           <View style={styles.mainContainer}>
               <View style={style.Comments.commentsCont}>
@@ -102,7 +102,7 @@ class Comments extends Component<{}> {
                               </View>
                           </View> :
                           <View style={style.Comments.toolsCont}>
-                              {this.props.showDelete &&
+                              {(this.props.showDelete || user._id === selectedEvent.organizerId) &&
                                   <Text style={style.Comments.tools} onPress={this.deleteComment}>Delete</Text>
                               }
                               <Text style={style.Comments.tools} onPress={this.openReplyTextField}>Reply</Text>
@@ -128,7 +128,7 @@ class Comments extends Component<{}> {
                                           <Text>{r.reply}</Text>
                                       </View>
                                       <View style={style.Comments.toolsCont}>
-                                          {(r.repliedby === user._id) &&
+                                          {(r.repliedby === user._id || user._id === selectedEvent.organizerId) &&
                                               <Text style={style.Comments.tools} onPress={() => this.deleteReply(userComment._id, r._id)}>Delete</Text>
                                           }
                                           <Text style={style.Comments.tools} onPress={this.openReplyTextField}>Reply</Text>

@@ -62,7 +62,7 @@ class ViewEvent extends Component<{}> {
                 comment
             };
             setLoader(true);
-            const headers = {"x-auth": token}
+            const headers = {"x-auth": token};
             const response = await fetchApi(ADD_COMMENT_URL, "POST", body, headers);
             if (response.status === 200) {
                 const res = await response.json();
@@ -83,12 +83,13 @@ class ViewEvent extends Component<{}> {
         }
     }
 
-    _deleteComment = async (id) => {
+    _deleteComment = async (id, eventId) => {
         const {selectedEvent, user, token, setLoader, comments, setComments} = this.props;
         try {
+            const body = {eventId}
             setLoader(true);
             const headers = {"x-auth": token}
-            const response = await fetchApi(`${DELETE_COMMENT_URL}/${id}`, "DELETE", {}, headers);
+            const response = await fetchApi(`${DELETE_COMMENT_URL}/${id}`, "DELETE", body, headers);
             const res = await response.json();
             if(res && res.n === 1) {
                 let commentsArray = JSON.parse(JSON.stringify(comments));
@@ -173,12 +174,12 @@ class ViewEvent extends Component<{}> {
     }
 
     _createCommentList = () => {
-        const {comments, user} = this.props;
+        const {comments, user, selectedEvent} = this.props;
         if(comments.length) {
             return comments.map(c => {
                 if (c) {
                     return (
-                        <Comments key={c._id} userComment={c} handleDeleteReply={this.handleDeleteReply} replyToComment={this.replyToComment} deleteComment={this._deleteComment} showDelete={(user._id === c.commentedby)} />
+                        <Comments key={c._id} selectedEvent={selectedEvent} userComment={c} handleDeleteReply={this.handleDeleteReply} replyToComment={this.replyToComment} deleteComment={this._deleteComment} showDelete={(user._id === c.commentedby)} />
                     );
                 }
             });
@@ -190,10 +191,7 @@ class ViewEvent extends Component<{}> {
         return (
           <View style={styles.mainContainer}>
               <ScrollView ref={scrollView => this.scrollView = scrollView}>
-                  <View style={style.viewEvent.titleCont}>
-                      <Text style={style.viewEvent.title}>{selectedEvent.title}</Text>
-                  </View>
-                  <MapView style={{height: 250, width: "100%", marginBottom: 16}}
+                  <MapView style={{height: 200, width: "100%", marginBottom: 16}}
                       initialRegion={{
                           latitude: selectedEvent.venue.latlng.lat,
                           longitude: selectedEvent.venue.latlng.lng,
@@ -209,6 +207,7 @@ class ViewEvent extends Component<{}> {
                       />
                   </MapView>
                   <View style={style.viewEvent.info}>
+                      <Text style={style.viewEvent.title}>{selectedEvent.title}</Text>
                       <Text style={style.viewEvent.date}>{selectedEvent.date}</Text>
                       <Text style={style.viewEvent.category}>{selectedEvent.category}</Text>
                       <Text style={style.viewEvent.description}>{selectedEvent.description}</Text>
