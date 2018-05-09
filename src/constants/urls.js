@@ -1,5 +1,6 @@
 //Auth URLS
 export const GET_USER_URL = "/user/user";
+export const GET_USERNAME_URL = "/user/username";
 export const LOGIN_URL = "/user/login";
 export const LOGOUT_URL = "/user/logout";
 export const REGISTER_URL = "/user/create";
@@ -15,6 +16,7 @@ export const ADD_COMMENT_URL = "/event/comments/addComment";
 export const GET_COMMENT_URL = "/event/comments/getComments"; //pass eventId as urlparams
 export const DELETE_COMMENT_URL = "/event/comments/deleteComment"; //pass comment id as urlparams
 export const REPLY_COMMENT_URL = "/event/comments/replyComment"; //pass comment id as urlparams
+export const DELETE_REPLY_URL = "/event/comments/deleteReply"; //pass comment id as urlparams and replyId and repliedby with body
 
 //autocomplete url
 //Example

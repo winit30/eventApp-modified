@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import React, {Component} from "react";
 import {View, Text, TouchableNativeFeedback, UIManager, LayoutAnimation} from "react-native";
 
+import {getUsername} from "./../../services/api";
 import TextField from "./../../components/eventInputs/TextField";
 
 import styles from "./../../styles/styles";
@@ -63,6 +64,10 @@ class Comments extends Component<{}> {
         });
     }
 
+    deleteReply = (commentId, replyId) => {
+        this.props.handleDeleteReply(commentId, replyId);
+    }
+
     render() {
         return (
           <View style={styles.mainContainer}>
@@ -71,7 +76,7 @@ class Comments extends Component<{}> {
                       <Avatar
                           medium
                           rounded
-                          source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg"}}
+                          source={require("./../../assets/thumbnail.png")}
                           onPress={() => console.log("Works!")}
                           activeOpacity={0.7}
                           />
@@ -106,17 +111,24 @@ class Comments extends Component<{}> {
                               <View style={style.Comments.repliesCont} key={r._id}>
                                   <View style={style.Comments.avatar}>
                                       <Avatar
-                                          medium
+                                          small
                                           rounded
-                                          source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg"}}
+                                          source={require("./../../assets/thumbnail.png")}
                                           onPress={() => console.log("Works!")}
                                           activeOpacity={0.7}
                                           />
                                   </View>
                                   <View style={style.Comments.textCommentCont}>
                                       <View style={style.Comments.textCont}>
-                                          <Text style={style.Comments.commentedby}>{r.repliedby}</Text>
+                                          <Text style={style.Comments.commentedby}>{r.replied}</Text>
                                           <Text>{r.reply}</Text>
+                                      </View>
+                                      <View style={style.Comments.toolsCont}>
+                                          {this.props.deleteIcon &&
+                                              <Text style={style.Comments.tools} onPress={() => this.deleteReply(this.props.id, r._id)}>Delete</Text>
+                                          }
+                                          <Text style={style.Comments.tools} onPress={this.openReplyTextField}>Reply</Text>
+                                          <Text style={style.Comments.tools}>Report</Text>
                                       </View>
                                   </View>
                               </View>

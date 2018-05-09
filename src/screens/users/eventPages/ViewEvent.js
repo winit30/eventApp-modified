@@ -4,7 +4,7 @@ import MapView , {Marker} from 'react-native-maps';
 import React, {Component} from "react";
 import {View, Text, ScrollView, TouchableNativeFeedback, Keyboard} from "react-native";
 
-import {ADD_COMMENT_URL, GET_COMMENT_URL, DELETE_COMMENT_URL, REPLY_COMMENT_URL} from "./../../../constants/urls";
+import {ADD_COMMENT_URL, GET_COMMENT_URL, DELETE_COMMENT_URL, REPLY_COMMENT_URL, DELETE_REPLY_URL} from "./../../../constants/urls";
 import BottomToolBar from "./../../../components/toolbar/BottomToolBar";
 import Comments from "./../../../components/comments/Comments";
 import {fetchApi} from "./../../../services/api";
@@ -58,6 +58,7 @@ class ViewEvent extends Component<{}> {
             const body = {
                 eventId: selectedEvent._id,
                 commentedby: user._id,
+                commenter: user.name,
                 comment
             };
             setLoader(true);
@@ -95,7 +96,7 @@ class ViewEvent extends Component<{}> {
                 setComments(commentsArray);
                 setLoader(false);
             } else {
-               throw new Error("Unable to delete");
+               throw new Error("Unable to delete comment");
             }
         } catch (e) {
             alert(e.message);
@@ -109,6 +110,7 @@ class ViewEvent extends Component<{}> {
         try {
             const body = {
                 repliedby: user._id,
+                replied: user.name,
                 reply
             };
             setLoader(true);
@@ -137,18 +139,52 @@ class ViewEvent extends Component<{}> {
         }
     }
 
+    handleDeleteReply = async (commentId, replyId) => {
+        const {user, token, setLoader, comments, setComments} = this.props;
+        try {
+            const body = {
+                _id: replyId,
+                repliedby: user._id,
+                replied: user.name
+            };
+            setLoader(true);
+            const headers = {"x-auth": token};
+            const response = await fetchApi(`${DELETE_REPLY_URL}/${commentId}`, "PUT", body, headers);
+            const res = await response.json();
+            if(res && res.n === 1 && res.nModified === 1) {
+                let commentsArray = JSON.parse(JSON.stringify(comments));
+                commentsArray = commentsArray.map(c => {
+                    if(c.replies.length) {
+                      c.replies = c.replies.filter(r => {
+                          if(r._id !== body._id) {
+                            return true;
+                          }
+                      });
+                    }
+                    return c;
+                });
+                setComments(commentsArray);
+                setLoader(false);
+            } else {
+                throw new Error("Unable to delete reply");
+            }
+        } catch (e) {
+            console.log(e.message);
+            setLoader(false);
+        }
+    }
+
     _createCommentList = () => {
         const {comments, user} = this.props;
-        console.log(comments, user);
         if(comments.length) {
             return comments.map(c => {
                 if (user._id === c.commentedby) {
                     return (
-                        <Comments key={c._id} id={c._id} replyToComment={this.replyToComment} comments={c.comment} commentBy={c.commentedby} replies={c.replies} deleteComment={this._deleteComment} deleteIcon={true} />
+                        <Comments key={c._id} id={c._id} handleDeleteReply={this.handleDeleteReply} replyToComment={this.replyToComment} comments={c.comment} commentBy={c.commenter} replies={c.replies} deleteComment={this._deleteComment} deleteIcon={true} />
                     );
                 } else {
                       return (
-                        <Comments key={c._id} id={c._id} replyToComment={this.replyToComment} comments={c.comment} commentBy={c.commentedby} replies={c.replies} deleteIcon={false}/>
+                        <Comments key={c._id} id={c._id} replyToComment={this.replyToComment} comments={c.comment} commentBy={c.commenter} replies={c.replies} deleteIcon={false}/>
                       );
                 }
             });
@@ -157,7 +193,6 @@ class ViewEvent extends Component<{}> {
 
     render() {
         const {selectedEvent, comments} = this.props;
-        console.log(comments);
         return (
           <View style={styles.mainContainer}>
               <ScrollView ref={scrollView => this.scrollView = scrollView}>

@@ -3,7 +3,7 @@ import {Router, Scene} from "react-native-router-flux";
 
 import {Login, Register, Dashboard, CreateEvent} from "./../screens";
 import {EventFirstScreen, EventSecondScreen} from "./../screens/createEventScreens";
-import ViewEvent from "./../screens/users/VolunteerPages/ViewEvent";
+import ViewEvent from "./../screens/users/eventPages/ViewEvent";
 
 export default class Routes extends Component<{}> {
 
