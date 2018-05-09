@@ -1,27 +1,13 @@
 import {BASE_URL} from "./../config/settings";
 import {GOOGLE_AUTOCOMPLETE_URL, GOOGLE_PLACE_DETAILS_URL, GET_USERNAME_URL} from "./../constants/urls";
 import {PLACES_API_KEY} from "./../config/settings";
-import {AsyncStorage} from "react-native";
 
-var requests = [],
-    asyncStore = null;
+var requests = [];
 
 _abortRequests = () => {
     requests.map(r => r.abort());
     requests = [];
 }
-
-_getAsyncData = async () => {
-    try {
-        const allKeys = await AsyncStorage.getItem("persist:root");
-        asyncStore = JSON.parse(allKeys);
-    } catch (e) {
-        console.log(e.message);
-        asyncStore = null;
-    }
-}
-
-_getAsyncData();
 
 export const fetchApi = async (url, method, reqBody = {}, headers = {}) => {
     try {

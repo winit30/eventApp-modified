@@ -86,10 +86,10 @@ class ViewEvent extends Component<{}> {
     _deleteComment = async (id, eventId) => {
         const {selectedEvent, user, token, setLoader, comments, setComments} = this.props;
         try {
-            const body = {eventId}
+            const body = {eventId};
             setLoader(true);
             const headers = {"x-auth": token}
-            const response = await fetchApi(`${DELETE_COMMENT_URL}/${id}`, "DELETE", body, headers);
+            const response = await fetchApi(`${DELETE_COMMENT_URL}/${id}`, "PUT", body, headers);
             const res = await response.json();
             if(res && res.n === 1) {
                 let commentsArray = JSON.parse(JSON.stringify(comments));
@@ -187,7 +187,7 @@ class ViewEvent extends Component<{}> {
     }
 
     render() {
-        const {selectedEvent, comments} = this.props;
+        const {selectedEvent, comments, user} = this.props;
         return (
           <View style={styles.mainContainer}>
               <ScrollView ref={scrollView => this.scrollView = scrollView}>
@@ -211,10 +211,12 @@ class ViewEvent extends Component<{}> {
                       <Text style={style.viewEvent.date}>{selectedEvent.date}</Text>
                       <Text style={style.viewEvent.category}>{selectedEvent.category}</Text>
                       <Text style={style.viewEvent.description}>{selectedEvent.description}</Text>
-                      <Button
-                        backgroundColor='#03A9F4'
-                        buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                        title='Apply Now' />
+                      {(user && user.userType !== "organizer") &&
+                          <Button
+                            backgroundColor='#03A9F4'
+                            buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                            title='Apply Now' />
+                      }
                   </View>
                   {this._createCommentList()}
                   <View style={{marginBottom:70}}></View>

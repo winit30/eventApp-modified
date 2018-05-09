@@ -39,7 +39,7 @@ class Comments extends Component<{}> {
 
     deleteComment = () => {
         const {userComment} = this.props;
-        this.props.deleteComment(userComment._id);
+        this.props.deleteComment(userComment._id, userComment.eventId);
         this._animate();
     }
 
