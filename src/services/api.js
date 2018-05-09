@@ -12,16 +12,19 @@ _abortRequests = () => {
 export const fetchApi = async (url, method, reqBody = {}, headers = {}) => {
     try {
         const URL = BASE_URL.concat(url);
+        const body = Object.keys(reqBody).length && JSON.stringify(reqBody);
         const fetchParams = {method, headers};
         if (method === "POST" || method === "PUT") {
             fetchParams.headers["Accept"] = "application/json";
             fetchParams.headers["Content-Type"] = "application/json";
-            const body = Object.keys(reqBody).length && JSON.stringify(reqBody);
             if(!body) {
                 throw new Error("Request body required");
             } else {
                 fetchParams["body"] = body;
             }
+        }
+        if(body) {
+            fetchParams["body"] = body;
         }
         const fetchPromise = fetch(URL, fetchParams);
         const timerPromise = new Promise((resolve, reject) => {
