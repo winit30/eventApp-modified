@@ -1,10 +1,11 @@
 import {connect} from "react-redux";
-import {Button, List, ListItem, Icon} from 'react-native-elements';
-import MapView , {Marker} from 'react-native-maps';
+import {Button, List, ListItem, Icon} from "react-native-elements";
+import MapView , {Marker} from "react-native-maps";
 import React, {Component} from "react";
 import {View, Text, ScrollView, TouchableNativeFeedback, Keyboard} from "react-native";
+import _ from "lodash";
 
-import {ADD_COMMENT_URL, GET_COMMENT_URL, DELETE_COMMENT_URL, REPLY_COMMENT_URL, DELETE_REPLY_URL} from "./../../../constants/urls";
+import {ADD_COMMENT_URL, GET_COMMENT_URL, DELETE_COMMENT_URL, REPLY_COMMENT_URL, DELETE_REPLY_URL, APPLY_EVENT_URL} from "./../../../constants/urls";
 import BottomToolBar from "./../../../components/toolbar/BottomToolBar";
 import Comments from "./../../../components/comments/Comments";
 import {fetchApi} from "./../../../services/api";
@@ -186,37 +187,73 @@ class ViewEvent extends Component<{}> {
         }
     }
 
+    applyEvent = async () => {
+        const {selectedEvent, setLoader, token, addApplierToEvent} = this.props;
+        let event = JSON.parse(JSON.stringify(selectedEvent));
+        try {
+            const body = {eventId: selectedEvent._id};
+            setLoader(true);
+            const headers = {"x-auth": token};
+            const response = await fetchApi(APPLY_EVENT_URL, "POST", body, headers);
+            const res = await response.json();
+            if(res.applier && Object.keys(res.applier).length > 0) {
+                event.applier = res.applier;
+            }
+            addApplierToEvent(event);
+            setLoader(false);
+        } catch (e) {
+            setLoader(false);
+            console.log(e);
+        }
+    }
+
+    renderApplyButton = (event) => {
+        if(event.applier && Object.keys(event.applier).length > 0) {
+            return (
+              <View>
+                  <Text>You have applied for this event.</Text>
+                  <Text>Status: {event.applier.status}</Text>
+              </View>
+            )
+        } else {
+            return (
+                <Button
+                  backgroundColor="#03A9F4"
+                  buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                  title="Apply Now" onPress={this.applyEvent} />
+            )
+        }
+    }
+
     render() {
-        const {selectedEvent, comments, user} = this.props;
+        const {selectedEvent, comments, user, events} = this.props;
+        const event = _.find(events, {_id: selectedEvent._id});
+        console.log(event);
         return (
           <View style={styles.mainContainer}>
               <ScrollView ref={scrollView => this.scrollView = scrollView}>
                   <MapView style={{height: 200, width: "100%", marginBottom: 16}}
                       initialRegion={{
-                          latitude: selectedEvent.venue.latlng.lat,
-                          longitude: selectedEvent.venue.latlng.lng,
+                          latitude: event.venue.latlng.lat,
+                          longitude: event.venue.latlng.lng,
                           latitudeDelta: 0.0900,
                           longitudeDelta: 0.0500,
                       }}>
                       <Marker
                         coordinate={{
-                            latitude: selectedEvent.venue.latlng.lat,
-                            longitude: selectedEvent.venue.latlng.lng
+                            latitude: event.venue.latlng.lat,
+                            longitude: event.venue.latlng.lng
                         }}
-                        title={selectedEvent.venue.description}
+                        title={event.venue.description}
                       />
                   </MapView>
                   <View style={style.viewEvent.info}>
-                      <Text style={style.viewEvent.title}>{selectedEvent.title}</Text>
-                      <Text style={style.viewEvent.date}>{selectedEvent.date}</Text>
-                      <Text style={style.viewEvent.category}>{selectedEvent.category}</Text>
-                      <Text style={style.viewEvent.description}>{selectedEvent.description}</Text>
-                      {(user && user.userType !== "organizer") &&
-                          <Button
-                            backgroundColor='#03A9F4'
-                            buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                            title='Apply Now' />
-                      }
+                      <Text style={style.viewEvent.title}>{event.title}</Text>
+                      <Text style={style.viewEvent.date}>{event.date}</Text>
+                      <Text style={style.viewEvent.date}>{event.applyCount} people are going</Text>
+                      <Text style={style.viewEvent.category}>{event.category}</Text>
+                      <Text style={style.viewEvent.description}>{event.description}</Text>
+                      {(user && user.userType !== "organizer") && this.renderApplyButton(event)}
                   </View>
                   {this._createCommentList()}
                   <View style={{marginBottom:70}}></View>
@@ -242,13 +279,15 @@ const mapStateToProps = state => ({
     event: state.form.event,
     user: state.auth.user,
     token: state.auth.token,
-    comments: state.event.comments
+    comments: state.event.comments,
+    events: state.event.events
 });
 
 const mapDispatchToProps = dispatch => ({
     setLoader: status => dispatch({type:"LOADER", status}),
     setComments: comments => dispatch({type:"SET_COMMENTS", comments}),
-    resetProperty: property => dispatch({type: "RESET_PROPERTY", property})
+    resetProperty: property => dispatch({type: "RESET_PROPERTY", property}),
+    addApplierToEvent: event => dispatch({type: "UPDATE_EVENT", event})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps )(ViewEvent);

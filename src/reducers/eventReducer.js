@@ -17,6 +17,12 @@ export default (state = initialState, action) => {
                 events: action.events
             }
 
+        case "UPDATE_EVENT":
+            return {
+                ...state,
+                events: updatedEvents(state.events, action.event)
+            }
+
         case "SET_CITY":
             return {
                 ...state,
@@ -34,4 +40,16 @@ export default (state = initialState, action) => {
     }
 
     return state;
+}
+
+function updatedEvents(array, event) {
+    return array.map((item) => {
+        if(item._id !== event._id) {
+            return item;
+        }
+        return {
+            ...item,
+            ...event
+        };
+    });
 }

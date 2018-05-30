@@ -18,6 +18,11 @@ export const DELETE_COMMENT_URL = "/event/comments/deleteComment"; //pass commen
 export const REPLY_COMMENT_URL = "/event/comments/replyComment"; //pass comment id as urlparams
 export const DELETE_REPLY_URL = "/event/comments/deleteReply"; //pass comment id as urlparams and replyId and repliedby with body
 
+//Apply URLS
+export const APPLY_EVENT_URL = "/event/applications/apply"; //pass eventId as urlparams
+export const GET_APPLICATION_URL = "/event/applications/getapplication"; //pass eventId as urlparams
+export const GET_APPLICATION_COUNT_URL = "/event/applications/numberofapplications"; //pass eventId as urlparams
+
 //autocomplete url
 //Example
 //https://maps.googleapis.com/maps/api/place/autocomplete/json?input=Paris&types=geocode&key=YOUR_API_KEY

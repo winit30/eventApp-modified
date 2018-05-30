@@ -7,7 +7,7 @@ import {View, Text, Picker, ScrollView} from "react-native";
 
 import DrawerContainer from "./../../components/drawer/DrawerContainer";
 import {fetchApi} from "./../../services/api";
-import {GET_EVENT_URL} from "./../../constants/urls";
+import {GET_EVENT_URL, GET_APPLICATION_URL, GET_APPLICATION_COUNT_URL} from "./../../constants/urls";
 import {navigateTo} from "./../../components/navigation/navigate";
 import Toolbar from "./../../components/toolbar/Toolbar";
 
@@ -33,13 +33,14 @@ class Volunteer extends Component<{}> {
     loadEventsForSelectedCity = async (city) => {
         let {token, setLoader, setEvent} = this.props;
         try {
-            const headers = {"x-auth": token}
+            const headers = {"x-auth": token};
             setLoader(true);
             const response = await fetchApi(`${GET_EVENT_URL}/${city}`, "GET", {}, headers);
             if (response.status === 200) {
                 const events = await response.json();
                 activeEvents = events.filter((event) => event.isActive);
                 setEvent(activeEvents);
+                this.loadApplicationsForEvents(activeEvents);
                 setLoader(false);
             } else {
               throw new Error("Error");
@@ -48,6 +49,30 @@ class Volunteer extends Component<{}> {
             setLoader(false);
             alert(e.message);
         }
+    }
+
+    loadApplicationsForEvents = async (events) => {
+        let {token, setEvent, addApplierToEvent} = this.props;
+        try {
+            for (let i = 0; i < events.length; i++) {
+                const headers = {"x-auth": token};
+                const applyResponse = await fetchApi(`${GET_APPLICATION_URL}/${events[i]._id}`, "GET", {}, headers);
+                const countResponse = await fetchApi(`${GET_APPLICATION_COUNT_URL}/${events[i]._id}`, "GET", {}, headers);
+                const applyRes = await applyResponse.json();
+                const countRes = await countResponse.json();
+                if(applyRes.applier && Object.keys(applyRes.applier).length > 0) {
+                    events[i].applier = applyRes.applier;
+                }
+                if(countRes) {
+                    events[i].applyCount = countRes;
+                } else {
+                    events[i].applyCount = 0;
+                }
+            }
+        } catch (e) {
+           alert(e.message);
+        }
+        setEvent(events);
     }
 
     onChangeSelect = (value) => {
@@ -121,11 +146,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     onChangeSelect: city => dispatch({type: "SET_CITY", city}),
-    setEvent: events => dispatch({
-        type: "SET_EVENTS",
-        events
-    }),
-    setLoader:(status) => dispatch({type:"LOADER", status})
+    setEvent: events => dispatch({type: "SET_EVENTS", events}),
+    setLoader: status => dispatch({type:"LOADER", status})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Volunteer);
