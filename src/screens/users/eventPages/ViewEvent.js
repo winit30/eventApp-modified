@@ -228,7 +228,6 @@ class ViewEvent extends Component<{}> {
     render() {
         const {selectedEvent, comments, user, events} = this.props;
         const event = _.find(events, {_id: selectedEvent._id});
-        console.log(event);
         return (
           <View style={styles.mainContainer}>
               <ScrollView ref={scrollView => this.scrollView = scrollView}>
