@@ -210,10 +210,10 @@ const styles = StyleSheet.create({
     },
 
     header: {
-        height: 180,
         flex: 1,
         padding: 16,
-        backgroundColor: '#6a0080'
+        backgroundColor: '#6a0080',
+        flexDirection:'row'
     },
 
     content: {
@@ -227,18 +227,19 @@ const styles = StyleSheet.create({
     },
 
     headerIcon: {
-        width: 70,
-        height: 70,
+        width: 56,
+        height: 56,
         borderRadius: 45,
-        marginBottom: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#303f9f'
+        backgroundColor: '#303f9f',
+        marginRight: 16,
     },
 
     headerTitle: {
         color: '#dedede',
-        fontSize: 20
+        fontSize: 20,
+        fontWeight: "500"
     },
 
     headerEmail: {

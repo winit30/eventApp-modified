@@ -4,10 +4,12 @@ import React, {Component} from "react";
 import Sidebar from "./../sidebar/Sidebar";
 
 export default DrawerContainer = (props) => {
-    const navigationView = (<Sidebar/>);
+    handleDrawerClose = () => {}
+    const navigationView = (<Sidebar onCloseDrawer={props.onCloseDrawer}/>);
     return (
         <DrawerLayoutAndroid
-            drawerWidth={290}
+            drawerWidth={300}
+            onDrawerClose={this.handleDrawerClose}
             ref={node => props.mapElement(node)}
             drawerPosition={DrawerLayoutAndroid.positions.Left}
             renderNavigationView={() => navigationView}>

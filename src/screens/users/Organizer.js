@@ -28,6 +28,10 @@ class Organizer extends Component<{}> {
         this.drawer && this.drawer.openDrawer();
     }
 
+    closeDrawer = () => {
+        this.drawer && this.drawer.closeDrawer();
+    }
+
     navigateToCreateScreen = () => {
         this.props.resetEvent();
         navigateTo("createEvent");
@@ -134,7 +138,7 @@ class Organizer extends Component<{}> {
 
         return (
           <View style={styles.mainContainer}>
-              <DrawerContainer mapElement={this.mapElement}>
+              <DrawerContainer mapElement={this.mapElement} onCloseDrawer={this.closeDrawer}>
                   <Toolbar title="Dashboard" onIconClicked={this.onIconClicked} navIcon={require("./../../assets/menu.png")}/>
                   {!events.length ?
                       <View style={styles.emptyDashboard}>
