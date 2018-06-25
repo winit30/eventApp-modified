@@ -113,6 +113,8 @@ class EventSecondScreen extends Component<{}> {
                 } else if (res.nModified === 1 && res.ok ===1) {
                     redirectTo("user");
                     setLoader(false);
+                } else {
+                    throw new Error("Unable to update. Please try again");
                 }
             } else {
                 throw new Error("Something went wrong. Please try again");
@@ -187,7 +189,7 @@ class EventSecondScreen extends Component<{}> {
 const mapStateToProps = state => ({
     event: state.form.event,
     token: state.auth.token,
-    events: state.event.events 
+    events: state.event.events
 });
 
 const mapDispatchToProps = dispatch => ({

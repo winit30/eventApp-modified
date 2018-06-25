@@ -128,6 +128,13 @@ const styles = StyleSheet.create({
         borderRadius: 3
     },
 
+    iconNotificationCont: {
+        backgroundColor: '#ffffff',
+        alignSelf: "flex-end",
+        padding:2,
+        borderRadius: 3
+    },
+
     floatingButton:{
         width: 60,
         height: 60,

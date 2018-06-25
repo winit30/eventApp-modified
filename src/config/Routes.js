@@ -4,6 +4,7 @@ import {Router, Scene} from "react-native-router-flux";
 import {Login, Register, Dashboard, CreateEvent} from "./../screens";
 import {EventFirstScreen, EventSecondScreen} from "./../screens/createEventScreens";
 import ViewEvent from "./../screens/users/eventPages/ViewEvent";
+import AppliersList from "./../screens/users/eventPages/AppliersList";
 
 export default class Routes extends Component<{}> {
 
@@ -25,6 +26,7 @@ export default class Routes extends Component<{}> {
 														<Scene key="secondScreen" hideNavBar={true}  component={EventSecondScreen} />
 												</Scene>
 												<Scene key="viewEvent" component={ViewEvent} title="View Event"/>
+												<Scene key="viewAppliers" component={AppliersList} title="View Appliers List"/>
 										</Scene>
 								</Scene>
 						</Router>

@@ -8,7 +8,7 @@ import {View, Text, ScrollView, TouchableNativeFeedback} from "react-native";
 import DrawerContainer from "./../../components/drawer/DrawerContainer";
 import {FloatingButton} from "./../../components/buttons";
 import {fetchApi} from "./../../services/api";
-import {GET_EVENT_URL, DELETE_EVENT_URL, UPDATE_EVENT_URL} from "./../../constants/urls";
+import {GET_EVENT_URL, DELETE_EVENT_URL, UPDATE_EVENT_URL, GET_APPLICATION_COUNT_URL} from "./../../constants/urls";
 import {navigateTo} from "./../../components/navigation/navigate";
 import Toolbar from "./../../components/toolbar/Toolbar";
 
@@ -36,7 +36,7 @@ class Organizer extends Component<{}> {
     loadEvents = async () => {
         let {token, setLoader, setEvent} = this.props;
         try {
-            const headers = {"x-auth": token}
+            const headers = {"x-auth": token};
             setLoader(true);
             const response = await fetchApi(GET_EVENT_URL, "GET", {}, headers);
             if (response.status === 200) {
@@ -108,6 +108,26 @@ class Organizer extends Component<{}> {
         }
     }
 
+    hasNotification = (event) => {
+        if (event.application) {
+            const notSeen = event.application.appliers.filter((applier, index) => {
+                return applier.status === "notseen";
+            });
+            if(notSeen && notSeen.length) {
+                return (
+                    <View style={{position: "relative"}}>
+                        <Icon style={{color: "#cccccc"}} name="bell" size={24} color="#333" />
+                        <Text style={{color: "red", position: "absolute", bottom: 0, right: 0, zIndex:1, fontSize: 16, fontWeight: "500"}}>{notSeen.length}</Text>
+                    </View>
+                );
+            }
+        } else {
+            return (
+              <Icon style={{color: "#dddddd"}} name="bell" size={24} color="#333" />
+            );
+        }
+    }
+
     render() {
 
         let {events} = this.props;
@@ -131,6 +151,15 @@ class Organizer extends Component<{}> {
                                         <Text style={styles.eventTitle}  onPress={() => navigateTo("viewEvent", {selectedEvent: event})}>{event.title.toUpperCase()}</Text>
                                     </View>
                                     <View style={styles.rowContainerChild}>
+                                        <View style={styles.iconNotificationCont}>
+                                            <TouchableNativeFeedback
+                                                background={TouchableNativeFeedback.Ripple("#fff", true)}
+                                                onPress={() => navigateTo("viewAppliers", {selectedEvent: event})}>
+                                                {this.hasNotification(event)}
+                                            </TouchableNativeFeedback>
+                                        </View>
+                                    </View>
+                                    <View style={styles.rowContainerChild}>
                                         <View style={styles.iconButtonCont}>
                                             <TouchableNativeFeedback
                                                 background={TouchableNativeFeedback.Ripple("#fff", true)}
@@ -141,7 +170,7 @@ class Organizer extends Component<{}> {
                                     </View>
                                 </View>
                                 <Divider style={{ backgroundColor: '#999999', marginVertical: 16 }} />
-                                <MapView style={{height: 150, width: "100%", marginBottom: 16}}
+                                {/* <MapView style={{height: 150, width: "100%", marginBottom: 16}}
                                     initialRegion={{
                                         latitude: event.venue.latlng.lat,
                                         longitude: event.venue.latlng.lng,
@@ -155,7 +184,7 @@ class Organizer extends Component<{}> {
                                       }}
                                       title={event.venue.description}
                                     />
-                                </MapView>
+                                </MapView>*/}
                                 <Text>{event.date}</Text>
                                 <Text>{event.category}</Text>
                                 <Text style={styles.eventDescription}>{event.description}</Text>

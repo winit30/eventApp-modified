@@ -52,7 +52,7 @@ class Volunteer extends Component<{}> {
     }
 
     loadApplicationsForEvents = async (events) => {
-        let {token, setEvent, addApplierToEvent} = this.props;
+        let {token, setEvent} = this.props;
         try {
             for (let i = 0; i < events.length; i++) {
                 const headers = {"x-auth": token};

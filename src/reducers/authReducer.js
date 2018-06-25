@@ -6,12 +6,12 @@ var initialState = {
 
 // var initialState = {
 //     user: {
-//         "_id": "5ad90c5b19a5cf001495cf30",
-//         "name": "Rahul",
-//         "email": "rahuls@gmail.com",
-//         "userType": "organizer"
+//        "_id": "5af2a711c50d5b00148abb5d",
+//        "name": "vineet",
+//        "email": "vineet@gmail.com",
+//        "userType": "organizer"
 //     },
-//     token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YWQ5MGM1YjE5YTVjZjAwMTQ5NWNmMzAiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTI1Mjk1ODY5fQ.TNdrLvxcHxXU9u9DiLEeH88G4TXma5vp_luDbSRI6tU",
+//     token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YWYyYTcxMWM1MGQ1YjAwMTQ4YWJiNWQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTI5ODU2ODU4fQ.1WIRdmqabx8pgCxuvFxUw19G00sKgychqdXTUPnyMTk",
 //     loggedIn: true
 // }
 
