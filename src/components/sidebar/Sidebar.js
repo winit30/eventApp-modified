@@ -24,8 +24,8 @@ class Sidebar extends Component {
             redirectTo("auth");
             setLoader(false);
         } catch (e) {
-          setLoader(false);
-          alert(e.message);
+            setLoader(false);
+            alert(e.message);
         }
     }
 

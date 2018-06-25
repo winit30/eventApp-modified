@@ -9,7 +9,7 @@ const persistConfig = {
     key: "root",
     storage: AsyncStorage,
     whitelist: ["auth", "form"],
-    blacklist: ["utils", "event"]
+    blacklist: ["utils", "event", "userProfile"]
 }
 
 const persistedReducer = persistReducer(persistConfig, reducers);

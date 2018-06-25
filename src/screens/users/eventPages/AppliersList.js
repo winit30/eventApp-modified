@@ -10,9 +10,7 @@ import styles from "./../../../styles/styles";
 class AppliersList extends Component<{}> {
 
     render() {
-
         const {selectedEvent} = this.props;
-
         return (
             <View style={styles.mainContainer}>
                 <List containerStyle={{marginBottom: 20}}>
@@ -35,12 +33,8 @@ class AppliersList extends Component<{}> {
     }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = state => ({});
 
-});
-
-const mapDispatchToProps = dispatch => ({
-
-});
+const mapDispatchToProps = dispatch => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppliersList);

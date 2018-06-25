@@ -1,8 +1,9 @@
+import {Button, List, ListItem, Icon} from "react-native-elements";
 import {connect} from "react-redux";
 import React, {Component} from "react";
 import {View, Text} from "react-native";
-import {Button, List, ListItem, Icon} from "react-native-elements";
 
+import {fetchApi} from "./../../../services/api";
 import {GET_USER_PROFILE_URL} from "./../../../constants/urls";
 
 import styles from "./../../../styles/styles";
@@ -10,18 +11,23 @@ import styles from "./../../../styles/styles";
 class UserProfile extends Component<{}> {
 
     componentDidMount() {
+        this.props.setUserDetails(null);
         this._fetchUserProfile();
     }
 
     _fetchUserProfile = async () => {
-        let {token, setLoader, profileId} = this.props;
+        let {token, setLoader, profileId, setUserDetails} = this.props;
         try {
-            const headers = {"x-auth": token}
             setLoader(true);
+            const headers = {"x-auth": token}
             const response = await fetchApi(`${GET_USER_PROFILE_URL}/${profileId}`, "GET", {}, headers);
-            const res = response.json();
-            console.log(res);
-            setLoader(false);
+            const res = await response.json();
+            if(res._id && res._id === profileId) {
+                setUserDetails(res);
+                setLoader(false);
+            } else {
+                throw new Error("Unable to fetch profile.");
+            }
         } catch (e) {
             setLoader(false);
             alert(e.message);
@@ -29,23 +35,27 @@ class UserProfile extends Component<{}> {
     }
 
     render() {
-
-        const {profileId} = this.props;
-
+        let {userDetails} = this.props;
         return (
             <View style={styles.mainContainer}>
-                <Text>User Profile</Text>
+                {userDetails &&
+                    <View>
+                        <Text>{userDetails.name}</Text>
+                    </View>
+                }
             </View>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    token: state.auth.token
+    token: state.auth.token,
+    userDetails: state.userProfile.userDetails
 });
 
 const mapDispatchToProps = dispatch => ({
-    setLoader: status => dispatch({type:"LOADER", status})
+    setLoader: status => dispatch({type: "LOADER", status}),
+    setUserDetails: userDetails => dispatch({type: "SET_USER_DETAILS", userDetails})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
