@@ -5,6 +5,7 @@ import {View, Text} from "react-native";
 
 import {fetchApi} from "./../../../services/api";
 import {GET_USER_PROFILE_URL} from "./../../../constants/urls";
+import ProfileHeader from "./profileComponents/ProfileHeader";
 
 import styles from "./../../../styles/styles";
 
@@ -39,8 +40,22 @@ class UserProfile extends Component<{}> {
         return (
             <View style={styles.mainContainer}>
                 {userDetails &&
-                    <View>
-                        <Text>{userDetails.name}</Text>
+                    <View style={styles.mainContainer}>
+                        <ProfileHeader details={userDetails} />
+                        <View style={[styles.rowContainer, styles.paddingVertical32]}>
+                            <View style={styles.rowContainerChild}>
+                                <Button
+                                  backgroundColor='#03A9F4'
+                                  buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                                  title="Accept"/>
+                            </View>
+                            <View style={styles.rowContainerChild}>
+                                <Button
+                                  backgroundColor='#03A9F4'
+                                  buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                                  title='Reject' />
+                            </View>
+                        </View>
                     </View>
                 }
             </View>
