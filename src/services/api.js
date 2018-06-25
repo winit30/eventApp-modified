@@ -1,5 +1,5 @@
 import {BASE_URL} from "./../config/settings";
-import {GOOGLE_AUTOCOMPLETE_URL, GOOGLE_PLACE_DETAILS_URL, GET_USERNAME_URL} from "./../constants/urls";
+import {GOOGLE_AUTOCOMPLETE_URL, GOOGLE_PLACE_DETAILS_URL} from "./../constants/urls";
 import {PLACES_API_KEY} from "./../config/settings";
 
 var requests = [];

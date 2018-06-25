@@ -1,9 +1,9 @@
 //Auth URLS
 export const GET_USER_URL = "/user/user";
-export const GET_USERNAME_URL = "/user/username";
 export const LOGIN_URL = "/user/login";
 export const LOGOUT_URL = "/user/logout";
 export const REGISTER_URL = "/user/create";
+export const GET_USER_PROFILE_URL = "/user/profile"; //pass userId as urlparams
 
 //Event URLS
 export const CREATE_EVENT_URL = "/event/create";

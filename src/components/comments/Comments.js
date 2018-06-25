@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 import React, {Component} from "react";
 import {View, Text, TouchableNativeFeedback, UIManager, LayoutAnimation} from "react-native";
 
-import {getUsername} from "./../../services/api";
 import TextField from "./../../components/eventInputs/TextField";
 
 import styles from "./../../styles/styles";

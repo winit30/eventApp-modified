@@ -3,11 +3,11 @@ import React, {Component} from "react";
 import {View} from "react-native";
 import {Button, List, ListItem, Icon} from "react-native-elements";
 
+import {navigateTo} from "./../../../components/navigation/navigate";
+
 import styles from "./../../../styles/styles";
 
 class AppliersList extends Component<{}> {
-
-    showApplierProfile = () => {}
 
     render() {
 
@@ -24,7 +24,7 @@ class AppliersList extends Component<{}> {
                           title={applier.applierName}
                           subtitle={applier.applierId}
                           onPress={() => {
-                              this.showApplierProfile(applier.applierId);
+                              navigateTo("viewProfile", {profileId: applier.applierId})
                           }}
                         />
                     );
