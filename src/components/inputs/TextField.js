@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 import React, {Component} from "react";
 import {TextInput} from "react-native";
 
-import styles from "./../../styles/styles";
+import componentStyles from "./../../styles/componentStyles";
 
 const defaultProps = {
     mapElement: (n) => {}
@@ -23,18 +23,18 @@ class TextField extends Component<{}> {
         let {onChangeText, name} = this.props;
 
         return (
-            <TextInput style={styles.inputBox}
+            <TextInput style={componentStyles.inputComponentStyles}
                 underlineColorAndroid='rgba(0,0,0,0)'
                 placeholder="Name"
-                placeholderTextColor = "rgba(255,255,255,0.5)"
-                selectionColor="#fff"
-                autoCapitalize="words"
-                keyboardType="default"
-                returnKeyType="next"
-                value={name ? name : ""}
-                ref={this.mapElement}
-                onSubmitEditing={this.onSubmitEditing}
-                onChangeText={(value)=> {
+                placeholderTextColor = "rgba(255,255,255,0.8)"
+                selectionColor= "#fff"
+                autoCapitalize= "words"
+                keyboardType= "default"
+                returnKeyType= "next"
+                value= {name ? name : ""}
+                ref= {this.mapElement}
+                onSubmitEditing= {this.onSubmitEditing}
+                onChangeText= {(value)=> {
                     onChangeText("name", value);
                 }}/>
         );

@@ -1,86 +1,4 @@
-import theme from "./theme";
-
-const componentStyles = {
-    inputComponentStyles: {
-        width: "85%",
-        fontSize: 18,
-        color: "#ffffff",
-        marginVertical: 16,
-        borderBottomWidth: 2,
-        borderBottomColor: theme.input.borderColor,
-        paddingVertical: 8,
-        fontFamily: "Roboto-Regular"
-    },
-
-    buttonComponentStyle: {
-        primaryButton: {
-            width: "85%",
-            backgroundColor: theme.button.primary,
-            marginVertical: 32,
-            paddingVertical: 12,
-            borderRadius: 45
-        },
-        primaryButtonText: {
-            textAlign: "center",
-            fontSize: 18,
-            color: theme.button.primaryTextColor,
-            fontFamily: "Roboto-Medium"
-        },
-        linkButton: {
-            color: "#ffffff",
-            fontSize: 18,
-            paddingHorizontal:5,
-            fontFamily: "Roboto-Medium"
-        }
-    },
-
-    selectComponentStyle: {
-        selectPicker: {
-            height: 45,
-            width: "100%",
-            color: "#dedede",
-            fontFamily: "Roboto-Regular",
-            fontSize: 18
-        },
-        selectPickerContainer: {
-            width: "85%",
-            height: "auto",
-            marginVertical: 16,
-            paddingVertical: 8
-        },
-        pickerBorderBottom: {
-            width: "100%",
-            height:2.2,
-            backgroundColor: theme.input.borderColor
-        },
-    },
-
-    toolBarComponentStyle: {
-        height:54,
-        backgroundColor: theme.primary.main,
-        color: "#ffffff",
-        fontFamily: "Roboto-Regular"
-    },
-
-    cardComponentStyle: {
-        containerStyle: {
-            backgroundColor: theme.primary.main,
-            borderColor: "transparent",
-            elevation: 0
-        },
-        titleStyle: {
-            textAlign: "left",
-            color: "#fff",
-            fontFamily: "Roboto-Medium",
-            marginVertical: 0,
-            paddingBottom: 8
-        },
-        subTitleStyle: {
-            color: "#fff",
-            fontFamily: "Roboto-Light"
-        }
-    },
-
+const style = {
     viewEvent: {
         titleCont: {
             backgroundColor: "#ffffff",
@@ -256,4 +174,4 @@ const componentStyles = {
     }
 }
 
-export default componentStyles;
+export default style;

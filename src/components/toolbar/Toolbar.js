@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 import React, {Component} from "react";
 import {ToolbarAndroid} from "react-native";
 
-import styles from "./../../styles/styles";
+import componentStyles from "./../../styles/componentStyles";
 
 defaultProps = {
     title: "",
@@ -15,9 +15,10 @@ class Toolbar extends Component<{}> {
     render() {
         return (
           <ToolbarAndroid
-              style={styles.toolbar}
+              style={componentStyles.toolBarComponentStyle}
               navIcon={this.props.navIcon}
               title={this.props.title}
+              titleColor="#ffffff"
               onIconClicked={this.props.onIconClicked}/>
         );
     }

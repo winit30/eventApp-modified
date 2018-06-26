@@ -6,7 +6,7 @@ import {View, Text, TouchableNativeFeedback, UIManager, LayoutAnimation} from "r
 import TextField from "./../../components/eventInputs/TextField";
 
 import styles from "./../../styles/styles";
-import style from "./../../styles/ComponentStyles";
+import style from "./../../styles/componentStyles";
 
 const defaultProps = {
     id: "",

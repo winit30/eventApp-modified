@@ -13,6 +13,8 @@ import {navigateTo} from "./../../components/navigation/navigate";
 import Toolbar from "./../../components/toolbar/Toolbar";
 
 import styles from "./../../styles/styles";
+import screenStyles from "./../../styles/screenStyles";
+import componentStyles from "./../../styles/componentStyles";
 
 class Organizer extends Component<{}> {
 
@@ -137,7 +139,7 @@ class Organizer extends Component<{}> {
         let {events} = this.props;
 
         return (
-          <View style={styles.mainContainer}>
+          <View style={[styles.flex_1, screenStyles.appBackgroundColor]}>
               <DrawerContainer mapElement={this.mapElement} onCloseDrawer={this.closeDrawer}>
                   <Toolbar title="Dashboard" onIconClicked={this.onIconClicked} navIcon={require("./../../assets/menu.png")}/>
                   {!events.length ?
@@ -148,65 +150,14 @@ class Organizer extends Component<{}> {
                       <ScrollView>
                           {events.map((event, index) => {
                             return(
-                              <Card
-                                key={index}>
-                                <View style={styles.rowContainer}>
-                                    <View style={[styles.rowContainerChild, styles.eventTitleCont]}>
-                                        <Text style={styles.eventTitle}  onPress={() => navigateTo("viewEvent", {selectedEvent: event})}>{event.title.toUpperCase()}</Text>
-                                    </View>
-                                    <View style={styles.rowContainerChild}>
-                                        <View style={styles.iconNotificationCont}>
-                                            <TouchableNativeFeedback
-                                                background={TouchableNativeFeedback.Ripple("#fff", true)}
-                                                onPress={() => navigateTo("viewAppliers", {selectedEvent: event})}>
-                                                {this.hasNotification(event)}
-                                            </TouchableNativeFeedback>
-                                        </View>
-                                    </View>
-                                    <View style={styles.rowContainerChild}>
-                                        <View style={styles.iconButtonCont}>
-                                            <TouchableNativeFeedback
-                                                background={TouchableNativeFeedback.Ripple("#fff", true)}
-                                                onPress={() => this.editEvent(event._id)}>
-                                                <Icon style={{color: "#ffffff"}} name="pencil" size={16} color="#333" />
-                                            </TouchableNativeFeedback>
-                                        </View>
-                                    </View>
-                                </View>
-                                <Divider style={{ backgroundColor: '#999999', marginVertical: 16 }} />
-                                {/* <MapView style={{height: 150, width: "100%", marginBottom: 16}}
-                                    initialRegion={{
-                                        latitude: event.venue.latlng.lat,
-                                        longitude: event.venue.latlng.lng,
-                                        latitudeDelta: 0.0900,
-                                        longitudeDelta: 0.0500,
-                                    }}>
-                                    <Marker
-                                      coordinate={{
-                                          latitude: event.venue.latlng.lat,
-                                          longitude: event.venue.latlng.lng
-                                      }}
-                                      title={event.venue.description}
-                                    />
-                                </MapView>*/}
-                                <Text>{event.date}</Text>
-                                <Text>{event.category}</Text>
-                                <Text style={styles.eventDescription}>{event.description}</Text>
-                                <View style={styles.rowContainer}>
-                                    <View style={styles.rowContainerChild}>
-                                        <Button
-                                          backgroundColor='#03A9F4'
-                                          buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                                          title={event.isActive ? "DEACTIVATE" : "ACTIVATE"} onPress={() => this.activateDeactivateEvent(!event.isActive, event._id)}/>
-                                    </View>
-                                    <View style={styles.rowContainerChild}>
-                                        <Button
-                                          backgroundColor='#03A9F4'
-                                          buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                                          title='DELETE' onPress={() => this.deleteEvent(event._id)} />
-                                    </View>
-                                </View>
-                              </Card>
+                              <TouchableNativeFeedback onPress={() => navigateTo("viewEvent", {selectedEvent: event})}>
+                                  <Card
+                                    containerStyle={componentStyles.cardComponentStyle.containerStyle}
+                                    key={index}>
+                                      <Text style={componentStyles.cardComponentStyle.titleStyle}>{event.title.toUpperCase()}</Text>
+                                      <Text style={componentStyles.cardComponentStyle.subTitleStyle}>{event.description}</Text>
+                                  </Card>
+                              </TouchableNativeFeedback>
                             )
                           }).reverse()}
                           <View style={{paddingBottom:15}} />

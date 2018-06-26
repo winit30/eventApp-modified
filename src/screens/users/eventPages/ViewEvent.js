@@ -12,7 +12,7 @@ import {fetchApi} from "./../../../services/api";
 import TextField from "./../../../components/eventInputs/TextField";
 
 import styles from "./../../../styles/styles";
-import style from "./../../../styles/ComponentStyles";
+import style from "./../../../styles/componentStyles";
 
 class ViewEvent extends Component<{}> {
 

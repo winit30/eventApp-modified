@@ -9,6 +9,7 @@ import {LOGIN_URL} from "./../constants/urls";
 import {redirectTo, navigateTo} from "./../components/navigation/navigate";
 
 import styles from "./../styles/styles";
+import screenStyles from "./../styles/screenStyles";
 
 class Login extends Component<{}> {
 
@@ -46,14 +47,14 @@ class Login extends Component<{}> {
 
     render() {
         return (
-            <View style={styles.mainContainer}>
-                <View style={styles.authCont}>
+            <View style={styles.flex_1}>
+                <View style={screenStyles.authScreenStyles.loginContainer}>
                     <Email onSubmitEditing={this.onEmailSubmitEditing} />
                     <Password mapElement={this.onMapPassword} />
                     <Button text="Login" onPress={this.loginRequest} />
                 </View>
-                <View style={styles.signupTextCont}>
-                    <Text style={styles.signupText}>Do not have an account yet? </Text>
+                <View style={screenStyles.authScreenStyles.signupTextContainer}>
+                    <Text style={screenStyles.authScreenStyles.signupText}>Do not have an account yet? </Text>
                     <LinkButton text="Register" onPress={() => navigateTo("signup")} />
                 </View>
             </View>

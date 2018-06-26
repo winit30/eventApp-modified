@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 import React, {Component} from "react";
 import {TextInput} from "react-native";
 
-import styles from "./../../styles/styles";
+import componentStyles from "./../../styles/componentStyles";
 
 const defaultProps = {
     mapElement: (n) => {}
@@ -26,10 +26,10 @@ class Email extends Component<{}> {
         let {onChangeText, email} = this.props;
 
         return (
-            <TextInput style={styles.inputBox}
+            <TextInput style={componentStyles.inputComponentStyles}
                 underlineColorAndroid="rgba(0,0,0,0)"
                 placeholder="Email"
-                placeholderTextColor = "rgba(255,255,255,0.5)"
+                placeholderTextColor = "rgba(255,255,255,0.8)"
                 selectionColor="#fff"
                 keyboardType="email-address"
                 autoCapitalize="none"
