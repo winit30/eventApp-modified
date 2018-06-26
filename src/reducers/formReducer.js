@@ -18,12 +18,27 @@ export default (state = defaultState, action) => {
                 }
             }
 
+        case "RESET_EVENT":
+            return {
+                ...state,
+                event: {}
+            }
+
         case "ON_CHANGE_EVENT":
             return {
                 ...state,
                 event: {
                     ...state.event,
                     [action.property]: action.value
+                }
+            }
+
+        case "RESET_PROPERTY":
+            return {
+                ...state,
+                event: {
+                    ...state.event,
+                    [action.property]: ""
                 }
             }
 

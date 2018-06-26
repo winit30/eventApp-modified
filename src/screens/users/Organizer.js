@@ -1,13 +1,14 @@
 import {connect} from "react-redux";
-import {Card, ListItem, Button} from 'react-native-elements';
+import {Card, ListItem, Button, Divider} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MapView , {Marker} from 'react-native-maps';
 import React, {Component} from "react";
-import {View, Text, ScrollView} from "react-native";
+import {View, Text, ScrollView, TouchableNativeFeedback} from "react-native";
 
 import DrawerContainer from "./../../components/drawer/DrawerContainer";
 import {FloatingButton} from "./../../components/buttons";
 import {fetchApi} from "./../../services/api";
-import {GET_EVENT_URL, DELETE_EVENT_URL, UPDATE_EVENT_URL} from "./../../constants/urls";
+import {GET_EVENT_URL, DELETE_EVENT_URL, UPDATE_EVENT_URL, GET_APPLICATION_COUNT_URL} from "./../../constants/urls";
 import {navigateTo} from "./../../components/navigation/navigate";
 import Toolbar from "./../../components/toolbar/Toolbar";
 
@@ -27,10 +28,19 @@ class Organizer extends Component<{}> {
         this.drawer && this.drawer.openDrawer();
     }
 
+    closeDrawer = () => {
+        this.drawer && this.drawer.closeDrawer();
+    }
+
+    navigateToCreateScreen = () => {
+        this.props.resetEvent();
+        navigateTo("createEvent");
+    }
+
     loadEvents = async () => {
         let {token, setLoader, setEvent} = this.props;
         try {
-            const headers = {"x-auth": token}
+            const headers = {"x-auth": token};
             setLoader(true);
             const response = await fetchApi(GET_EVENT_URL, "GET", {}, headers);
             if (response.status === 200) {
@@ -44,6 +54,16 @@ class Organizer extends Component<{}> {
             setLoader(false);
             alert(e.message);
         }
+    }
+
+    editEvent = (id) => {
+        const {events, onChange} = this.props;
+        let eventInstance = JSON.parse(JSON.stringify(events));
+        eventInstance = eventInstance.filter(event => event._id === id)[0];
+        for(const key in eventInstance) {
+            onChange(key, eventInstance[key]);
+        }
+        navigateTo("createEvent");
     }
 
     deleteEvent = async (id) => {
@@ -92,26 +112,83 @@ class Organizer extends Component<{}> {
         }
     }
 
+    hasNotification = (event) => {
+        if (event.application) {
+            const notSeen = event.application.appliers.filter((applier, index) => {
+                return applier.status === "notseen";
+            });
+            if(notSeen && notSeen.length) {
+                return (
+                    <View style={{position: "relative"}}>
+                        <Icon style={{color: "#cccccc"}} name="bell" size={24} color="#333" />
+                        <Text style={{color: "red", position: "absolute", bottom: 0, right: 0, zIndex:1, fontSize: 16, fontWeight: "500"}}>{notSeen.length}</Text>
+                    </View>
+                );
+            }
+        } else {
+            return (
+              <Icon style={{color: "#dddddd"}} name="bell" size={24} color="#333" />
+            );
+        }
+    }
+
     render() {
 
         let {events} = this.props;
 
         return (
           <View style={styles.mainContainer}>
-              <DrawerContainer mapElement={this.mapElement}>
+              <DrawerContainer mapElement={this.mapElement} onCloseDrawer={this.closeDrawer}>
                   <Toolbar title="Dashboard" onIconClicked={this.onIconClicked} navIcon={require("./../../assets/menu.png")}/>
                   {!events.length ?
                       <View style={styles.emptyDashboard}>
                         <Icon name="flask-empty-outline" size={70} color="#ccc" />
                         <Text style={styles.emptyDashboardText}>You have no events</Text>
                       </View> :
-                      <ScrollView >
+                      <ScrollView>
                           {events.map((event, index) => {
                             return(
                               <Card
-                                key={index}
-                                title={event.title}
-                                image={require('./../../assets/default-thumbnail.jpg')}>
+                                key={index}>
+                                <View style={styles.rowContainer}>
+                                    <View style={[styles.rowContainerChild, styles.eventTitleCont]}>
+                                        <Text style={styles.eventTitle}  onPress={() => navigateTo("viewEvent", {selectedEvent: event})}>{event.title.toUpperCase()}</Text>
+                                    </View>
+                                    <View style={styles.rowContainerChild}>
+                                        <View style={styles.iconNotificationCont}>
+                                            <TouchableNativeFeedback
+                                                background={TouchableNativeFeedback.Ripple("#fff", true)}
+                                                onPress={() => navigateTo("viewAppliers", {selectedEvent: event})}>
+                                                {this.hasNotification(event)}
+                                            </TouchableNativeFeedback>
+                                        </View>
+                                    </View>
+                                    <View style={styles.rowContainerChild}>
+                                        <View style={styles.iconButtonCont}>
+                                            <TouchableNativeFeedback
+                                                background={TouchableNativeFeedback.Ripple("#fff", true)}
+                                                onPress={() => this.editEvent(event._id)}>
+                                                <Icon style={{color: "#ffffff"}} name="pencil" size={16} color="#333" />
+                                            </TouchableNativeFeedback>
+                                        </View>
+                                    </View>
+                                </View>
+                                <Divider style={{ backgroundColor: '#999999', marginVertical: 16 }} />
+                                {/* <MapView style={{height: 150, width: "100%", marginBottom: 16}}
+                                    initialRegion={{
+                                        latitude: event.venue.latlng.lat,
+                                        longitude: event.venue.latlng.lng,
+                                        latitudeDelta: 0.0900,
+                                        longitudeDelta: 0.0500,
+                                    }}>
+                                    <Marker
+                                      coordinate={{
+                                          latitude: event.venue.latlng.lat,
+                                          longitude: event.venue.latlng.lng
+                                      }}
+                                      title={event.venue.description}
+                                    />
+                                </MapView>*/}
                                 <Text>{event.date}</Text>
                                 <Text>{event.category}</Text>
                                 <Text style={styles.eventDescription}>{event.description}</Text>
@@ -120,7 +197,7 @@ class Organizer extends Component<{}> {
                                         <Button
                                           backgroundColor='#03A9F4'
                                           buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                                          title={event.isActive ? "INACTIVE" : "ACTIVE"} onPress={() => this.activateDeactivateEvent(!event.isActive, event._id)}/>
+                                          title={event.isActive ? "DEACTIVATE" : "ACTIVATE"} onPress={() => this.activateDeactivateEvent(!event.isActive, event._id)}/>
                                     </View>
                                     <View style={styles.rowContainerChild}>
                                         <Button
@@ -131,11 +208,11 @@ class Organizer extends Component<{}> {
                                 </View>
                               </Card>
                             )
-                          })}
+                          }).reverse()}
                           <View style={{paddingBottom:15}} />
                       </ScrollView>
                   }
-                  <FloatingButton onPress={() => navigateTo("createEvent")}/>
+                  <FloatingButton onPress={this.navigateToCreateScreen}/>
               </DrawerContainer>
           </View>
         );
@@ -148,6 +225,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    onChange:(property, value)=> dispatch({
+        type:"ON_CHANGE_EVENT",
+        property,
+        value,
+    }),
+    resetEvent:() => dispatch({type:"RESET_EVENT"}),
     setEvent: events => dispatch({
         type: "SET_EVENTS",
         events

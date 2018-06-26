@@ -19,7 +19,7 @@ class Main extends Component<{}> {
         let {loggedIn} = this.props;
         return (
             <View style={styles.mainContainer}>
-                <StatusBar backgroundColor="#001970" barStyle="light-content"/>
+                <StatusBar backgroundColor="#560027" barStyle="light-content"/>
                 <Routes loggedIn={loggedIn} />
                 <Loader />
             </View>

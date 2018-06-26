@@ -6,8 +6,12 @@ export const redirectTo = (scene) => {
     }
 }
 
-export const navigateTo = (scene) => {
-    Actions[scene].call();
+export const navigateTo = (scene, props = null) => {
+    if(props) {
+        Actions.push(scene, props);
+    } else {
+        Actions[scene].call();
+    }
 }
 
 export const navigateBack = () => {

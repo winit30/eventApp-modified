@@ -7,6 +7,7 @@ import styles from "./../../styles/styles";
 const defaultProps = {
     mapElement: (n) => {},
     onSubmitEditing: () => {},
+    onTextInputFocus: () => {},
     property: "",
     placeholder: "",
     keyboardType: "default",
@@ -43,6 +44,7 @@ class TextField extends Component<{}> {
                 returnKeyType={this.props.returnKeyType}
                 value={event ? event[this.props.property] ? event[this.props.property] : "" : ""}
                 ref={this.mapElement}
+                onFocus={this.props.onTextInputFocus}
                 onSubmitEditing={this.onSubmitEditing}
                 onChangeText={(value)=> {
                     onChangeText(this.props.property, value);
