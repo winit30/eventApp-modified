@@ -31,6 +31,38 @@ const componentStyles = {
             fontSize: 18,
             paddingHorizontal:5,
             fontFamily: "Roboto-Medium"
+        },
+        floatingButtonContainer: {
+            width: 60,
+            height: 60,
+            borderRadius: 30,
+            backgroundColor: "#ffffff",
+            position: 'absolute',
+            bottom: 15,
+            right: 15,
+            alignItems:'center',
+            justifyContent :'center',
+            elevation:4
+        },
+        floatingButton: {
+            width: 60,
+            height: 60,
+            borderRadius: 30,
+            alignItems:'center',
+            justifyContent :'center'
+        }
+    },
+
+    eventInputStyle: {
+        textfield: {
+            backgroundColor:'rgba(255, 255,255,1)',
+            paddingHorizontal:16,
+            fontSize:16,
+            color:'#000000',
+            borderBottomWidth:1,
+            borderColor:'#ddd',
+            textAlignVertical:'top',
+            elevation:0.7
         }
     },
 
@@ -55,17 +87,46 @@ const componentStyles = {
         },
     },
 
+    emptyDashboardStyle: {
+        emptyDashboard: {
+            flexGrow:1,
+            alignItems:'center',
+            justifyContent :'center',
+        },
+
+        emptyDashboardText: {
+            fontSize:24,
+            color:'#ffffff',
+            fontWeight:'500',
+            marginVertical: 8
+        }
+    },
+
     toolBarComponentStyle: {
-        height:54,
-        backgroundColor: theme.primary.main,
-        color: "#ffffff",
-        fontFamily: "Roboto-Regular"
+        toolbarContainer: {
+            height:56,
+            backgroundColor: theme.primary.main,
+            width: "100%",
+            flexDirection: "row",
+            justifyContent: "space-between",
+        },
+        iconContainer: {
+            flexDirection: "row",
+            paddingHorizontal: 32
+        },
+        titleContainer: {
+            flexDirection: "row"
+        },
+        utilityContainer: {
+            flexDirection: "row",
+            justifyContent: "space-around",
+        }
     },
 
     cardComponentStyle: {
         containerStyle: {
             backgroundColor: theme.primary.main,
-            borderColor: "transparent",
+            borderColor: theme.primary.main,
             elevation: 0
         },
         titleStyle: {
@@ -73,99 +134,13 @@ const componentStyles = {
             color: "#fff",
             fontFamily: "Roboto-Medium",
             marginVertical: 0,
-            paddingBottom: 8
+            padding: 8
         },
         subTitleStyle: {
             color: "#fff",
-            fontFamily: "Roboto-Light"
-        }
-    },
-
-    viewEvent: {
-        titleCont: {
-            backgroundColor: "#ffffff",
-            padding: 16
-        },
-
-        title: {
-            fontWeight: "500",
-            color: "#333333"
-        },
-
-        info : {
-          backgroundColor: "#ffffff",
-          padding: 16
-        },
-
-        date: {
-          fontSize:10,
-          paddingVertical:8,
-          color: "#333333"
-        },
-
-        category: {
-          paddingVertical:8,
-          color: "#333333"
-        },
-
-        description: {
-          paddingVertical:8,
-          color: "#333333"
-        },
-
-        commentBox: {
-            flex: 1,
-            flexDirection: "row"
-        },
-
-        marginLeft16: {
-          marginLeft: 16,
-          marginTop: 8
-        },
-
-        textField: {
-            flex:1,
-            marginRight:8
-        },
-
-        cancelReply: {
-            paddingTop: 4,
-            color:"#03A9F4",
-            marginLeft: 16,
-        },
-
-        sendIcon: {
-          flex:0,
-          width:54,
-          height:54,
-          backgroundColor:"#03A9F4",
-          borderRadius:30,
-          justifyContent:"center",
-          alignItems:"center",
-          marginVertical:8
-        },
-
-        replyIcon: {
-          flex:0,
-          width:43,
-          height:43,
-          backgroundColor:"#03A9F4",
-          borderRadius:30,
-          justifyContent:"center",
-          alignItems:"center",
-          marginVertical:8
-        },
-
-        replyTextField: {
-          paddingTop: 8,
-          paddingBottom: 4,
-          borderBottomWidth: 1,
-          fontSize: 14
-        },
-
-        showComments: {
-            padding:16,
-            backgroundColor: "#fefefe"
+            fontFamily: "Roboto-Light",
+            paddingHorizontal: 8,
+            paddingBottom: 4
         }
     },
 
@@ -173,10 +148,6 @@ const componentStyles = {
         wrapper: {
             backgroundColor: '#ffffff',
             flexDirection: 'row',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            position:"absolute",
             alignItems: 'stretch',
             flex: 1,
             elevation:4
@@ -188,71 +159,94 @@ const componentStyles = {
         },
     },
 
-    Comments: {
-        commentsCont: {
+    commentComponentStyle: {
+        commentContainer: {
             flexDirection: "row",
             flex: 1,
-            backgroundColor: "#eeeeee",
             alignItems: 'stretch',
             padding:16,
-            borderBottomWidth: 1,
-            borderBottomColor: "#ffffff"
+            backgroundColor: "#ffffff",
+            marginHorizontal: 8,
+            marginTop: 8,
+            borderRadius: 4
         },
-
-        repliesCont: {
-            flexDirection: "row",
+        avatarContainer: {},
+        commentTextContainer: {
+            flex: 1
+        },
+        textContainer: {
             flex: 1,
-            backgroundColor: "#eeeeee",
+            marginLeft: 16,
+            paddingTop:4,
+            paddingBottom:8
+        },
+        commentedbyStyle: {
+            fontFamily: "Roboto-Bold",
+            paddingBottom: 2,
+            fontSize: 16
+        },
+        commentTextStyle: {
+            fontFamily: "Roboto-Regular",
+            fontSize: 16
+        },
+
+        utilityContStyle: {
+            utilityContainer: {
+                flexDirection: "row",
+                flex: 1,
+                marginTop: 8,
+                marginLeft: 16,
+                justifyContent: "space-between"
+            },
+            utilityToolStyle: {
+                color: theme.primary.light
+            }
+        },
+
+        replyComponentStyle: {
+            replyContainer: {
+                flex: 1,
+                flexDirection: "row",
+                marginLeft: 16,
+                marginTop: 16
+            },
+            replyTextfieldContainer: {
+                flex:1,
+                marginRight: 8
+            },
+            replyTextFieldStyle: {
+                paddingTop: 8,
+                paddingBottom: 4,
+                borderBottomWidth: 1,
+                fontSize: 16,
+                borderRadius: 30
+            },
+            replyIconButton: {
+                width: 43,
+                height: 43,
+                backgroundColor: theme.primary.light,
+                borderRadius: 30,
+                justifyContent: "center",
+                alignItems: "center"
+            },
+            replyCloseButton: {
+                paddingTop: 16,
+                color: theme.primary.light,
+                marginLeft: 16,
+            }
+        },
+
+        repliesContainer: {
+            flex: 1,
+            paddingTop:16,
+            borderTopWidth: 1,
+            borderTopColor: "#dddddd",
+            flexDirection: "row",
             alignItems: 'stretch',
-            paddingVertical:16,
-            borderBottomWidth: 1,
-            borderBottomColor: "#ffffff"
-        },
-
-        avatar: {
-          flex: 0,
-        },
-
-        textCommentCont: {
-          flex: 1
-        },
-
-        textCont: {
-          flex: 1,
-          backgroundColor: "#ffffff",
-          marginLeft: 16,
-          borderRadius: 3,
-          paddingHorizontal:8,
-          paddingTop:4,
-          paddingBottom:8
-        },
-
-        commentedby: {
-            fontWeight:"500",
-            paddingBottom:2
-        },
-
-        toolsCont: {
-          flexDirection: "row",
-          flex: 1,
-          marginLeft: 16,
-          marginTop: 8,
-          alignItems:"stretch"
-        },
-
-        tools: {
-          flex: 1,
-          paddingTop: 8,
-          color:"#03A9F4",
-          textAlign: "right"
-        },
-
-        replyCont: {
-          flexDirection: "row",
-          flex: 1,
-          marginLeft: 16,
-          marginTop: 8,
-        },
+            backgroundColor: "#ffffff",
+            marginHorizontal: 8,
+            marginTop: 16
+        }
     }
 }
 

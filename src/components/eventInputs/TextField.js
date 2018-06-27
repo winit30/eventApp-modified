@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 import React, {Component} from "react";
 import {TextInput} from "react-native";
 
-import styles from "./../../styles/styles";
+import componentStyles from "./../../styles/componentStyles";
 
 const defaultProps = {
     mapElement: (n) => {},
@@ -32,7 +32,7 @@ class TextField extends Component<{}> {
         let {onChangeText, event} = this.props;
 
         return (
-            <TextInput style={[styles.eventTextInput, this.props.style]}
+            <TextInput style={[componentStyles.eventInputStyle.textfield, this.props.style]}
                 underlineColorAndroid='rgba(0,0,0,0)'
                 placeholder={this.props.placeholder}
                 placeholderTextColor = "#999"

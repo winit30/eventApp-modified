@@ -9,6 +9,17 @@ const styles = StyleSheet.create({
 
     flex_1: {
         flex: 1
+    },
+
+    flexDirectionColumn: {
+        flexDirection: "column"
+    },
+
+    paddingVertical16: {
+        paddingVertical: 16
+    },
+    paddingVertical8: {
+        paddingVertical: 8
     }
 });
 

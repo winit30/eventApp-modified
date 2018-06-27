@@ -143,17 +143,16 @@ class Organizer extends Component<{}> {
               <DrawerContainer mapElement={this.mapElement} onCloseDrawer={this.closeDrawer}>
                   <Toolbar title="Dashboard" onIconClicked={this.onIconClicked} navIcon={require("./../../assets/menu.png")}/>
                   {!events.length ?
-                      <View style={styles.emptyDashboard}>
-                        <Icon name="flask-empty-outline" size={70} color="#ccc" />
-                        <Text style={styles.emptyDashboardText}>You have no events</Text>
+                      <View style={componentStyles.emptyDashboardStyle.emptyDashboard}>
+                        <Icon name="flask-empty-outline" size={70} color="#ffffff" />
+                        <Text style={componentStyles.emptyDashboardStyle.emptyDashboardText}>You have no events</Text>
                       </View> :
                       <ScrollView>
                           {events.map((event, index) => {
                             return(
-                              <TouchableNativeFeedback onPress={() => navigateTo("viewEvent", {selectedEvent: event})}>
+                              <TouchableNativeFeedback key={index} onPress={() => navigateTo("viewEvent", {selectedEvent: event})}>
                                   <Card
-                                    containerStyle={componentStyles.cardComponentStyle.containerStyle}
-                                    key={index}>
+                                    containerStyle={componentStyles.cardComponentStyle.containerStyle}>
                                       <Text style={componentStyles.cardComponentStyle.titleStyle}>{event.title.toUpperCase()}</Text>
                                       <Text style={componentStyles.cardComponentStyle.subTitleStyle}>{event.description}</Text>
                                   </Card>

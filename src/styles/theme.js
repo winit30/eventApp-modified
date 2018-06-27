@@ -1,14 +1,14 @@
 const theme = {
     background: "#ededed",
     primary: {
-        main: "#880e4f",
-        dark: "#560027",
-        light: "#bc477b"
+        main: "#720d5d",
+        dark: "#5e0f49",
+        light: "#a0027d"
     },
     secondary: {
-        main: "#8bc34a",
-        dark: "#5a9216",
-        light: "#bef67a"
+        main: "#ffeb3b",
+        dark: "#c8b900",
+        light: "#ffff72"
     },
     button: {
         primary: "#ffffff",

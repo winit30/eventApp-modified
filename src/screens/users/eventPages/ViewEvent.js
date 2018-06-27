@@ -7,12 +7,13 @@ import _ from "lodash";
 
 import {ADD_COMMENT_URL, GET_COMMENT_URL, DELETE_COMMENT_URL, REPLY_COMMENT_URL, DELETE_REPLY_URL, APPLY_EVENT_URL} from "./../../../constants/urls";
 import BottomToolBar from "./../../../components/toolbar/BottomToolBar";
-import Comments from "./../../../components/comments/Comments";
+import Comments from "./comments/Comments";
 import {fetchApi} from "./../../../services/api";
 import TextField from "./../../../components/eventInputs/TextField";
 
 import styles from "./../../../styles/styles";
 import style from "./../../../styles/componentStyles";
+import screenStyles from "./../../../styles/screenStyles";
 
 class ViewEvent extends Component<{}> {
 
@@ -228,6 +229,7 @@ class ViewEvent extends Component<{}> {
     render() {
         const {selectedEvent, comments, user, events} = this.props;
         const event = _.find(events, {_id: selectedEvent._id});
+        console.log(event);
         return (
           <View style={styles.mainContainer}>
               <ScrollView ref={scrollView => this.scrollView = scrollView}>
@@ -246,29 +248,58 @@ class ViewEvent extends Component<{}> {
                         title={event.venue.description}
                       />
                   </MapView>
-                  <View style={style.viewEvent.info}>
-                      <Text style={style.viewEvent.title}>{event.title}</Text>
-                      <Text style={style.viewEvent.date}>{event.date}</Text>
-                      <Text style={style.viewEvent.date}>{event.applyCount} people are going</Text>
-                      <Text style={style.viewEvent.category}>{event.category}</Text>
-                      <Text style={style.viewEvent.description}>{event.description}</Text>
-                      {(user && user.userType !== "organizer") && this.renderApplyButton(event)}
+                  <View style={screenStyles.viewEventScreenStyle.viewEventContainer}>
+                      <View style={screenStyles.viewEventScreenStyle.viewEventHeader}>
+                          <View style={screenStyles.viewEventScreenStyle.rowContainer}>
+                              <View style={screenStyles.viewEventScreenStyle.iconContainer}>
+                                  <Icon
+                                      name="arrow-left"
+                                      type="material-community"
+                                      color='#ffffff'/>
+                              </View>
+                              <Text style={screenStyles.viewEventScreenStyle.eventTitle}>{event.title}</Text>
+                          </View>
+                          <View style={screenStyles.viewEventScreenStyle.rowContainer}>
+                              <View style={screenStyles.viewEventScreenStyle.iconContainer}>
+                                  <Icon
+                                      name="dots-vertical"
+                                      type="material-community"
+                                      color='#ffffff'/>
+                              </View>
+                          </View>
+                      </View>
+                      <View style={screenStyles.viewEventScreenStyle.viewEventDetails}>
+                          <View style={[screenStyles.viewEventScreenStyle.viewEventMetaDesc, styles.paddingVertical8]}>
+                              <View style={[screenStyles.viewEventScreenStyle.rowContainer, styles.flexDirectionColumn]}>
+                                  <Text style={screenStyles.viewEventScreenStyle.eventCategory}>{event.category}</Text>
+                                  <Text style={screenStyles.viewEventScreenStyle.eventDate}>{event.date}</Text>
+                                  <Text style={screenStyles.viewEventScreenStyle.eventDate}>{event.applyCount} people are going</Text>
+                              </View>
+                              <View style={screenStyles.viewEventScreenStyle.rowContainer}>
+                                  <Text style={screenStyles.viewEventScreenStyle.eventCreatedDate}>{event.createdDate}</Text>
+                              </View>
+                          </View>
+                          <View style={[screenStyles.viewEventScreenStyle.viewEventMetaDesc, styles.paddingVertical16]}>
+                              <Text style={screenStyles.viewEventScreenStyle.eventDescription}>{event.description}</Text>
+                          </View>
+                          <View style={screenStyles.viewEventScreenStyle.viewEventMetaDesc}>
+                              {(user && user.userType !== "organizer") && this.renderApplyButton(event)}
+                          </View>
+                      </View>
+                  </View>
+                  <View style={screenStyles.viewEventScreenStyle.eventCommentStyle.commentContainer}>
+                      <View style={screenStyles.viewEventScreenStyle.eventCommentStyle.textInputContainer}>
+                          <TextField mapElement={this.mapElement} property="comment" placeholder="Comment" />
+                      </View>
+                      <View style={screenStyles.viewEventScreenStyle.eventCommentStyle.sendIconButton}>
+                          <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple("#fff", true)} onPress={this.addComment}>
+                              <Icon name='send' type='material-community' color='#ffffff' />
+                          </TouchableNativeFeedback>
+                      </View>
                   </View>
                   {this._createCommentList()}
                   <View style={{marginBottom:70}}></View>
               </ScrollView>
-              <BottomToolBar>
-                  <View style={style.viewEvent.commentBox}>
-                    <View style={style.viewEvent.textField}>
-                        <TextField mapElement={this.mapElement} property="comment" placeholder="Comment" />
-                    </View>
-                    <View style={style.viewEvent.sendIcon}>
-                        <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple("#fff", true)} onPress={this.addComment}>
-                            <Icon name='send' type='material-community' color='#ffffff' />
-                        </TouchableNativeFeedback>
-                    </View>
-                  </View>
-              </BottomToolBar>
           </View>
         );
     }
