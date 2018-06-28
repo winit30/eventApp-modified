@@ -2,13 +2,15 @@ import {connect} from "react-redux";
 import {Button, List, ListItem, Icon} from "react-native-elements";
 import MapView , {Marker} from "react-native-maps";
 import React, {Component} from "react";
-import {View, Text, ScrollView, TouchableNativeFeedback, Keyboard} from "react-native";
+import {View, Text, ScrollView, TouchableNativeFeedback, Keyboard, UIManager} from "react-native";
 import _ from "lodash";
 
 import {ADD_COMMENT_URL, GET_COMMENT_URL, DELETE_COMMENT_URL, REPLY_COMMENT_URL, DELETE_REPLY_URL, APPLY_EVENT_URL} from "./../../../constants/urls";
 import BottomToolBar from "./../../../components/toolbar/BottomToolBar";
 import Comments from "./comments/Comments";
+import {Dropdown, DropdownItem} from "./../../../components/dropdown";
 import {fetchApi} from "./../../../services/api";
+import {navigateBack} from "./../../../components/navigation/navigate";
 import TextField from "./../../../components/eventInputs/TextField";
 
 import styles from "./../../../styles/styles";
@@ -16,6 +18,13 @@ import style from "./../../../styles/componentStyles";
 import screenStyles from "./../../../styles/screenStyles";
 
 class ViewEvent extends Component<{}> {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showDropdown: false,
+            topPosition: 0
+        };
+    }
 
     componentDidMount() {
         this.loadComments();
@@ -226,6 +235,15 @@ class ViewEvent extends Component<{}> {
         }
     }
 
+    handleDowndownMenu = () => {
+      this.view.measure((x, y, width, height, pageX, pageY) => {
+          this.setState({
+              showDropdown: !this.state.showDropdown,
+              topPosition: pageY
+          })
+        })
+    }
+
     render() {
         const {selectedEvent, comments, user, events} = this.props;
         const event = _.find(events, {_id: selectedEvent._id});
@@ -245,27 +263,38 @@ class ViewEvent extends Component<{}> {
                             latitude: event.venue.latlng.lat,
                             longitude: event.venue.latlng.lng
                         }}
-                        title={event.venue.description}
-                      />
+                        title={event.venue.description}/>
                   </MapView>
                   <View style={screenStyles.viewEventScreenStyle.viewEventContainer}>
                       <View style={screenStyles.viewEventScreenStyle.viewEventHeader}>
                           <View style={screenStyles.viewEventScreenStyle.rowContainer}>
-                              <View style={screenStyles.viewEventScreenStyle.iconContainer}>
-                                  <Icon
-                                      name="arrow-left"
-                                      type="material-community"
-                                      color='#ffffff'/>
-                              </View>
+                              <TouchableNativeFeedback onPress={navigateBack}>
+                                  <View style={screenStyles.viewEventScreenStyle.iconContainer}>
+                                      <Icon
+                                          name="arrow-left"
+                                          type="material-community"
+                                          color='#ffffff'/>
+                                  </View>
+                              </TouchableNativeFeedback>
                               <Text style={screenStyles.viewEventScreenStyle.eventTitle}>{event.title}</Text>
                           </View>
                           <View style={screenStyles.viewEventScreenStyle.rowContainer}>
-                              <View style={screenStyles.viewEventScreenStyle.iconContainer}>
-                                  <Icon
-                                      name="dots-vertical"
-                                      type="material-community"
-                                      color='#ffffff'/>
-                              </View>
+                              <TouchableNativeFeedback onPress={this.handleDowndownMenu}>
+                                  <View style={screenStyles.viewEventScreenStyle.iconContainer} ref={node => this.view = node}>
+                                      <Icon
+                                          name="dots-vertical"
+                                          type="material-community"
+                                          color='#ffffff'/>
+                                  </View>
+                              </TouchableNativeFeedback>
+                              <Dropdown
+                                  showDropdown={this.state.showDropdown}
+                                  onHandleDowndownMenu={this.handleDowndownMenu}
+                                  topPosition={this.state.topPosition}>
+                                  <DropdownItem onPress={() => console.log("Edit")}>Edit</DropdownItem>
+                                  <DropdownItem onPress={() => console.log("Activate")}>Activate</DropdownItem>
+                                  <DropdownItem onPress={() => console.log("Delete")}>Delete</DropdownItem>
+                              </Dropdown>
                           </View>
                       </View>
                       <View style={screenStyles.viewEventScreenStyle.viewEventDetails}>
@@ -298,7 +327,7 @@ class ViewEvent extends Component<{}> {
                       </View>
                   </View>
                   {this._createCommentList()}
-                  <View style={{marginBottom:70}}></View>
+                  <View style={{marginBottom:8}}></View>
               </ScrollView>
           </View>
         );

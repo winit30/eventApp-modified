@@ -40,7 +40,7 @@ const screenStyles = {
             alignItems: "center"
         },
         rowContainer: {
-            flexDirection:'row',
+            flexDirection:'row'
         },
         iconContainer: {
             paddingHorizontal: 16

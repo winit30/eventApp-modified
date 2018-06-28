@@ -1,3 +1,4 @@
+import {Dimensions} from 'react-native';
 import theme from "./theme";
 
 const componentStyles = {
@@ -132,15 +133,19 @@ const componentStyles = {
         titleStyle: {
             textAlign: "left",
             color: "#fff",
-            fontFamily: "Roboto-Medium",
+            fontFamily: "Roboto-Bold",
             marginVertical: 0,
-            padding: 8
+            paddingHorizontal: 8,
+            paddingTop: 4,
+            paddingBottom: 4,
+            fontSize: 18
         },
         subTitleStyle: {
             color: "#fff",
-            fontFamily: "Roboto-Light",
+            fontFamily: "Roboto-Regular",
             paddingHorizontal: 8,
-            paddingBottom: 4
+            paddingBottom: 4,
+            fontSize: 16
         }
     },
 
@@ -246,6 +251,19 @@ const componentStyles = {
             backgroundColor: "#ffffff",
             marginHorizontal: 8,
             marginTop: 16
+        }
+    },
+
+    dropdownComponentStyle: {
+        dropdownContainer: {
+            width: Dimensions.get('window').width/2,
+            position: "absolute",
+            height: 100,
+            backgroundColor: "#cccccc",
+            top: 0,
+            right: 32,
+            zIndex: 1,
+            borderRadius: 3
         }
     }
 }

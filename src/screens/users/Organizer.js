@@ -153,7 +153,7 @@ class Organizer extends Component<{}> {
                               <TouchableNativeFeedback key={index} onPress={() => navigateTo("viewEvent", {selectedEvent: event})}>
                                   <Card
                                     containerStyle={componentStyles.cardComponentStyle.containerStyle}>
-                                      <Text style={componentStyles.cardComponentStyle.titleStyle}>{event.title.toUpperCase()}</Text>
+                                      <Text style={componentStyles.cardComponentStyle.titleStyle}>{event.title}</Text>
                                       <Text style={componentStyles.cardComponentStyle.subTitleStyle}>{event.description}</Text>
                                   </Card>
                               </TouchableNativeFeedback>
