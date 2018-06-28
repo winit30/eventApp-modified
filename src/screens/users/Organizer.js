@@ -58,62 +58,6 @@ class Organizer extends Component<{}> {
         }
     }
 
-    editEvent = (id) => {
-        const {events, onChange} = this.props;
-        let eventInstance = JSON.parse(JSON.stringify(events));
-        eventInstance = eventInstance.filter(event => event._id === id)[0];
-        for(const key in eventInstance) {
-            onChange(key, eventInstance[key]);
-        }
-        navigateTo("createEvent");
-    }
-
-    deleteEvent = async (id) => {
-        let {token, setLoader, setEvent, events} = this.props;
-        try {
-            const headers = {"x-auth": token}
-            setLoader(true);
-            const response = await fetchApi(`${DELETE_EVENT_URL}/${id}`, "DELETE", {}, headers);
-            const res = await response.json();
-            if(res.n === 1 && res.ok ===1) {
-              const eventArray = events.filter((event) => {
-                  return event._id !== id;
-              });
-              setEvent(eventArray);
-              setLoader(false);
-            } else {
-               throw new Error("Unable to delete event.");
-            }
-        } catch (e) {
-            setLoader(false);
-            alert(e.message);
-        }
-    }
-
-    activateDeactivateEvent = async (isActive, id) => {
-        let {token, setLoader, setEvent, events} = this.props;
-        try {
-            const body = {isActive}
-            const headers = {"x-auth": token}
-            setLoader(true);
-            const response = await fetchApi(`${UPDATE_EVENT_URL}/${id}`, "PUT", body, headers);
-            const res = await response.json();
-            if(res.nModified === 1 && res.ok ===1) {
-                const eventArray = events.map((event) => {
-                    if(event._id === id) event.isActive = isActive;
-                    return event;
-                });
-                setEvent(eventArray);
-                setLoader(false);
-            } else {
-              throw new Error("Unable to activate event.");
-            }
-        } catch (e) {
-            setLoader(false);
-            alert(e.message);
-        }
-    }
-
     hasNotification = (event) => {
         if (event.application) {
             const notSeen = event.application.appliers.filter((applier, index) => {

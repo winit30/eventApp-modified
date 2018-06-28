@@ -5,12 +5,12 @@ import React, {Component} from "react";
 import {View, Text, ScrollView, TouchableNativeFeedback, Keyboard, UIManager} from "react-native";
 import _ from "lodash";
 
-import {ADD_COMMENT_URL, GET_COMMENT_URL, DELETE_COMMENT_URL, REPLY_COMMENT_URL, DELETE_REPLY_URL, APPLY_EVENT_URL} from "./../../../constants/urls";
+import {ADD_COMMENT_URL, GET_COMMENT_URL, DELETE_COMMENT_URL, REPLY_COMMENT_URL, DELETE_REPLY_URL, APPLY_EVENT_URL, UPDATE_EVENT_URL, DELETE_EVENT_URL} from "./../../../constants/urls";
 import BottomToolBar from "./../../../components/toolbar/BottomToolBar";
 import Comments from "./comments/Comments";
 import {Dropdown, DropdownItem} from "./../../../components/dropdown";
 import {fetchApi} from "./../../../services/api";
-import {navigateBack} from "./../../../components/navigation/navigate";
+import {navigateBack, navigateTo, redirectTo} from "./../../../components/navigation/navigate";
 import TextField from "./../../../components/eventInputs/TextField";
 
 import styles from "./../../../styles/styles";
@@ -217,6 +217,59 @@ class ViewEvent extends Component<{}> {
         }
     }
 
+    activateDeactivateEvent = async (isActive, id) => {
+        let {token, setLoader, setEvent, events} = this.props;
+        try {
+            const body = {isActive}
+            const headers = {"x-auth": token}
+            setLoader(true);
+            const response = await fetchApi(`${UPDATE_EVENT_URL}/${id}`, "PUT", body, headers);
+            const res = await response.json();
+            if(res.nModified === 1 && res.ok ===1) {
+                const eventArray = events.map((event) => {
+                    if(event._id === id) event.isActive = isActive;
+                    return event;
+                });
+                setEvent(eventArray);
+                setLoader(false);
+            } else {
+              throw new Error("Unable to activate event.");
+            }
+        } catch (e) {
+            setLoader(false);
+            alert(e.message);
+        }
+    }
+
+    deleteEvent = async (id) => {
+        let {token, setLoader, setEvent, events} = this.props;
+        try {
+            const headers = {"x-auth": token}
+            setLoader(true);
+            const response = await fetchApi(`${DELETE_EVENT_URL}/${id}`, "DELETE", {}, headers);
+            const res = await response.json();
+            if(res.n === 1 && res.ok ===1) {
+              setLoader(false);
+              redirectTo("user");
+            } else {
+               throw new Error("Unable to delete event.");
+            }
+        } catch (e) {
+            setLoader(false);
+            alert(e.message);
+        }
+    }
+
+    editEvent = (id) => {
+        const {events, onChangeEvent} = this.props;
+        let eventInstance = JSON.parse(JSON.stringify(events));
+        eventInstance = eventInstance.filter(event => event._id === id)[0];
+        for(const key in eventInstance) {
+            onChangeEvent(key, eventInstance[key]);
+        }
+        navigateTo("createEvent");
+    }
+
     renderApplyButton = (event) => {
         if(event.applier && Object.keys(event.applier).length > 0) {
             return (
@@ -291,9 +344,15 @@ class ViewEvent extends Component<{}> {
                                   showDropdown={this.state.showDropdown}
                                   onHandleDowndownMenu={this.handleDowndownMenu}
                                   topPosition={this.state.topPosition}>
-                                  <DropdownItem onPress={() => console.log("Edit")}>Edit</DropdownItem>
-                                  <DropdownItem onPress={() => console.log("Activate")}>Activate</DropdownItem>
-                                  <DropdownItem onPress={() => console.log("Delete")}>Delete</DropdownItem>
+                                  <DropdownItem onPress={() => {
+                                          this.handleDowndownMenu();
+                                          this.editEvent(event._id);
+                                  }}>Edit</DropdownItem>
+                                  <DropdownItem onPress={() => this.activateDeactivateEvent(!event.isActive, event._id)}>{event.isActive ? "Deactivate" : "Activate"}</DropdownItem>
+                                  <DropdownItem onPress={() => {
+                                      this.handleDowndownMenu();
+                                      this.deleteEvent(event._id);
+                                  }}>Delete</DropdownItem>
                               </Dropdown>
                           </View>
                       </View>
@@ -346,7 +405,9 @@ const mapDispatchToProps = dispatch => ({
     setLoader: status => dispatch({type:"LOADER", status}),
     setComments: comments => dispatch({type:"SET_COMMENTS", comments}),
     resetProperty: property => dispatch({type: "RESET_PROPERTY", property}),
-    addApplierToEvent: event => dispatch({type: "UPDATE_EVENT", event})
+    addApplierToEvent: event => dispatch({type: "UPDATE_EVENT", event}),
+    setEvent: events => dispatch({type: "SET_EVENTS", events}),
+    onChangeEvent: (property, value)=> dispatch({type:"ON_CHANGE_EVENT",property, value})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps )(ViewEvent);

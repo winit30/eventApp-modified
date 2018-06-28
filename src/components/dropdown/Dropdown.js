@@ -24,8 +24,7 @@ class Dropdown extends Component<{}> {
         if (nextProps.topPosition === prevState.topPosition) return null;
         return {
           topPosition: {
-              top: nextProps.topPosition,
-              flex: 1
+              top: nextProps.topPosition + 16
           }
         }
     }

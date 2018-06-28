@@ -138,7 +138,7 @@ const componentStyles = {
             paddingHorizontal: 8,
             paddingTop: 4,
             paddingBottom: 4,
-            fontSize: 18
+            fontSize: 20
         },
         subTitleStyle: {
             color: "#fff",
@@ -258,12 +258,22 @@ const componentStyles = {
         dropdownContainer: {
             width: Dimensions.get('window').width/2,
             position: "absolute",
-            height: 100,
-            backgroundColor: "#cccccc",
+            backgroundColor: "#fefefe",
             top: 0,
-            right: 32,
+            right: 25,
             zIndex: 1,
-            borderRadius: 3
+            borderRadius: 2,
+            elevation: 4
+        },
+        dropdownItemStyle: {
+            flex: 1,
+            paddingVertical: 16,
+            paddingHorizontal:16
+        },
+        dropdownTextStyle: {
+            color: theme.primary.dark,
+            fontSize: 16,
+            fontFamily: "Roboto-Medium"
         }
     }
 }

@@ -40,15 +40,18 @@ const screenStyles = {
             alignItems: "center"
         },
         rowContainer: {
-            flexDirection:'row'
+            flexDirection:'row',
+            justifyContent: "space-around",
         },
         iconContainer: {
-            paddingHorizontal: 16
+            paddingHorizontal: 16,
+            paddingVertical: 16
         },
         eventTitle: {
             color: "#ffffff",
             fontFamily: "Roboto-Bold",
-            fontSize: 18
+            fontSize: 18,
+            paddingVertical: 16
         },
 
         viewEventDetails: {
