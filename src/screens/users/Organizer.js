@@ -58,26 +58,6 @@ class Organizer extends Component<{}> {
         }
     }
 
-    hasNotification = (event) => {
-        if (event.application) {
-            const notSeen = event.application.appliers.filter((applier, index) => {
-                return applier.status === "notseen";
-            });
-            if(notSeen && notSeen.length) {
-                return (
-                    <View style={{position: "relative"}}>
-                        <Icon style={{color: "#cccccc"}} name="bell" size={24} color="#333" />
-                        <Text style={{color: "red", position: "absolute", bottom: 0, right: 0, zIndex:1, fontSize: 16, fontWeight: "500"}}>{notSeen.length}</Text>
-                    </View>
-                );
-            }
-        } else {
-            return (
-              <Icon style={{color: "#dddddd"}} name="bell" size={24} color="#333" />
-            );
-        }
-    }
-
     render() {
 
         let {events} = this.props;
