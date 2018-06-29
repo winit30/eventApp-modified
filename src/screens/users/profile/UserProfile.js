@@ -8,6 +8,7 @@ import {GET_USER_PROFILE_URL} from "./../../../constants/urls";
 import ProfileHeader from "./profileComponents/ProfileHeader";
 
 import styles from "./../../../styles/styles";
+import screenStyles from "./../../../styles/screenStyles";
 
 class UserProfile extends Component<{}> {
 
@@ -38,9 +39,9 @@ class UserProfile extends Component<{}> {
     render() {
         let {userDetails} = this.props;
         return (
-            <View style={styles.mainContainer}>
+            <View style={styles.flex_1}>
                 {userDetails &&
-                    <View style={styles.mainContainer}>
+                    <View style={[styles.flex_1, screenStyles.userProfileStyle.profileBackground]}>
                         <ProfileHeader details={userDetails} />
                         <View style={[styles.rowContainer, styles.paddingVertical32]}>
                             <View style={styles.rowContainerChild}>

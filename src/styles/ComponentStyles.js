@@ -3,10 +3,9 @@ import theme from "./theme";
 
 const componentStyles = {
     inputComponentStyles: {
-        width: "85%",
+        width: "100%",
         fontSize: 18,
         color: "#ffffff",
-        marginVertical: 16,
         borderBottomWidth: 2,
         borderBottomColor: theme.input.borderColor,
         paddingVertical: 8,
@@ -15,9 +14,8 @@ const componentStyles = {
 
     buttonComponentStyle: {
         primaryButton: {
-            width: "85%",
+            width: "100%",
             backgroundColor: theme.button.primary,
-            marginVertical: 32,
             paddingVertical: 12,
             borderRadius: 45
         },
@@ -60,10 +58,8 @@ const componentStyles = {
             paddingHorizontal:16,
             fontSize:16,
             color:'#000000',
-            borderBottomWidth:1,
-            borderColor:'#ddd',
-            textAlignVertical:'top',
-            elevation:0.7
+            elevation:0.7,
+            fontFamily: "Roboto-Regular"
         }
     },
 
@@ -76,7 +72,7 @@ const componentStyles = {
             fontSize: 18
         },
         selectPickerContainer: {
-            width: "85%",
+            width: "100%",
             height: "auto",
             marginVertical: 16,
             paddingVertical: 8
@@ -113,7 +109,7 @@ const componentStyles = {
         },
         iconContainer: {
             flexDirection: "row",
-            paddingHorizontal: 32
+            paddingHorizontal: 16
         },
         titleContainer: {
             flexDirection: "row"
@@ -128,7 +124,20 @@ const componentStyles = {
         containerStyle: {
             backgroundColor: theme.primary.main,
             borderColor: theme.primary.main,
-            elevation: 0
+            elevation: 0,
+            marginTop: 16,
+            marginHorizontal: 16,
+            padding: 16,
+            flex: 1,
+            flexDirection: "row"
+        },
+        iconStyle: {
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center"
+        },
+        contentStyle: {
+          flex: 4
         },
         titleStyle: {
             textAlign: "left",
@@ -275,6 +284,55 @@ const componentStyles = {
             fontSize: 16,
             fontFamily: "Roboto-Medium"
         }
+    },
+
+    sidebarComponentStyle: {
+        sidebarHeaderContainer: {
+            flex: 1,
+            padding: 16,
+            backgroundColor: theme.secondary.main,
+            flexDirection: "row"
+        },
+        headerIconStyle: {
+            width: 56,
+            height: 56,
+            borderRadius: 45,
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: theme.secondary.dark,
+            marginRight: 16,
+        },
+        headerInfoStyle: {
+            height: 56
+        },
+        headerTitleStyle: {
+            color: "#000000",
+            fontSize: 24,
+            fontFamily: "Roboto-Bold"
+        },
+        headerUserTypeStyle: {
+            color: "#333333",
+            fontFamily: "Roboto-Medium",
+            fontSize: 16
+        },
+        sidebarContentStyle: {
+            flex: 3,
+            backgroundColor: theme.secondary.light,
+            paddingVertical: 16
+        },
+        listItemStyle: {
+            flexDirection: "row",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            height: 50,
+            paddingHorizontal: 16
+        },
+        listItemTitleStyle: {
+            fontSize: 18,
+            flexShrink: 1,
+            fontFamily: "Roboto-Medium",
+            color: "#333333"
+        },
     }
 }
 

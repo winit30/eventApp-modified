@@ -1,12 +1,14 @@
-import {Button} from 'react-native-elements';
 import {connect} from "react-redux";
 import React, {Component} from "react";
 import {View, Text, TouchableWithoutFeedback, DatePickerAndroid} from "react-native";
 
+import {Button} from "./../../components/buttons";
+import {navigateBack, navigateTo} from "./../../components/navigation/navigate";
 import TextField from "./../../components/eventInputs/TextField";
-import {navigateTo} from "./../../components/navigation/navigate";
+import Toolbar2 from "./../../components/toolbar/Toolbar2";
 
 import styles from "./../../styles/styles";
+import screenStyles from "./../../styles/screenStyles";
 
 class EventFirstScreen extends Component<{}> {
 
@@ -33,26 +35,30 @@ class EventFirstScreen extends Component<{}> {
 
     render() {
         return (
-          <View style={styles.mainContainer}>
-            <View style={styles.formCont}>
-              <TextField property="title" placeholder="Title" />
-              <TextField property="category" placeholder="Category" />
-              <TouchableWithoutFeedback  onPress={this.openDatePicker}>
-                  <View style={styles.relativeDateCont}>
-                      <TextField property="date" placeholder="Date" keyboardType="numeric" mapElement={this.mapDatePicker}/>
-                      <View style={styles.dateOverlay}/>
-                  </View>
-              </TouchableWithoutFeedback>
-              <TextField property="description" placeholder="Event Description" multiline={true} numberOfLines={4} />
-            </View>
-            <View style={[styles.formContRow]}>
-                <View style={styles.formContRowChild}>
-                    <Button
-                      backgroundColor='#03A9F4'
-                      buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                      title="NEXT"  onPress={() => navigateTo("secondScreen")} />
+          <View style={[styles.flex_1, screenStyles.createEventStyle.eventFromBackgroundColor]}>
+            <Toolbar2 onIconClicked={navigateBack} />
+            <View style={screenStyles.createEventStyle.eventFormContainer}>
+                <View style={screenStyles.createEventStyle.eventInputContainer}>
+                    <TextField property="title" placeholder="Title" placeholderColor="#ffffff" style={screenStyles.createEventStyle.eventInputStyle} />
                 </View>
-            </View>
+                <View style={screenStyles.createEventStyle.eventInputContainer}>
+                    <TextField property="category" placeholder="Category" placeholderColor="#ffffff" style={screenStyles.createEventStyle.eventInputStyle} />
+                </View>
+                <View style={screenStyles.createEventStyle.eventInputContainer}>
+                    <TouchableWithoutFeedback  onPress={this.openDatePicker}>
+                        <View style={styles.relativeDateCont}>
+                            <TextField property="date" placeholder="Date" style={screenStyles.createEventStyle.eventInputStyle} placeholderColor="#ffffff" keyboardType="numeric" mapElement={this.mapDatePicker}/>
+                            <View style={styles.dateOverlay} />
+                        </View>
+                    </TouchableWithoutFeedback>
+                </View>
+                <View style={screenStyles.createEventStyle.eventInputContainer}>
+                    <TextField property="description" placeholder="Event Description" placeholderColor="#ffffff" multiline={true} numberOfLines={4} style={[screenStyles.createEventStyle.eventInputStyle, screenStyles.createEventStyle.eventTextareaStyle]} />
+                </View>
+                <View style={[screenStyles.createEventStyle.eventInputContainer, styles.pullRight]}>
+                    <Button onPress={() => navigateTo("secondScreen")} style={screenStyles.createEventStyle.eventInputButton} text="Next" />
+                </View>
+              </View>
           </View>
         );
     }

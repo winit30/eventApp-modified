@@ -49,9 +49,15 @@ class Login extends Component<{}> {
         return (
             <View style={styles.flex_1}>
                 <View style={screenStyles.authScreenStyles.loginContainer}>
-                    <Email onSubmitEditing={this.onEmailSubmitEditing} />
-                    <Password mapElement={this.onMapPassword} />
-                    <Button text="Login" onPress={this.loginRequest} />
+                    <View style={screenStyles.authScreenStyles.authInputContainer}>
+                        <Email onSubmitEditing={this.onEmailSubmitEditing} />
+                    </View>
+                    <View style={screenStyles.authScreenStyles.authInputContainer}>
+                        <Password mapElement={this.onMapPassword} />
+                    </View>
+                    <View style={screenStyles.authScreenStyles.authButtonContainer}>
+                        <Button text="Login" onPress={this.loginRequest} />
+                    </View>
                 </View>
                 <View style={screenStyles.authScreenStyles.signupTextContainer}>
                     <Text style={screenStyles.authScreenStyles.signupText}>Do not have an account yet? </Text>

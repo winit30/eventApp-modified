@@ -345,8 +345,12 @@ class ViewEvent extends Component<{}> {
                                   onHandleDowndownMenu={this.handleDowndownMenu}
                                   topPosition={this.state.topPosition}>
                                   <DropdownItem onPress={() => {
-                                          this.handleDowndownMenu();
-                                          this.editEvent(event._id);
+                                          this.handleDowndownMenu()
+                                          navigateTo("viewAppliers", {selectedEvent: event})
+                                  }}>Applications</DropdownItem>
+                                  <DropdownItem onPress={() => {
+                                          this.handleDowndownMenu()
+                                          this.editEvent(event._id)
                                   }}>Edit</DropdownItem>
                                   <DropdownItem onPress={() => this.activateDeactivateEvent(!event.isActive, event._id)}>{event.isActive ? "Deactivate" : "Activate"}</DropdownItem>
                                   <DropdownItem onPress={() => {

@@ -14,7 +14,9 @@ const defaultProps = {
     returnKeyType: "done",
     multiline: false,
     numberOfLines:1,
-    style: {}
+    style: {},
+    selectionColor: "#666666",
+    placeholderColor: "#666666"
 }
 
 class TextField extends Component<{}> {
@@ -35,8 +37,7 @@ class TextField extends Component<{}> {
             <TextInput style={[componentStyles.eventInputStyle.textfield, this.props.style]}
                 underlineColorAndroid='rgba(0,0,0,0)'
                 placeholder={this.props.placeholder}
-                placeholderTextColor = "#999"
-                selectionColor="#333333"
+                placeholderTextColor = {this.props.placeholderColor}
                 autoCapitalize="words"
                 keyboardType={this.props.keyboardType}
                 multiline = {this.props.multiline}

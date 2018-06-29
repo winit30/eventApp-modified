@@ -1,5 +1,4 @@
 import {connect} from "react-redux";
-import {Card, ListItem, Button, Divider} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MapView , {Marker} from 'react-native-maps';
 import React, {Component} from "react";
@@ -12,6 +11,7 @@ import {GET_EVENT_URL, DELETE_EVENT_URL, UPDATE_EVENT_URL, GET_APPLICATION_COUNT
 import {navigateTo} from "./../../components/navigation/navigate";
 import Toolbar from "./../../components/toolbar/Toolbar";
 
+import theme from "./../../styles/theme";
 import styles from "./../../styles/styles";
 import screenStyles from "./../../styles/screenStyles";
 import componentStyles from "./../../styles/componentStyles";
@@ -95,11 +95,15 @@ class Organizer extends Component<{}> {
                           {events.map((event, index) => {
                             return(
                               <TouchableNativeFeedback key={index} onPress={() => navigateTo("viewEvent", {selectedEvent: event})}>
-                                  <Card
-                                    containerStyle={componentStyles.cardComponentStyle.containerStyle}>
-                                      <Text style={componentStyles.cardComponentStyle.titleStyle}>{event.title}</Text>
-                                      <Text style={componentStyles.cardComponentStyle.subTitleStyle}>{event.description}</Text>
-                                  </Card>
+                                  <View style={componentStyles.cardComponentStyle.containerStyle}>
+                                      <View style={componentStyles.cardComponentStyle.iconStyle}>
+                                          <Icon name="music" size={46} color={theme.primary.light} />
+                                      </View>
+                                      <View style={componentStyles.cardComponentStyle.contentStyle}>
+                                          <Text numberOfLines={1} style={componentStyles.cardComponentStyle.titleStyle}>{event.title}</Text>
+                                          <Text numberOfLines={1} style={componentStyles.cardComponentStyle.subTitleStyle}>{event.description}</Text>
+                                      </View>
+                                  </View>
                               </TouchableNativeFeedback>
                             )
                           }).reverse()}

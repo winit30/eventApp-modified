@@ -4,6 +4,7 @@ import React, {Component} from "react";
 import {View, Text} from "react-native";
 
 import styles from "./../../../../styles/styles";
+import screenStyles from "./../../../../styles/screenStyles";
 
 class ProfileHeader extends Component<{}> {
 
@@ -11,14 +12,14 @@ class ProfileHeader extends Component<{}> {
         const {details} = this.props;
         return (
             <View>
-                <View style={styles.displayPicCont}>
+                <View style={screenStyles.userProfileStyle.headerContainer}>
                     <Avatar
                         large
                         rounded
-                        source={require("./../../../../assets/thumbnail.png")}
+                        source={require("./../../../../assets/profile.jpg")}
                         onPress={() => console.log("Works!")}
                         activeOpacity={0.7}/>
-                    <Text style={styles.profileName}>{details.name}</Text>
+                    <Text style={screenStyles.userProfileStyle.profileName}>{details.name}</Text>
                 </View>
             </View>
         );

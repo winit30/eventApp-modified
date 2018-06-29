@@ -60,10 +60,18 @@ class Register extends Component<{}> {
             <View style={styles.flex_1}>
                 <View style={screenStyles.authScreenStyles.loginContainer}>
                     <Select />
-                    <TextField onSubmitEditing={this.onNameSubmitEditing} />
-                    <Email onSubmitEditing={this.onEmailSubmitEditing} mapElement={this.onMapEmail} />
-                    <Password mapElement={this.onMapPassword} />
-                    <Button text="Register" onPress={this.registerRequest}/>
+                    <View style={screenStyles.authScreenStyles.authInputContainer}>
+                        <TextField onSubmitEditing={this.onNameSubmitEditing} />
+                    </View>
+                    <View style={screenStyles.authScreenStyles.authInputContainer}>
+                        <Email onSubmitEditing={this.onEmailSubmitEditing} mapElement={this.onMapEmail} />
+                    </View>
+                    <View style={screenStyles.authScreenStyles.authInputContainer}>
+                        <Password mapElement={this.onMapPassword} />
+                    </View>
+                    <View style={screenStyles.authScreenStyles.authButtonContainer}>
+                        <Button text="Register" onPress={this.registerRequest}/>
+                    </View>
                 </View>
                 <View style={screenStyles.authScreenStyles.signupTextContainer}>
                     <Text style={screenStyles.authScreenStyles.signupText}>Already have an account? </Text>

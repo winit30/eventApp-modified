@@ -9,7 +9,18 @@ const screenStyles = {
             flexGrow: 4,
             alignItems: "center",
             justifyContent : "center",
-            backgroundColor: theme.primary.main
+            backgroundColor: theme.primary.main,
+            padding: 16
+        },
+
+        authInputContainer: {
+            width: "100%",
+            paddingBottom: 16
+        },
+
+        authButtonContainer: {
+            width: "100%",
+            paddingTop: 16
         },
 
         signupTextContainer: {
@@ -106,11 +117,71 @@ const screenStyles = {
               flex:0,
               width:54,
               height:54,
-              backgroundColor:theme.primary.light,
+              backgroundColor:theme.primary.main,
               borderRadius:30,
               justifyContent:"center",
               alignItems:"center"
             },
+        }
+    },
+
+    createEventStyle: {
+        eventFromBackgroundColor: {
+            backgroundColor:theme.primary.light,
+        },
+        eventFormContainer: {
+            padding: 16
+        },
+        eventInputContainer: {
+            width: "100%",
+            paddingBottom: 16
+        },
+        eventInputButton: {
+            width: "50%"
+        },
+        eventInputStyle: {
+            backgroundColor: theme.primary.main,
+            color: "#ffffff",
+            borderRadius: 3
+        },
+        eventTextareaStyle: {
+            textAlignVertical:'top',
+        },
+        eventSelectedText: {
+            paddingHorizontal: 16,
+            paddingTop: 13,
+            paddingBottom: 16,
+            marginBottom: 16,
+            fontSize: 16,
+            fontFamily: "Roboto-Regular"
+        },
+        mapViewStyle: {
+            borderBottomWidth: 3,
+            borderTopWidth: 3,
+            borderLeftWidth: 3,
+            borderRightWidth: 3,
+            borderColor: "#ffffff",
+            marginBottom: 16
+        }
+    },
+
+    userProfileStyle: {
+        profileBackground: {
+            backgroundColor: "#ffffff"
+        },
+        headerContainer: {
+            height:250,
+            backgroundColor: theme.primary.main,
+            padding: 16,
+            justifyContent:"center",
+            alignItems: "center",
+        },
+
+        profileName: {
+            color: "#fff",
+            fontSize: 24,
+            fontFamily: "Roboto-Medium",
+            padding: 16
         }
     }
 }

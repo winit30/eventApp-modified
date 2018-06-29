@@ -9,6 +9,7 @@ import {redirectTo, navigateTo} from "./../../components/navigation/navigate";
 import {url} from "./../../config/settings";
 
 import styles from "./../../styles/styles";
+import componentStyles from "./../../styles/componentStyles";
 
 class Sidebar extends Component {
 
@@ -40,30 +41,29 @@ class Sidebar extends Component {
         let {user} = this.props;
 
         return(
-            <ScrollView style={styles.drawer}>
+            <ScrollView style={styles.flex_1}>
                 <TouchableNativeFeedback onPress={this.showUserProfile}>
-                    <View style={styles.header} key={0}>
-                        <View style={styles.headerIcon} key={0}>
+                    <View style={componentStyles.sidebarComponentStyle.sidebarHeaderContainer}>
+                        <View style={componentStyles.sidebarComponentStyle.headerIconStyle}>
                             <Icon name="md-boat" size={35} color="#fff" />
                         </View>
-                        <View style={styles.headerInfo} key={1}>
-                            <Text style={styles.headerTitle} key={0}>
+                        <View style={componentStyles.sidebarComponentStyle.headerInfoStyle}>
+                            <Text style={componentStyles.sidebarComponentStyle.headerTitleStyle}>
                                 {user ? user.name[0].toUpperCase() + user.name.slice(1) : ""}
                             </Text>
-                            <Text style={styles.headerUserType} key={1}>
+                            <Text style={componentStyles.sidebarComponentStyle.headerUserTypeStyle}>
                                 {user ? user.userType === "organizer" ? "Organizer" : "Volunteer" : ""}
                             </Text>
                         </View>
                     </View>
                 </TouchableNativeFeedback>
-                <View style={styles.content} key={1}>
+                <View style={componentStyles.sidebarComponentStyle.sidebarContentStyle}>
                     <View>
-                        <TouchableOpacity
-                            style={styles.listItem}>
-                            <Text style={styles.listItemTitle}>Link</Text>
+                        <TouchableOpacity style={componentStyles.sidebarComponentStyle.listItemStyle}>
+                            <Text style={componentStyles.sidebarComponentStyle.listItemTitleStyle}>Filter Events</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.listItem} onPress={this.logout}>
-                            <Text style={styles.listItemTitle}>Logout</Text>
+                        <TouchableOpacity style={componentStyles.sidebarComponentStyle.listItemStyle} onPress={this.logout}>
+                            <Text style={componentStyles.sidebarComponentStyle.listItemTitleStyle}>Logout</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

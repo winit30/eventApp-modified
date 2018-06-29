@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import React, {Component} from "react";
-import {TouchableOpacity, Text} from "react-native";
+import {TouchableNativeFeedback, Text, View} from "react-native";
 
 import componentStyles from "./../../styles/componentStyles";
 
@@ -13,9 +13,11 @@ class Button extends Component<{}> {
 
     render() {
         return (
-            <TouchableOpacity style={[componentStyles.buttonComponentStyle.primaryButton, this.props.style]} onPress={this.props.onPress}>
-                <Text style={[componentStyles.buttonComponentStyle.primaryButtonText, this.props.textStyle]}>{this.props.text}</Text>
-            </TouchableOpacity>
+            <TouchableNativeFeedback onPress={this.props.onPress}>
+                <View style={[componentStyles.buttonComponentStyle.primaryButton, this.props.style]} >
+                  <Text style={[componentStyles.buttonComponentStyle.primaryButtonText, this.props.textStyle]}>{this.props.text}</Text>
+                </View>
+            </TouchableNativeFeedback>
         );
     }
 }

@@ -11,7 +11,7 @@ defaultProps = {
     onIconClicked: ""
 }
 
-class Toolbar extends Component<{}> {
+class Toolbar2 extends Component<{}> {
 
     render() {
         return (
@@ -19,26 +19,11 @@ class Toolbar extends Component<{}> {
               <TouchableNativeFeedback onPress={this.props.onIconClicked}>
                   <View style={componentStyles.toolBarComponentStyle.iconContainer}>
                       <Icon
-                          name="menu"
+                          name="arrow-left"
                           type="material-community"
-                          size={28}
                           color='#ffffff'/>
                   </View>
               </TouchableNativeFeedback>
-              <View style={componentStyles.toolBarComponentStyle.utilityContainer}>
-                  <View style={componentStyles.toolBarComponentStyle.iconContainer}>
-                      <Icon
-                          name="comment"
-                          type="font-awesome"
-                          color='#ffffff'/>
-                  </View>
-                  <View style={componentStyles.toolBarComponentStyle.iconContainer}>
-                      <Icon
-                          name="bell"
-                          type="font-awesome"
-                          color='#ffffff'/>
-                  </View>
-              </View>
           </View>
         );
     }
@@ -52,6 +37,6 @@ const mapDispatchToProps = dispatch => ({
 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps )(Toolbar);
+export default connect(mapStateToProps, mapDispatchToProps )(Toolbar2);
 
-Toolbar.defaultProps = defaultProps;
+Toolbar2.defaultProps = defaultProps;

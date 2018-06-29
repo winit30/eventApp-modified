@@ -6,21 +6,32 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: theme.background
     },
-
     flex_1: {
         flex: 1
     },
-
+    flex_2: {
+        flex: 2
+    },
+    fullWidth: {
+      width: "100%"
+    },
     flexDirectionColumn: {
         flexDirection: "column"
     },
-
     paddingVertical16: {
         paddingVertical: 16
     },
     paddingVertical8: {
         paddingVertical: 8
     },
+    pullRight: {
+        alignItems: "flex-end"
+    },
+    backgroundColor: {
+        backgroundColor: "#cccccc"
+    },
+
+    //old styles below
 
     authCont: {
         flexGrow: 4,
@@ -169,7 +180,6 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         borderBottomWidth:1,
         borderColor:'#ddd',
-        textAlignVertical:'top',
         elevation:0.7
     },
 
