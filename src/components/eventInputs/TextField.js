@@ -38,7 +38,7 @@ class TextField extends Component<{}> {
                 underlineColorAndroid='rgba(0,0,0,0)'
                 placeholder={this.props.placeholder}
                 placeholderTextColor = {this.props.placeholderColor}
-                autoCapitalize="words"
+                autoCapitalize="sentences"
                 keyboardType={this.props.keyboardType}
                 multiline = {this.props.multiline}
                 numberOfLines = {this.props.numberOfLines}
