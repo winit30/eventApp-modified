@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 import React, {Component} from "react";
 import {TextInput} from "react-native";
 
-import styles from "./../../styles/styles";
+import componentStyles from "./../../styles/componentStyles";
 
 const defaultProps = {
     mapElement: (n) => {}
@@ -22,12 +22,12 @@ class Password extends Component<{}> {
         let {onChangeText, password} = this.props;
 
         return (
-            <TextInput style={styles.inputBox}
+            <TextInput style={componentStyles.inputComponentStyles}
                 underlineColorAndroid="rgba(0,0,0,0)"
                 placeholder="Password"
                 value={password ? password : ""}
                 secureTextEntry={true}
-                placeholderTextColor = "rgba(255,255,255,0.5)"
+                placeholderTextColor="rgba(255,255,255,0.8)"
                 ref={this.mapElement}
                 onChangeText={(value)=> {
                     onChangeText('password', value);

@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 import React, {Component} from "react";
 import {ToolbarAndroid, View} from "react-native";
 
-import style from "./../../styles/ComponentStyles";
+import style from "./../../styles/componentStyles";
 
 class BottomToolBar extends Component<{}> {
 

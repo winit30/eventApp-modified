@@ -1,15 +1,17 @@
-import {Button} from 'react-native-elements';
 import {connect} from "react-redux";
 import MapView , {Marker} from 'react-native-maps';
 import React, {Component} from "react";
 import {View, Text, TouchableWithoutFeedback, DatePickerAndroid, TextInput} from "react-native";
 
 import Autocomplete from "./../../components/eventInputs/Autocomplete";
+import {Button} from "./../../components/buttons";
 import {CREATE_EVENT_URL, UPDATE_EVENT_URL} from "./../../constants/urls";
 import {fetchGoogleApi, fetchApi} from "./../../services/api";
 import {redirectTo, navigateBack} from "./../../components/navigation/navigate";
+import Toolbar2 from "./../../components/toolbar/Toolbar2";
 
 import styles from "./../../styles/styles";
+import screenStyles from "./../../styles/screenStyles";
 
 class EventSecondScreen extends Component<{}> {
     constructor(props) {
@@ -57,7 +59,7 @@ class EventSecondScreen extends Component<{}> {
                             lng: response.result.geometry.location.lng
                         }
                     };
-                    this.props.onChange("venue", venue);
+                    this.props.onChangeEvent("venue", venue);
                     this.setState({
                         value: "",
                         location: {}
@@ -70,7 +72,7 @@ class EventSecondScreen extends Component<{}> {
     }
 
     handleRemoveVenue = () => {
-        this.props.onChange("venue", null)
+        this.props.onChangeEvent("venue", null)
     }
 
     createEvent = async () => {
@@ -129,58 +131,54 @@ class EventSecondScreen extends Component<{}> {
         const {venue} = this.props.event;
         const {event} = this.props;
         return (
-          <View style={styles.mainContainer}>
-            {!venue ?
-                <Autocomplete
-                    onVenueChange={this.onVenueChange}
-                    value={this.state.value}
-                    handleSelectItem={this.handleSelectItem}
-                    mapElement={this.mapAutocomplete}
-                    data={this.state.location} /> :
-                <View style={[styles.formCont, styles.autocompleteHight]}>
-                    <Text style={[styles.eventTextInput, styles.eventSelectedText]} numberOfLines={1} onPress={this.handleRemoveVenue}>{venue.description}</Text>
-                    <MapView style={styles.drawer}
-                        initialRegion={{
-                            latitude: venue.latlng.lat,
-                            longitude: venue.latlng.lng,
-                            latitudeDelta: 0.0900,
-                            longitudeDelta: 0.0500,
-                        }}>
-                        <Marker
-                          coordinate={{
-                            latitude: venue.latlng.lat,
-                            longitude: venue.latlng.lng
-                          }}
-                          title={venue.description}
-                        />
-                    </MapView>
-                </View>
-            }
-
-            <View style={styles.rowContainer}>
-                <View style={styles.rowContainerChild}>
-                    <Button
-                      backgroundColor='#03A9F4'
-                      buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                      title="BACK" onPress={navigateBack}/>
-                </View>
-                {(event._id && venue) &&
-                    <View style={styles.rowContainerChild}>
-                        <Button
-                          backgroundColor='#03A9F4'
-                          buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                          title="UPDATE" onPress={this.updateEvent} />
-                    </View>
-                }
-                {(!event._id && venue) &&
-                    <View style={styles.rowContainerChild}>
-                        <Button
-                          backgroundColor='#03A9F4'
-                          buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                          title="CREATE" onPress={this.createEvent} />
-                    </View>
-                }
-            </View>
+          <View style={[styles.flex_1, screenStyles.createEventStyle.eventFromBackgroundColor]}>
+              <Toolbar2 onIconClicked={navigateBack} />
+              <View style={[screenStyles.createEventStyle.eventFormContainer, styles.flex_1]}>
+                  {!venue ?
+                      <Autocomplete
+                          onVenueChange={this.onVenueChange}
+                          value={this.state.value}
+                          handleSelectItem={this.handleSelectItem}
+                          style={screenStyles.createEventStyle.eventInputStyle}
+                          mapElement={this.mapAutocomplete}
+                          placeholder="Enter Venue"
+                          placeholderColor="#ffffff"
+                          data={this.state.location} /> :
+                      <View style={styles.flex_1}>
+                          <Text style={[screenStyles.createEventStyle.eventInputStyle, screenStyles.createEventStyle.eventSelectedText]} numberOfLines={1} onPress={this.handleRemoveVenue}>{venue.description}</Text>
+                          <View style={[screenStyles.createEventStyle.mapViewStyle, styles.flex_1]}>
+                              <MapView style={styles.flex_1}
+                                  initialRegion={{
+                                      latitude: venue.latlng.lat,
+                                      longitude: venue.latlng.lng,
+                                      latitudeDelta: 0.0900,
+                                      longitudeDelta: 0.0500,
+                                  }}>
+                                  <Marker
+                                    coordinate={{
+                                      latitude: venue.latlng.lat,
+                                      longitude: venue.latlng.lng
+                                    }}
+                                    title={venue.description}/>
+                              </MapView>
+                          </View>
+                          <View style={[styles.fullWidth, styles.pullRight]}>
+                              {(event._id && venue) &&
+                                  <Button
+                                      onPress={this.updateEvent}
+                                      style={screenStyles.createEventStyle.eventInputButton}
+                                      text="Update" />
+                              }
+                              {(!event._id && venue) &&
+                                  <Button
+                                      onPress={this.createEvent}
+                                      style={screenStyles.createEventStyle.eventInputButton}
+                                      text="Create" />
+                              }
+                          </View>
+                      </View>
+                  }
+              </View>
           </View>
         );
     }
@@ -193,7 +191,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onChange:(property, value)=> dispatch({
+    onChangeEvent:(property, value)=> dispatch({
         type:"ON_CHANGE_EVENT",
         property,
         value,

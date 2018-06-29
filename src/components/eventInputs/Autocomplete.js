@@ -4,10 +4,17 @@ import React, {Component} from "react";
 import {TextInput, View, Text} from "react-native";
 
 import styles from "./../../styles/styles";
+import componentStyles from "./../../styles/componentStyles";
 
 const defaultProps = {
     data: {
-        predictions: []
+        predictions: [],
+        style: {},
+        value: "",
+        onVenueChange: () => {},
+        selectionColor: "#666666",
+        placeholder: "",
+        placeholderColor: "#666666"
     }
 }
 
@@ -46,8 +53,7 @@ class Autocomplete extends Component<{}> {
                                   })}
                                 </Text>
                               </View>
-                          }
-                        />
+                          }/>
                     );
                 }
             });
@@ -56,15 +62,15 @@ class Autocomplete extends Component<{}> {
 
     render() {
         return (
-            <View style={styles.formCont}>
+            <View>
                 <TextInput
                     ref={this.mapElement}
-                    style={styles.eventTextInput}
+                    style={[componentStyles.eventInputStyle.textfield, this.props.style]}
                     value={this.props.value}
+                    placeholder={this.props.placeholder}
+                    placeholderTextColor = {this.props.placeholderColor}
                     onChangeText={this.props.onVenueChange}
-                    underlineColorAndroid='rgba(0,0,0,0)'
-                    placeholderTextColor = "#999"
-                    selectionColor="#333333" />
+                    underlineColorAndroid='rgba(0,0,0,0)' />
                 {this.loadListItem()}
             </View>
         );

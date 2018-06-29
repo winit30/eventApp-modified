@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 import {Picker, View} from "react-native";
 import React, { Component } from "react";
 
-import styles from "./../../styles/styles";
+import componentStyles from "./../../styles/componentStyles";
 
 class Select extends Component<{}> {
 
@@ -11,16 +11,16 @@ class Select extends Component<{}> {
         let {onChangeText, userType} = this.props;
 
         return (
-            <View style={styles.pickerCont}>
+            <View style={componentStyles.selectComponentStyle.selectPickerContainer}>
                 <Picker
                     selectedValue={userType ? userType : "options"}
-                    style={styles.selectPicker}
+                    style={componentStyles.selectComponentStyle.selectPicker}
                     onValueChange={(itemValue, itemIndex) => onChangeText("userType", itemValue) }>
                     <Picker.Item label="Select user type" value="options" />
                     <Picker.Item label="Organizer" value="organizer" />
                     <Picker.Item label="Volunteer" value="volunteer" />
                 </Picker>
-                <View style={styles.pickerBorderBottom} />
+                <View style={componentStyles.selectComponentStyle.pickerBorderBottom} />
             </View>
         );
     }

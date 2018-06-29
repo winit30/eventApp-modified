@@ -11,7 +11,7 @@ var initialState = {
 //        "email": "vineet@gmail.com",
 //        "userType": "organizer"
 //     },
-//     token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YWYyYTcxMWM1MGQ1YjAwMTQ4YWJiNWQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTI5ODU2ODU4fQ.1WIRdmqabx8pgCxuvFxUw19G00sKgychqdXTUPnyMTk",
+//     token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YWYyYTcxMWM1MGQ1YjAwMTQ4YWJiNWQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTMwMjY3OTIzfQ.mXL9txBMNRd8tlVgRED2tOJt7dPh7xWp0vEpwpn9c1c",
 //     loggedIn: true
 // }
 

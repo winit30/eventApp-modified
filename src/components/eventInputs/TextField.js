@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 import React, {Component} from "react";
 import {TextInput} from "react-native";
 
-import styles from "./../../styles/styles";
+import componentStyles from "./../../styles/componentStyles";
 
 const defaultProps = {
     mapElement: (n) => {},
@@ -14,7 +14,9 @@ const defaultProps = {
     returnKeyType: "done",
     multiline: false,
     numberOfLines:1,
-    style: {}
+    style: {},
+    selectionColor: "#666666",
+    placeholderColor: "#666666"
 }
 
 class TextField extends Component<{}> {
@@ -32,11 +34,10 @@ class TextField extends Component<{}> {
         let {onChangeText, event} = this.props;
 
         return (
-            <TextInput style={[styles.eventTextInput, this.props.style]}
+            <TextInput style={[componentStyles.eventInputStyle.textfield, this.props.style]}
                 underlineColorAndroid='rgba(0,0,0,0)'
                 placeholder={this.props.placeholder}
-                placeholderTextColor = "#999"
-                selectionColor="#333333"
+                placeholderTextColor = {this.props.placeholderColor}
                 autoCapitalize="words"
                 keyboardType={this.props.keyboardType}
                 multiline = {this.props.multiline}

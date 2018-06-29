@@ -1,5 +1,4 @@
 import {connect} from "react-redux";
-import {Card, ListItem, Button, Divider} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MapView , {Marker} from 'react-native-maps';
 import React, {Component} from "react";
@@ -12,7 +11,10 @@ import {GET_EVENT_URL, DELETE_EVENT_URL, UPDATE_EVENT_URL, GET_APPLICATION_COUNT
 import {navigateTo} from "./../../components/navigation/navigate";
 import Toolbar from "./../../components/toolbar/Toolbar";
 
+import theme from "./../../styles/theme";
 import styles from "./../../styles/styles";
+import screenStyles from "./../../styles/screenStyles";
+import componentStyles from "./../../styles/componentStyles";
 
 class Organizer extends Component<{}> {
 
@@ -56,157 +58,33 @@ class Organizer extends Component<{}> {
         }
     }
 
-    editEvent = (id) => {
-        const {events, onChange} = this.props;
-        let eventInstance = JSON.parse(JSON.stringify(events));
-        eventInstance = eventInstance.filter(event => event._id === id)[0];
-        for(const key in eventInstance) {
-            onChange(key, eventInstance[key]);
-        }
-        navigateTo("createEvent");
-    }
-
-    deleteEvent = async (id) => {
-        let {token, setLoader, setEvent, events} = this.props;
-        try {
-            const headers = {"x-auth": token}
-            setLoader(true);
-            const response = await fetchApi(`${DELETE_EVENT_URL}/${id}`, "DELETE", {}, headers);
-            const res = await response.json();
-            if(res.n === 1 && res.ok ===1) {
-              const eventArray = events.filter((event) => {
-                  return event._id !== id;
-              });
-              setEvent(eventArray);
-              setLoader(false);
-            } else {
-               throw new Error("Unable to delete event.");
-            }
-        } catch (e) {
-            setLoader(false);
-            alert(e.message);
-        }
-    }
-
-    activateDeactivateEvent = async (isActive, id) => {
-        let {token, setLoader, setEvent, events} = this.props;
-        try {
-            const body = {isActive}
-            const headers = {"x-auth": token}
-            setLoader(true);
-            const response = await fetchApi(`${UPDATE_EVENT_URL}/${id}`, "PUT", body, headers);
-            const res = await response.json();
-            if(res.nModified === 1 && res.ok ===1) {
-                const eventArray = events.map((event) => {
-                    if(event._id === id) event.isActive = isActive;
-                    return event;
-                });
-                setEvent(eventArray);
-                setLoader(false);
-            } else {
-              throw new Error("Unable to activate event.");
-            }
-        } catch (e) {
-            setLoader(false);
-            alert(e.message);
-        }
-    }
-
-    hasNotification = (event) => {
-        if (event.application) {
-            const notSeen = event.application.appliers.filter((applier, index) => {
-                return applier.status === "notseen";
-            });
-            if(notSeen && notSeen.length) {
-                return (
-                    <View style={{position: "relative"}}>
-                        <Icon style={{color: "#cccccc"}} name="bell" size={24} color="#333" />
-                        <Text style={{color: "red", position: "absolute", bottom: 0, right: 0, zIndex:1, fontSize: 16, fontWeight: "500"}}>{notSeen.length}</Text>
-                    </View>
-                );
-            }
-        } else {
-            return (
-              <Icon style={{color: "#dddddd"}} name="bell" size={24} color="#333" />
-            );
-        }
-    }
-
     render() {
 
         let {events} = this.props;
 
         return (
-          <View style={styles.mainContainer}>
+          <View style={[styles.flex_1, screenStyles.appBackgroundColor]}>
               <DrawerContainer mapElement={this.mapElement} onCloseDrawer={this.closeDrawer}>
                   <Toolbar title="Dashboard" onIconClicked={this.onIconClicked} navIcon={require("./../../assets/menu.png")}/>
                   {!events.length ?
-                      <View style={styles.emptyDashboard}>
-                        <Icon name="flask-empty-outline" size={70} color="#ccc" />
-                        <Text style={styles.emptyDashboardText}>You have no events</Text>
+                      <View style={componentStyles.emptyDashboardStyle.emptyDashboard}>
+                        <Icon name="flask-empty-outline" size={70} color="#ffffff" />
+                        <Text style={componentStyles.emptyDashboardStyle.emptyDashboardText}>You have no events</Text>
                       </View> :
                       <ScrollView>
                           {events.map((event, index) => {
                             return(
-                              <Card
-                                key={index}>
-                                <View style={styles.rowContainer}>
-                                    <View style={[styles.rowContainerChild, styles.eventTitleCont]}>
-                                        <Text style={styles.eventTitle}  onPress={() => navigateTo("viewEvent", {selectedEvent: event})}>{event.title.toUpperCase()}</Text>
-                                    </View>
-                                    <View style={styles.rowContainerChild}>
-                                        <View style={styles.iconNotificationCont}>
-                                            <TouchableNativeFeedback
-                                                background={TouchableNativeFeedback.Ripple("#fff", true)}
-                                                onPress={() => navigateTo("viewAppliers", {selectedEvent: event})}>
-                                                {this.hasNotification(event)}
-                                            </TouchableNativeFeedback>
-                                        </View>
-                                    </View>
-                                    <View style={styles.rowContainerChild}>
-                                        <View style={styles.iconButtonCont}>
-                                            <TouchableNativeFeedback
-                                                background={TouchableNativeFeedback.Ripple("#fff", true)}
-                                                onPress={() => this.editEvent(event._id)}>
-                                                <Icon style={{color: "#ffffff"}} name="pencil" size={16} color="#333" />
-                                            </TouchableNativeFeedback>
-                                        </View>
-                                    </View>
-                                </View>
-                                <Divider style={{ backgroundColor: '#999999', marginVertical: 16 }} />
-                                {/* <MapView style={{height: 150, width: "100%", marginBottom: 16}}
-                                    initialRegion={{
-                                        latitude: event.venue.latlng.lat,
-                                        longitude: event.venue.latlng.lng,
-                                        latitudeDelta: 0.0900,
-                                        longitudeDelta: 0.0500,
-                                    }}>
-                                    <Marker
-                                      coordinate={{
-                                          latitude: event.venue.latlng.lat,
-                                          longitude: event.venue.latlng.lng
-                                      }}
-                                      title={event.venue.description}
-                                    />
-                                </MapView>*/}
-                                <Text>{event.date}</Text>
-                                <Text>{event.category}</Text>
-                                <Text style={styles.eventDescription}>{event.description}</Text>
-                                <View style={styles.rowContainer}>
-                                    <View style={styles.rowContainerChild}>
-                                        <Button
-                                          backgroundColor='#03A9F4'
-                                          buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                                          title={event.isActive ? "DEACTIVATE" : "ACTIVATE"} onPress={() => this.activateDeactivateEvent(!event.isActive, event._id)}/>
-                                    </View>
-                                    <View style={styles.rowContainerChild}>
-                                        <Button
-                                          backgroundColor='#03A9F4'
-                                          buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                                          title='DELETE' onPress={() => this.deleteEvent(event._id)} />
-                                    </View>
-                                </View>
-                              </Card>
+                              <TouchableNativeFeedback key={index} onPress={() => navigateTo("viewEvent", {selectedEvent: event})}>
+                                  <View style={componentStyles.cardComponentStyle.containerStyle}>
+                                      <View style={componentStyles.cardComponentStyle.iconStyle}>
+                                          <Icon name="music" size={46} color={theme.primary.light} />
+                                      </View>
+                                      <View style={componentStyles.cardComponentStyle.contentStyle}>
+                                          <Text numberOfLines={1} style={componentStyles.cardComponentStyle.titleStyle}>{event.title}</Text>
+                                          <Text numberOfLines={1} style={componentStyles.cardComponentStyle.subTitleStyle}>{event.description}</Text>
+                                      </View>
+                                  </View>
+                              </TouchableNativeFeedback>
                             )
                           }).reverse()}
                           <View style={{paddingBottom:15}} />
