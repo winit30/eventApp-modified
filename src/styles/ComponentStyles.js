@@ -272,7 +272,7 @@ const componentStyles = {
             right: 25,
             zIndex: 1,
             borderRadius: 2,
-            elevation: 4
+            elevation: 6
         },
         dropdownItemStyle: {
             flex: 1,
@@ -280,8 +280,8 @@ const componentStyles = {
             paddingHorizontal:16
         },
         dropdownTextStyle: {
-            color: theme.primary.dark,
-            fontSize: 16,
+            color: "#000000",
+            fontSize: 18,
             fontFamily: "Roboto-Medium"
         }
     },
