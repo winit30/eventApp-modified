@@ -12,17 +12,14 @@ const screenStyles = {
             backgroundColor: theme.primary.main,
             padding: 16
         },
-
         authInputContainer: {
             width: "100%",
             paddingBottom: 16
         },
-
         authButtonContainer: {
             width: "100%",
             paddingTop: 16
         },
-
         signupTextContainer: {
             flexGrow: 1,
             alignItems:'flex-end',
@@ -31,7 +28,6 @@ const screenStyles = {
             flexDirection:'row',
             backgroundColor: theme.primary.main
         },
-
         signupText: {
             color:'#ffffff',
             fontSize:18,
@@ -64,43 +60,45 @@ const screenStyles = {
             fontSize: 18,
             paddingVertical: 16
         },
-
         viewEventDetails: {
 
         },
-
         viewEventMetaDesc: {
             flexDirection:'row',
             justifyContent: "space-between",
             paddingHorizontal: 16
         },
-
+        statusContainer: {
+            paddingBottom: 16
+        },
+        statusTextStyle: {
+            fontSize: 14,
+            fontFamily: "Roboto-Regular",
+            color: "#ffffff",
+            paddingBottom: 4
+        },
         eventCategory: {
             color: "#ffffff",
             fontSize: 16,
             fontFamily: "Roboto-Medium",
         },
-
         eventCreatedDate: {
             color: "#ffffff",
             fontSize: 12,
             fontFamily: "Roboto-Regular",
         },
-
         eventDate: {
             color: "#ffffff",
             fontSize: 12,
             fontFamily: "Roboto-Regular",
             paddingTop: 4
         },
-
         eventDescription: {
             color: "#ffffff",
             fontSize: 16,
             fontFamily: "Roboto-Regular",
             paddingBottom: 8
         },
-
         eventCommentStyle: {
             commentContainer: {
                 flex: 1,
@@ -176,7 +174,6 @@ const screenStyles = {
             justifyContent:"center",
             alignItems: "center",
         },
-
         profileName: {
             color: "#fff",
             fontSize: 24,

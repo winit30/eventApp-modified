@@ -30,6 +30,10 @@ class Volunteer extends Component<{}> {
         this.drawer && this.drawer.openDrawer();
     }
 
+    closeDrawer = () => {
+        this.drawer && this.drawer.closeDrawer();
+    }
+
     loadEventsForSelectedCity = async (city) => {
         let {token, setLoader, setEvent} = this.props;
         try {
