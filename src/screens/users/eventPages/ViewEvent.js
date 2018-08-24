@@ -6,6 +6,7 @@ import {View, Text, ScrollView, TouchableNativeFeedback, Keyboard, UIManager} fr
 import _ from "lodash";
 
 import {ADD_COMMENT_URL, GET_COMMENT_URL, DELETE_COMMENT_URL, REPLY_COMMENT_URL, DELETE_REPLY_URL, APPLY_EVENT_URL, UPDATE_EVENT_URL, DELETE_EVENT_URL} from "./../../../constants/urls";
+import {LOADER, ON_CHANGE_EVENT, RESET_PROPERTY, SET_EVENTS, SET_COMMENTS, UPDATE_EVENT} from "./../../../constants/action-types";
 import BottomToolBar from "./../../../components/toolbar/BottomToolBar";
 import Comments from "./comments/Comments";
 import {Dropdown, DropdownItem} from "./../../../components/dropdown";
@@ -415,12 +416,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    setLoader: status => dispatch({type:"LOADER", status}),
-    setComments: comments => dispatch({type:"SET_COMMENTS", comments}),
-    resetProperty: property => dispatch({type: "RESET_PROPERTY", property}),
-    addApplierToEvent: event => dispatch({type: "UPDATE_EVENT", event}),
-    setEvent: events => dispatch({type: "SET_EVENTS", events}),
-    onChangeEvent: (property, value)=> dispatch({type:"ON_CHANGE_EVENT",property, value})
+    setLoader: status => dispatch({type: LOADER, status}),
+    setComments: comments => dispatch({type: SET_COMMENTS, comments}),
+    resetProperty: property => dispatch({type: RESET_PROPERTY, property}),
+    addApplierToEvent: event => dispatch({type: UPDATE_EVENT, event}),
+    setEvent: events => dispatch({type: SET_EVENTS, events}),
+    onChangeEvent: (property, value)=> dispatch({type: ON_CHANGE_EVENT,property, value})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewEvent);

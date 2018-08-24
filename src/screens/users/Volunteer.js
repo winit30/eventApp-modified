@@ -8,6 +8,7 @@ import {View, Text, Picker, ScrollView} from "react-native";
 import DrawerContainer from "./../../components/drawer/DrawerContainer";
 import {fetchApi} from "./../../services/api";
 import {GET_EVENT_URL, GET_APPLICATION_URL, GET_APPLICATION_COUNT_URL} from "./../../constants/urls";
+import {LOADER, SET_EVENTS, SET_CITY} from "./../../constants/action-types";
 import {navigateTo} from "./../../components/navigation/navigate";
 import Toolbar from "./../../components/toolbar/Toolbar";
 
@@ -149,9 +150,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onChangeSelect: city => dispatch({type: "SET_CITY", city}),
-    setEvent: events => dispatch({type: "SET_EVENTS", events}),
-    setLoader: status => dispatch({type:"LOADER", status})
+    onChangeSelect: city => dispatch({type: SET_CITY, city}),
+    setEvent: events => dispatch({type: SET_EVENTS, events}),
+    setLoader: status => dispatch({type: LOADER, status})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Volunteer);
