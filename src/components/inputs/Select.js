@@ -2,6 +2,8 @@ import {connect} from "react-redux";
 import {Picker, View} from "react-native";
 import React, { Component } from "react";
 
+import {ON_CHANGE_TEXT} from "./../../constants/action-types";
+
 import componentStyles from "./../../styles/componentStyles";
 
 class Select extends Component<{}> {
@@ -32,7 +34,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     onChangeText: (property, value) => dispatch({
-        type:"ON_CHANGE_TEXT",
+        type: ON_CHANGE_TEXT,
         property,
         value
     })

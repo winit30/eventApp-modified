@@ -5,6 +5,7 @@ import React, {Component, PropTypes} from "react";
 
 import {fetchApi} from "./../../services/api";
 import {LOGOUT_URL} from "./../../constants/urls";
+import {LOADER, INIT} from "./../../constants/action-types";
 import {redirectTo, navigateTo} from "./../../components/navigation/navigate";
 import {url} from "./../../config/settings";
 
@@ -78,8 +79,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    setLoader: status => dispatch({type: "LOADER", status}),
-    resetStore: () => dispatch({type: "INIT"})
+    setLoader: status => dispatch({type: LOADER, status}),
+    resetStore: () => dispatch({type: INIT})
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

@@ -190,7 +190,14 @@ class ViewEvent extends Component<{}> {
             return comments.map(c => {
                 if (c) {
                     return (
-                        <Comments key={c._id} selectedEvent={selectedEvent} userComment={c} handleDeleteReply={this.handleDeleteReply} replyToComment={this.replyToComment} deleteComment={this._deleteComment} showDelete={(user._id === c.commentedby)} />
+                        <Comments
+                            key={c._id}
+                            selectedEvent={selectedEvent}
+                            userComment={c}
+                            handleDeleteReply={this.handleDeleteReply}
+                            replyToComment={this.replyToComment}
+                            deleteComment={this._deleteComment}
+                            showDelete={(user._id === c.commentedby)} />
                     );
                 }
             });

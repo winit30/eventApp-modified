@@ -1,3 +1,5 @@
+import {INIT, SET_USER_DETAILS} from "./../constants/action-types";
+
 var initialState = {
     userDetails: null
 }
@@ -6,18 +8,17 @@ export default (state = initialState, action) => {
 
     switch (action.type) {
 
-        case "INIT":
+        case INIT:
             return initialState
 
-        case "SET_USER_DETAILS":
+        case SET_USER_DETAILS:
             return {
                 ...state,
                 userDetails: action.userDetails
             }
 
         default:
-
+            return state;
     }
 
-    return state;
 }

@@ -2,6 +2,8 @@ import {connect} from "react-redux";
 import React, {Component} from "react";
 import {TextInput} from "react-native";
 
+import {ON_CHANGE_TEXT} from "./../../constants/action-types";
+
 import componentStyles from "./../../styles/componentStyles";
 
 const defaultProps = {
@@ -36,6 +38,7 @@ class Email extends Component<{}> {
                 returnKeyType="next"
                 value={email ? email : ""}
                 ref={this.mapElement}
+                blurOnSubmit={false}
                 onSubmitEditing={this.onSubmitEditing}
                 onChangeText={(value)=> {
                     onChangeText("email", value);
@@ -50,7 +53,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     onChangeText: (property, value) => dispatch({
-        type:"ON_CHANGE_TEXT",
+        type: ON_CHANGE_TEXT,
         property,
         value
     })

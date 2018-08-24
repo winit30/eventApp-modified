@@ -1,3 +1,5 @@
+import {INIT, ON_CHANGE_TEXT, RESET_EVENT, ON_CHANGE_EVENT, RESET_PROPERTY} from "./../constants/action-types";
+
 var defaultState = {
     form: {},
     event: {}
@@ -6,10 +8,10 @@ var defaultState = {
 export default (state = defaultState, action) => {
     switch (action.type) {
 
-        case "INIT":
+        case INIT:
             return defaultState
 
-        case "ON_CHANGE_TEXT":
+        case ON_CHANGE_TEXT:
             return {
                 ...state,
                 form: {
@@ -18,13 +20,13 @@ export default (state = defaultState, action) => {
                 }
             }
 
-        case "RESET_EVENT":
+        case RESET_EVENT:
             return {
                 ...state,
                 event: {}
             }
 
-        case "ON_CHANGE_EVENT":
+        case ON_CHANGE_EVENT:
             return {
                 ...state,
                 event: {
@@ -33,7 +35,7 @@ export default (state = defaultState, action) => {
                 }
             }
 
-        case "RESET_PROPERTY":
+        case RESET_PROPERTY:
             return {
                 ...state,
                 event: {

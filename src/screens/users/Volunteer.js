@@ -88,7 +88,7 @@ class Volunteer extends Component<{}> {
         let {city, events} = this.props;
         return (
           <View style={styles.mainContainer}>
-              <DrawerContainer mapElement={this.mapElement}>
+              <DrawerContainer mapElement={this.mapElement} onCloseDrawer={this.closeDrawer}>
                   <Toolbar title="Dashboard" onIconClicked={this.onIconClicked} navIcon={require("./../../assets/menu.png")}/>
                   {!events.length ?
                   <View style={[styles.pickerCont, styles.selectCityCont]}>
