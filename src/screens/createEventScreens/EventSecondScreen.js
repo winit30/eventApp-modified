@@ -15,7 +15,7 @@ import screenStyles from "./../../styles/screenStyles";
 
 class EventSecondScreen extends Component<{}> {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             location: {},
             value: ""

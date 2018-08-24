@@ -29,14 +29,10 @@ class Toolbar2 extends Component<{}> {
     }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = state => ({});
 
-});
+const mapDispatchToProps = dispatch => ({});
 
-const mapDispatchToProps = dispatch => ({
-
-});
-
-export default connect(mapStateToProps, mapDispatchToProps )(Toolbar2);
+export default connect(mapStateToProps, mapDispatchToProps)(Toolbar2);
 
 Toolbar2.defaultProps = defaultProps;

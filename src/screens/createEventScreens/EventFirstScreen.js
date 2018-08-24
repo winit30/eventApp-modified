@@ -3,6 +3,7 @@ import React, {Component} from "react";
 import {View, Text, TouchableWithoutFeedback, DatePickerAndroid} from "react-native";
 
 import {Button} from "./../../components/buttons";
+import {ON_CHANGE_EVENT} from "./../../constants/action-types";
 import {navigateBack, navigateTo} from "./../../components/navigation/navigate";
 import TextField from "./../../components/eventInputs/TextField";
 import Toolbar2 from "./../../components/toolbar/Toolbar2";
@@ -70,7 +71,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     onChange:(property, value)=> dispatch({
-        type:"ON_CHANGE_EVENT",
+        type: ON_CHANGE_EVENT,
         property,
         value,
     })

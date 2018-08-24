@@ -81,9 +81,7 @@ const mapStateToProps = state => ({
     event: state.form.event
 });
 
-const mapDispatchToProps = dispatch => ({
-
-});
+const mapDispatchToProps = dispatch => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Autocomplete);
 

@@ -30,6 +30,10 @@ class Volunteer extends Component<{}> {
         this.drawer && this.drawer.openDrawer();
     }
 
+    closeDrawer = () => {
+        this.drawer && this.drawer.closeDrawer();
+    }
+
     loadEventsForSelectedCity = async (city) => {
         let {token, setLoader, setEvent} = this.props;
         try {
@@ -84,7 +88,7 @@ class Volunteer extends Component<{}> {
         let {city, events} = this.props;
         return (
           <View style={styles.mainContainer}>
-              <DrawerContainer mapElement={this.mapElement}>
+              <DrawerContainer mapElement={this.mapElement} onCloseDrawer={this.closeDrawer}>
                   <Toolbar title="Dashboard" onIconClicked={this.onIconClicked} navIcon={require("./../../assets/menu.png")}/>
                   {!events.length ?
                   <View style={[styles.pickerCont, styles.selectCityCont]}>

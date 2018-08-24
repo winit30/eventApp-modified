@@ -1,3 +1,5 @@
+import {INIT, SET_EVENTS, UPDATE_EVENT, SET_CITY, SET_COMMENTS} from "./../constants/action-types";
+
 var initialState = {
     events: [],
     city: "",
@@ -8,38 +10,37 @@ export default (state = initialState, action) => {
 
     switch (action.type) {
 
-        case "INIT":
+        case INIT:
             return initialState
 
-        case "SET_EVENTS":
+        case SET_EVENTS:
             return {
                 ...state,
                 events: action.events
             }
 
-        case "UPDATE_EVENT":
+        case UPDATE_EVENT:
             return {
                 ...state,
                 events: updatedEvents(state.events, action.event)
             }
 
-        case "SET_CITY":
+        case SET_CITY:
             return {
                 ...state,
                 city: action.city
             }
 
-        case "SET_COMMENTS":
+        case SET_COMMENTS:
             return {
                 ...state,
                 comments: action.comments
             }
 
         default:
-
+            return state;
     }
 
-    return state;
 }
 
 function updatedEvents(array, event) {

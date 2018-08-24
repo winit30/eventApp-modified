@@ -190,7 +190,14 @@ class ViewEvent extends Component<{}> {
             return comments.map(c => {
                 if (c) {
                     return (
-                        <Comments key={c._id} selectedEvent={selectedEvent} userComment={c} handleDeleteReply={this.handleDeleteReply} replyToComment={this.replyToComment} deleteComment={this._deleteComment} showDelete={(user._id === c.commentedby)} />
+                        <Comments
+                            key={c._id}
+                            selectedEvent={selectedEvent}
+                            userComment={c}
+                            handleDeleteReply={this.handleDeleteReply}
+                            replyToComment={this.replyToComment}
+                            deleteComment={this._deleteComment}
+                            showDelete={(user._id === c.commentedby)} />
                     );
                 }
             });
@@ -273,9 +280,9 @@ class ViewEvent extends Component<{}> {
     renderApplyButton = (event) => {
         if(event.applier && Object.keys(event.applier).length > 0) {
             return (
-              <View>
-                  <Text>You have applied for this event.</Text>
-                  <Text>Status: {event.applier.status}</Text>
+              <View style={screenStyles.viewEventScreenStyle.statusContainer}>
+                  <Text style={screenStyles.viewEventScreenStyle.statusTextStyle}>You have applied for this event.</Text>
+                  <Text style={screenStyles.viewEventScreenStyle.statusTextStyle}>Status: {event.applier.status}</Text>
               </View>
             )
         } else {
@@ -331,34 +338,36 @@ class ViewEvent extends Component<{}> {
                               </TouchableNativeFeedback>
                               <Text style={screenStyles.viewEventScreenStyle.eventTitle}>{event.title}</Text>
                           </View>
-                          <View style={screenStyles.viewEventScreenStyle.rowContainer}>
-                              <TouchableNativeFeedback onPress={this.handleDowndownMenu}>
-                                  <View style={screenStyles.viewEventScreenStyle.iconContainer} ref={node => this.view = node}>
-                                      <Icon
-                                          name="dots-vertical"
-                                          type="material-community"
-                                          color='#ffffff'/>
-                                  </View>
-                              </TouchableNativeFeedback>
-                              <Dropdown
-                                  showDropdown={this.state.showDropdown}
-                                  onHandleDowndownMenu={this.handleDowndownMenu}
-                                  topPosition={this.state.topPosition}>
-                                  <DropdownItem onPress={() => {
-                                          this.handleDowndownMenu()
-                                          navigateTo("viewAppliers", {selectedEvent: event})
-                                  }}>Applications</DropdownItem>
-                                  <DropdownItem onPress={() => {
-                                          this.handleDowndownMenu()
-                                          this.editEvent(event._id)
-                                  }}>Edit</DropdownItem>
-                                  <DropdownItem onPress={() => this.activateDeactivateEvent(!event.isActive, event._id)}>{event.isActive ? "Deactivate" : "Activate"}</DropdownItem>
-                                  <DropdownItem onPress={() => {
-                                      this.handleDowndownMenu();
-                                      this.deleteEvent(event._id);
-                                  }}>Delete</DropdownItem>
-                              </Dropdown>
-                          </View>
+                          {(user && user.userType === "organizer") &&
+                              <View style={screenStyles.viewEventScreenStyle.rowContainer}>
+                                  <TouchableNativeFeedback onPress={this.handleDowndownMenu}>
+                                      <View style={screenStyles.viewEventScreenStyle.iconContainer} ref={node => this.view = node}>
+                                          <Icon
+                                              name="dots-vertical"
+                                              type="material-community"
+                                              color='#ffffff'/>
+                                      </View>
+                                  </TouchableNativeFeedback>
+                                  <Dropdown
+                                      showDropdown={this.state.showDropdown}
+                                      onHandleDowndownMenu={this.handleDowndownMenu}
+                                      topPosition={this.state.topPosition}>
+                                      <DropdownItem onPress={() => {
+                                              this.handleDowndownMenu()
+                                              navigateTo("viewAppliers", {selectedEvent: event})
+                                      }}>Applicants</DropdownItem>
+                                      <DropdownItem onPress={() => {
+                                              this.handleDowndownMenu()
+                                              this.editEvent(event._id)
+                                      }}>Edit</DropdownItem>
+                                      <DropdownItem onPress={() => this.activateDeactivateEvent(!event.isActive, event._id)}>{event.isActive ? "Deactivate" : "Activate"}</DropdownItem>
+                                      <DropdownItem onPress={() => {
+                                          this.handleDowndownMenu();
+                                          this.deleteEvent(event._id);
+                                      }}>Delete</DropdownItem>
+                                  </Dropdown>
+                              </View>
+                          }
                       </View>
                       <View style={screenStyles.viewEventScreenStyle.viewEventDetails}>
                           <View style={[screenStyles.viewEventScreenStyle.viewEventMetaDesc, styles.paddingVertical8]}>
@@ -414,4 +423,4 @@ const mapDispatchToProps = dispatch => ({
     onChangeEvent: (property, value)=> dispatch({type:"ON_CHANGE_EVENT",property, value})
 });
 
-export default connect(mapStateToProps, mapDispatchToProps )(ViewEvent);
+export default connect(mapStateToProps, mapDispatchToProps)(ViewEvent);
