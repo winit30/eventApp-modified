@@ -25,8 +25,6 @@ const mapStateToProps = state => ({
     user: state.auth.user
 });
 
-const mapDispatchToProps = dispatch => ({
-
-});
+const mapDispatchToProps = dispatch => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

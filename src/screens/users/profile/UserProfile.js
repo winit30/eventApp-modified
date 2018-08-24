@@ -5,6 +5,7 @@ import {View, Text} from "react-native";
 
 import {fetchApi} from "./../../../services/api";
 import {GET_USER_PROFILE_URL} from "./../../../constants/urls";
+import {LOADER, SET_USER_DETAILS} from "./../../../constants/action-types";
 import ProfileHeader from "./profileComponents/ProfileHeader";
 
 import styles from "./../../../styles/styles";
@@ -70,8 +71,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    setLoader: status => dispatch({type: "LOADER", status}),
-    setUserDetails: userDetails => dispatch({type: "SET_USER_DETAILS", userDetails})
+    setLoader: status => dispatch({type: LOADER, status}),
+    setUserDetails: userDetails => dispatch({type: SET_USER_DETAILS, userDetails})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

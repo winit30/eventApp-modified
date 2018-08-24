@@ -8,6 +8,7 @@ import DrawerContainer from "./../../components/drawer/DrawerContainer";
 import {FloatingButton} from "./../../components/buttons";
 import {fetchApi} from "./../../services/api";
 import {GET_EVENT_URL, DELETE_EVENT_URL, UPDATE_EVENT_URL, GET_APPLICATION_COUNT_URL} from "./../../constants/urls";
+import {LOADER, ON_CHANGE_EVENT, SET_EVENTS} from "./../../constants/action-types";
 import {navigateTo} from "./../../components/navigation/navigate";
 import Toolbar from "./../../components/toolbar/Toolbar";
 
@@ -103,17 +104,17 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onChange:(property, value)=> dispatch({
-        type:"ON_CHANGE_EVENT",
+    onChange: (property, value)=> dispatch({
+        type: ON_CHANGE_EVENT,
         property,
         value,
     }),
-    resetEvent:() => dispatch({type:"RESET_EVENT"}),
+    resetEvent: () => dispatch({type:"RESET_EVENT"}),
     setEvent: events => dispatch({
-        type: "SET_EVENTS",
+        type: SET_EVENTS,
         events
     }),
-    setLoader:(status) => dispatch({type:"LOADER", status})
+    setLoader:(status) => dispatch({type: LOADER, status})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Organizer);

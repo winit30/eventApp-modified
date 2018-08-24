@@ -6,6 +6,7 @@ import {Button, LinkButton} from "./../components/buttons";
 import {Email, Password, Select, TextField} from "./../components/inputs";
 import {fetchApi} from "./../services/api";
 import {REGISTER_URL} from "./../constants/urls";
+import {SET_USER_AUTH, LOADER} from "./../constants/action-types";
 import {redirectTo, navigateBack} from "./../components/navigation/navigate";
 
 import styles from "./../styles/styles";
@@ -88,12 +89,12 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     setUserAuth: (token, user, loggedIn) => dispatch({
-        type: "SET_USER_AUTH",
+        type: SET_USER_AUTH,
         token,
         user,
         loggedIn
     }),
-    setLoader:(status) => dispatch({type:"LOADER", status})
+    setLoader:(status) => dispatch({type: LOADER, status})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

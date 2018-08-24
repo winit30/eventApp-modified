@@ -6,6 +6,7 @@ import {View, Text, TouchableWithoutFeedback, DatePickerAndroid, TextInput} from
 import Autocomplete from "./../../components/eventInputs/Autocomplete";
 import {Button} from "./../../components/buttons";
 import {CREATE_EVENT_URL, UPDATE_EVENT_URL} from "./../../constants/urls";
+import {ON_CHANGE_EVENT, LOADER} from "./../../constants/action-types";
 import {fetchGoogleApi, fetchApi} from "./../../services/api";
 import {redirectTo, navigateBack} from "./../../components/navigation/navigate";
 import Toolbar2 from "./../../components/toolbar/Toolbar2";
@@ -192,11 +193,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     onChangeEvent:(property, value)=> dispatch({
-        type:"ON_CHANGE_EVENT",
+        type: ON_CHANGE_EVENT,
         property,
         value,
     }),
-    setLoader:(status) => dispatch({type:"LOADER", status})
+    setLoader:(status) => dispatch({type: LOADER, status})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventSecondScreen);
